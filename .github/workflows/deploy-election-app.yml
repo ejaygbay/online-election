@@ -2,13 +2,17 @@ name: deploy-election-app
 on:
   push:
     branches: [ master ]
+    
 jobs:
-  check-bats-version:
+  deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Deploy NodeJS app
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: '16'
+          host: ${{ secrets.ELECTION_HOST_IP }}
+          key: ${{ secrets.ELECTION_SSH_KEY }}
+          username: ${{ secrets.ELECTION_USER }}
       - run: npm install -g bats
       - run: bats -v
