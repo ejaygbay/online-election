@@ -1,107 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('./layouts/head') -%>
+    </head>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>Material Design for Bootstrap</title>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
-    <!-- Google Fonts Roboto -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" />
-    <!-- MDB -->
-    <link rel="stylesheet" href="/public/css/mdb.min.css" />
-    <!-- Custom styles -->
-    <link rel="stylesheet" href="/public/css/admin.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
-</head>
+    <body>
+        <!--Main Navigation-->
+        <header>
+            <!-- Sidebar -->
+            <%- include('./layouts/sidebar') -%>
+                <!-- Sidebar -->
 
-<body>
-    <!--Main Navigation-->
-    <header>
-        <!-- Sidebar -->
-        <nav style="margin-top: 10px;" id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
-            <div class="position-sticky">
-                <div class="list-group list-group-flush mx-3 mt-4">
-                    <a href="#" class="list-group-item list-group-item-action py-2 ripple active">
-                        <i class="fas fa-chart-area fa-fw me-3"></i><span>Dashboard</span>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-              class="fas fa-lock fa-fw me-3"></i><span>Register</span></a>
-                    <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-              class="fas fa-chart-line fa-fw me-3"></i><span>Vote</span></a>
-                    <a href="#" class="list-group-item list-group-item-action py-2 ripple">
-                        <i class="fas fa-chart-pie fa-fw me-3"></i><span>Create Election</span>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-              class="fas fa-chart-bar fa-fw me-3"></i><span>Create Position</span></a>
-                    <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-              class="fas fa-globe fa-fw me-3"></i><span>Create Contestant</span></a>
-                    <a href="#" class="list-group-item list-group-item-action py-2 ripple"><i
-              class="fas fa-building fa-fw me-3"></i><span>Register Voters</span></a>
-                </div>
-            </div>
-        </nav>
-        <!-- Sidebar -->
-
-        <!-- Navbar -->
-        <nav style="justify-content: center; padding-top: 20px;" id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+                <!-- Navbar -->
+                <!-- <nav style="justify-content: center; padding-top: 20px;" id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
             <h1>TYA ELECTION</h1>
-        </nav>
-        <!-- Navbar -->
-    </header>
-    <!--Main Navigation-->
+		</nav> -->
+                <nav id="main-navbar" class="navbar navbar-expand-lg navbar-light bg-white fixed-top">
+                    <!-- Container wrapper -->
+                    <div class="container-fluid">
+                        <!-- Toggle button -->
+                        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+					<i class="fas fa-bars"></i>
+				</button>
 
-    <!--Main layout-->
-    <main style="margin-top: 70px ">
-        <div class="container pt-4 ">
-            <!--Section: Statistics with subtitles-->
-            <section>
-                <div class="row ">
-                    <div class="col-xl-6 col-md-12 mb-4 ">
-                        <div class="card ">
-                            <div class="card-body ">
-                                <div class="d-flex justify-content-between p-md-1 ">
-                                    <div class="d-flex flex-row ">
-                                        <div class="align-self-center ">
-                                            <i class="fas fa-pencil-alt text-info fa-3x me-4 "></i>
+                        <!-- Brand -->
+                        <a class="navbar-brand" href="#">
+                            <img src="https://mdbootstrap.com/img/logo/mdb-transaprent-noshadows.png" height="25" alt="" loading="lazy" />
+                        </a>
+                    </div>
+                    <!-- Container wrapper -->
+                </nav>
+                <!-- Navbar -->
+        </header>
+        <!--Main Navigation-->
+
+        <!--Main layout-->
+        <main style="margin-top: 70px ">
+            <div class="container pt-4 ">
+                <!--Section: Statistics with subtitles-->
+                <section>
+                    <div class="row ">
+                        <div class="col-xl-6 col-md-12 mb-4 ">
+                            <div class="card ">
+                                <div class="card-body ">
+                                    <div class="d-flex justify-content-between p-md-1 ">
+                                        <div class="d-flex flex-row ">
+                                            <div class="align-self-center ">
+                                                <i class="fas fa-pencil-alt text-info fa-3x me-4 "></i>
+                                            </div>
+                                            <div>
+                                                <h4>Registered Voters</h4>
+                                                <p class="mb-0 ">Total number of registered voters</p>
+                                            </div>
                                         </div>
-                                        <div>
-                                            <h4>Registered Voters</h4>
-                                            <p class="mb-0 ">Total number of registered voters</p>
+                                        <div class="align-self-center ">
+                                            <h2 class="h1 mb-0 ">18,000</h2>
                                         </div>
                                     </div>
-                                    <div class="align-self-center ">
-                                        <h2 class="h1 mb-0 ">18,000</h2>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-md-12 mb-4 ">
+                            <div class="card ">
+                                <div class="card-body ">
+                                    <div class="d-flex justify-content-between p-md-1 ">
+                                        <div class="d-flex flex-row ">
+                                            <div class="align-self-center ">
+                                                <!-- <i class="fas fa-vote-yea "></i> -->
+                                                <i class="fas fa-balance-scale text-warning fa-3x me-4 "></i>
+                                            </div>
+                                            <div>
+                                                <h4>Total Votes</h4>
+                                                <p class="mb-0 ">Total number of votes</p>
+                                            </div>
+                                        </div>
+                                        <div class="align-self-center ">
+                                            <h2 class="h1 mb-0 ">0</h2>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-6 col-md-12 mb-4 ">
-                        <div class="card ">
-                            <div class="card-body ">
-                                <div class="d-flex justify-content-between p-md-1 ">
-                                    <div class="d-flex flex-row ">
-                                        <div class="align-self-center ">
-                                            <!-- <i class="fas fa-vote-yea "></i> -->
-                                            <i class="fas fa-balance-scale text-warning fa-3x me-4 "></i>
-                                        </div>
-                                        <div>
-                                            <h4>Total Votes</h4>
-                                            <p class="mb-0 ">Total number of votes</p>
-                                        </div>
-                                    </div>
-                                    <div class="align-self-center ">
-                                        <h2 class="h1 mb-0 ">0</h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row ">
+                    <!-- <div class="row ">
                     <div class="col-xl-6 col-md-12 mb-4 ">
                         <div class="card ">
                             <div class="card-body ">
@@ -142,106 +120,287 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-            <!--Section: Statistics with subtitles-->
+                </div> -->
+                </section>
+                <!--Section: Statistics with subtitles-->
 
-            <!--Section: Minimal statistics cards-->
-            <section>
-                <div class="row ">
-                    <div class="col-xl-3 col-sm-6 col-12 mb-4 ">
-                        <div class="card ">
-                            <div class="card-body ">
-                                <div class="d-flex justify-content-between px-md-1 ">
-                                    <div class="align-self-center ">
-                                        <img src="../public/images/user.jpg" class="img-fluid text-info fa-3x" />
+                <!--Section: Minimal statistics cards-->
+                <section>
+                    <h2>Chairman</h2>
+                    <div class="row ">
+                        <div class="col-xl-3 col-sm-6 col-12 mb-4 ">
+                            <div class="card ">
+                                <div class="card-body ">
+                                    <div class="d-flex justify-content-between px-md-1 ">
+                                        <div class="align-self-center ">
+                                            <img src="../public/images/user.jpg" class="img-fluid text-info fa-3x" />
+                                            <p class="mb-0">John Brown</p>
+                                        </div>
+                                        <div class="text-end ">
+                                            <h3>278</h3>
+                                            <p class="mb-0 ">Votes</p>
+                                        </div>
                                     </div>
-                                    <div class="text-end ">
-                                        <h3>278</h3>
-                                        <p class="mb-0 ">Votes</p>
+                                    <div class="px-md-1 ">
+                                        <div class="progress mt-3 mb-1 rounded " style="height: 15px ">
+                                            <div class="progress-bar bg-info " role="progressbar " style="width: 80% " aria-valuenow="80 " aria-valuemin="0 " aria-valuemax="100 ">75</div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="px-md-1 ">
-                                    <div class="progress mt-3 mb-1 rounded " style="height: 15px ">
-                                        <div class="progress-bar bg-info " role="progressbar " style="width: 80% " aria-valuenow="80 " aria-valuemin="0 " aria-valuemax="100 ">75</div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 col-12 mb-4 ">
+                            <div class="card ">
+                                <div class="card-body ">
+                                    <div class="d-flex justify-content-between px-md-1 ">
+                                        <div class="align-self-center ">
+                                            <img src="../public/images/user.jpg" class="img-fluid text-info fa-3x" />
+                                            <p class="mb-0">John Brown</p>
+                                        </div>
+                                        <div class="text-end ">
+                                            <h3>156</h3>
+                                            <p class="mb-0 ">Votes</p>
+                                        </div>
+                                    </div>
+                                    <div class="px-md-1 ">
+                                        <div class="progress mt-3 mb-1 rounded " style="height: 15px ">
+                                            <div class="progress-bar bg-warning " role="progressbar " style="width: 35% " aria-valuenow="35 " aria-valuemin="0 " aria-valuemax="100 ">50%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 col-12 mb-4 ">
+                            <div class="card ">
+                                <div class="card-body ">
+                                    <div class="d-flex justify-content-between px-md-1 ">
+                                        <div class="align-self-center ">
+                                            <img src="../public/images/user.jpg" class="img-fluid text-info fa-3x" />
+                                            <p class="mb-0">John Brown</p>
+                                        </div>
+                                        <div class="text-end ">
+                                            <h3>164</h3>
+                                            <p class="mb-0 ">Votes</p>
+                                        </div>
+                                    </div>
+                                    <div class="px-md-1 ">
+                                        <div class="progress mt-3 mb-1 rounded " style="height: 15px">
+                                            <div class="progress-bar bg-success " role="progressbar " style="width: 60%;" aria-valuenow="60 " aria-valuemin="0 " aria-valuemax="100 ">60%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 col-12 mb-4 ">
+                            <div class="card ">
+                                <div class="card-body ">
+                                    <div class="d-flex justify-content-between px-md-1 ">
+                                        <div class="align-self-center ">
+                                            <img src="../public/images/user.jpg" class="img-fluid text-info fa-3x" />
+                                            <p class="mb-0">John Brown</p>
+                                        </div>
+                                        <div class="text-end ">
+                                            <h3>423</h3>
+                                            <p class="mb-0 ">Votes</p>
+                                        </div>
+                                    </div>
+                                    <div class="px-md-1 ">
+                                        <div class="progress mt-3 mb-1 rounded " style="height: 15px ">
+                                            <div class="progress-bar bg-danger " role="progressbar " style="width: 40% " aria-valuenow="40 " aria-valuemin="0 " aria-valuemax="100 ">10%</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-sm-6 col-12 mb-4 ">
-                        <div class="card ">
-                            <div class="card-body ">
-                                <div class="d-flex justify-content-between px-md-1 ">
-                                    <div class="align-self-center ">
-                                        <img src="../public/images/user.jpg" class="img-fluid text-info fa-3x" />
+
+                    <h2>Chairlady</h2>
+                    <div class="row ">
+                        <div class="col-xl-3 col-sm-6 col-12 mb-4 ">
+                            <div class="card ">
+                                <div class="card-body ">
+                                    <div class="d-flex justify-content-between px-md-1 ">
+                                        <div class="align-self-center ">
+                                            <img src="../public/images/user.jpg" class="img-fluid text-info fa-3x" />
+                                            <p class="mb-0">Ruth Flomo</p>
+                                        </div>
+                                        <div class="text-end ">
+                                            <h3>278</h3>
+                                            <p class="mb-0 ">Votes</p>
+                                        </div>
                                     </div>
-                                    <div class="text-end ">
-                                        <h3>156</h3>
-                                        <p class="mb-0 ">Votes</p>
+                                    <div class="px-md-1 ">
+                                        <div class="progress mt-3 mb-1 rounded " style="height: 15px ">
+                                            <div class="progress-bar bg-info " role="progressbar " style="width: 80% " aria-valuenow="80 " aria-valuemin="0 " aria-valuemax="100 ">75</div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="px-md-1 ">
-                                    <div class="progress mt-3 mb-1 rounded " style="height: 15px ">
-                                        <div class="progress-bar bg-warning " role="progressbar " style="width: 35% " aria-valuenow="35 " aria-valuemin="0 " aria-valuemax="100 ">50%</div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 col-12 mb-4 ">
+                            <div class="card ">
+                                <div class="card-body ">
+                                    <div class="d-flex justify-content-between px-md-1 ">
+                                        <div class="align-self-center ">
+                                            <img src="../public/images/user.jpg" class="img-fluid text-info fa-3x" />
+                                            <p class="mb-0">Ruth Flomo</p>
+                                        </div>
+                                        <div class="text-end ">
+                                            <h3>156</h3>
+                                            <p class="mb-0 ">Votes</p>
+                                        </div>
+                                    </div>
+                                    <div class="px-md-1 ">
+                                        <div class="progress mt-3 mb-1 rounded " style="height: 15px ">
+                                            <div class="progress-bar bg-warning " role="progressbar " style="width: 35% " aria-valuenow="35 " aria-valuemin="0 " aria-valuemax="100 ">50%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 col-12 mb-4 ">
+                            <div class="card ">
+                                <div class="card-body ">
+                                    <div class="d-flex justify-content-between px-md-1 ">
+                                        <div class="align-self-center ">
+                                            <img src="../public/images/user.jpg" class="img-fluid text-info fa-3x" />
+                                            <p class="mb-0">Ruth Flomo</p>
+                                        </div>
+                                        <div class="text-end ">
+                                            <h3>164</h3>
+                                            <p class="mb-0 ">Votes</p>
+                                        </div>
+                                    </div>
+                                    <div class="px-md-1 ">
+                                        <div class="progress mt-3 mb-1 rounded " style="height: 15px">
+                                            <div class="progress-bar bg-success " role="progressbar " style="width: 60%;" aria-valuenow="60 " aria-valuemin="0 " aria-valuemax="100 ">60%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 col-12 mb-4 ">
+                            <div class="card ">
+                                <div class="card-body ">
+                                    <div class="d-flex justify-content-between px-md-1 ">
+                                        <div class="align-self-center ">
+                                            <img src="../public/images/user.jpg" class="img-fluid text-info fa-3x" />
+                                            <p class="mb-0">Ruth Flomo</p>
+                                        </div>
+                                        <div class="text-end ">
+                                            <h3>423</h3>
+                                            <p class="mb-0 ">Votes</p>
+                                        </div>
+                                    </div>
+                                    <div class="px-md-1 ">
+                                        <div class="progress mt-3 mb-1 rounded " style="height: 15px ">
+                                            <div class="progress-bar bg-danger " role="progressbar " style="width: 40% " aria-valuenow="40 " aria-valuemin="0 " aria-valuemax="100 ">10%</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-sm-6 col-12 mb-4 ">
-                        <div class="card ">
-                            <div class="card-body ">
-                                <div class="d-flex justify-content-between px-md-1 ">
-                                    <div class="align-self-center ">
-                                        <img src="../public/images/user.jpg" class="img-fluid text-info fa-3x" />
+
+                    <h2>Secretary</h2>
+                    <div class="row ">
+                        <div class="col-xl-3 col-sm-6 col-12 mb-4 ">
+                            <div class="card ">
+                                <div class="card-body ">
+                                    <div class="d-flex justify-content-between px-md-1 ">
+                                        <div class="align-self-center ">
+                                            <img src="../public/images/user.jpg" class="img-fluid text-info fa-3x" />
+                                            <p class="mb-0">Samuel Davis</p>
+                                        </div>
+                                        <div class="text-end ">
+                                            <h3>278</h3>
+                                            <p class="mb-0 ">Votes</p>
+                                        </div>
                                     </div>
-                                    <div class="text-end ">
-                                        <h3>164</h3>
-                                        <p class="mb-0 ">Votes</p>
+                                    <div class="px-md-1 ">
+                                        <div class="progress mt-3 mb-1 rounded " style="height: 15px ">
+                                            <div class="progress-bar bg-info " role="progressbar " style="width: 80% " aria-valuenow="80 " aria-valuemin="0 " aria-valuemax="100 ">75</div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="px-md-1 ">
-                                    <div class="progress mt-3 mb-1 rounded " style="height: 15px">
-                                        <div class="progress-bar bg-success " role="progressbar " style="width: 60%;" aria-valuenow="60 " aria-valuemin="0 " aria-valuemax="100 ">60%</div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 col-12 mb-4 ">
+                            <div class="card ">
+                                <div class="card-body ">
+                                    <div class="d-flex justify-content-between px-md-1 ">
+                                        <div class="align-self-center ">
+                                            <img src="../public/images/user.jpg" class="img-fluid text-info fa-3x" />
+                                            <p class="mb-0">James Kollie</p>
+                                        </div>
+                                        <div class="text-end ">
+                                            <h3>156</h3>
+                                            <p class="mb-0 ">Votes</p>
+                                        </div>
+                                    </div>
+                                    <div class="px-md-1 ">
+                                        <div class="progress mt-3 mb-1 rounded " style="height: 15px ">
+                                            <div class="progress-bar bg-warning " role="progressbar " style="width: 35% " aria-valuenow="35 " aria-valuemin="0 " aria-valuemax="100 ">50%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 col-12 mb-4 ">
+                            <div class="card ">
+                                <div class="card-body ">
+                                    <div class="d-flex justify-content-between px-md-1 ">
+                                        <div class="align-self-center ">
+                                            <img src="../public/images/user.jpg" class="img-fluid text-info fa-3x" />
+                                            <p class="mb-0">Ruth Ben</p>
+                                        </div>
+                                        <div class="text-end ">
+                                            <h3>164</h3>
+                                            <p class="mb-0 ">Votes</p>
+                                        </div>
+                                    </div>
+                                    <div class="px-md-1 ">
+                                        <div class="progress mt-3 mb-1 rounded " style="height: 15px">
+                                            <div class="progress-bar bg-success " role="progressbar " style="width: 60%;" aria-valuenow="60 " aria-valuemin="0 " aria-valuemax="100 ">60%</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 col-12 mb-4 ">
+                            <div class="card ">
+                                <div class="card-body ">
+                                    <div class="d-flex justify-content-between px-md-1 ">
+                                        <div class="align-self-center ">
+                                            <img src="../public/images/user.jpg" class="img-fluid text-info fa-3x" />
+                                            <p class="mb-0">Johnson Flomo</p>
+                                        </div>
+                                        <div class="text-end ">
+                                            <h3>423</h3>
+                                            <p class="mb-0 ">Votes</p>
+                                        </div>
+                                    </div>
+                                    <div class="px-md-1 ">
+                                        <div class="progress mt-3 mb-1 rounded " style="height: 15px ">
+                                            <div class="progress-bar bg-danger " role="progressbar " style="width: 40% " aria-valuenow="40 " aria-valuemin="0 " aria-valuemax="100 ">10%</div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-sm-6 col-12 mb-4 ">
-                        <div class="card ">
-                            <div class="card-body ">
-                                <div class="d-flex justify-content-between px-md-1 ">
-                                    <div class="align-self-center ">
-                                        <img src="../public/images/user.jpg" class="img-fluid text-info fa-3x" />
-                                    </div>
-                                    <div class="text-end ">
-                                        <h3>423</h3>
-                                        <p class="mb-0 ">Votes</p>
-                                    </div>
-                                </div>
-                                <div class="px-md-1 ">
-                                    <div class="progress mt-3 mb-1 rounded " style="height: 15px ">
-                                        <div class="progress-bar bg-danger " role="progressbar " style="width: 40% " aria-valuenow="40 " aria-valuemin="0 " aria-valuemax="100 ">10%</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <!--Section: Minimal statistics cards-->
+                </section>
+                <!--Section: Minimal statistics cards-->
 
 
-        </div>
-    </main>
-    <!--Main layout-->
-    <!-- MDB -->
-    <script type="text/javascript " src="/public/js/mdb.min.js "></script>
-    <!-- Custom scripts -->
-    <!-- <script type="text/javascript " src="/public/js/admin.js "></script> -->
+            </div>
+        </main>
+        <!--Main layout-->
+        <!-- MDB -->
+        <script type="text/javascript " src="/public/js/mdb.min.js "></script>
+        <!-- Custom scripts -->
+        <!-- <script type="text/javascript " src="/public/js/admin.js "></script> -->
 
-</body>
+    </body>
 
-</html>
+    </html>

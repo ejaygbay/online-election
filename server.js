@@ -11,17 +11,26 @@ app.get('/', (req, res) => {
     res.render('dashboard');
 })
 
-app.get('/result', (req, res) => {
-    res.send("Result Page");
+app.get('/register', (req, res) => {
+    res.render('register');
 })
 
-app.get('/voters', (req, res) => {
-    res.send("View Voters Page");
+app.get('/election', (req, res) => {
+    res.render('election');
 })
 
-app.post('/voters', (req, res) => {
-    res.send("Voter Created Page");
+app.get('/position', (req, res) => {
+    res.render('position');
 })
+
+app.get('/contestant', (req, res) => {
+    res.render('contestant');
+})
+
+app.get('/vote', (req, res) => {
+    res.render('vote');
+})
+
 
 app.listen(PORT, () => {
     console.log(`App is listening on port ${PORT}`)
