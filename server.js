@@ -8,27 +8,27 @@ app.use(express.static(__dirname, +'/public'));
 
 
 app.get('/', (req, res) => {
-    res.render('dashboard');
+    res.render('dashboard', { page: 'dashboard' });
 })
 
 app.get('/register', (req, res) => {
-    res.render('register');
+    res.render('register', { page: 'register' });
 })
 
 app.get('/election', (req, res) => {
-    res.render('election');
+    res.render('election', { page: 'election' });
 })
 
 app.get('/position', (req, res) => {
-    res.render('position');
+    res.render('position', { page: 'position' });
 })
 
 app.get('/contestant', (req, res) => {
-    res.render('contestant');
+    res.render('contestant', { page: 'contestant' });
 })
 
 app.get('/vote', (req, res) => {
-    res.render('vote');
+    res.render('vote', { page: 'vote' });
 })
 
 
