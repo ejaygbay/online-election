@@ -1,0 +1,2 @@
+1. After voting, change the button color for the person who voted
+    to green and the others to red

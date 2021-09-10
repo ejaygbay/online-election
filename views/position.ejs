@@ -1,3 +1,4 @@
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
 <%- include('./layouts/head') -%>
     </head>
 
@@ -13,11 +14,31 @@
 
         <!--Main layout-->
         <main style="margin-top: 70px ">
-            <div class="container pt-4 ">
+            <h1 class="mb-4" style="text-align: center;">Create Positions</h1>
+            <div class="container pt-2">
                 <!--Section: Statistics with subtitles-->
-                <section>
+                <section style="display: grid; justify-items: center;">
 
+                    <form>
+                        <div class="col mb-3">
+                            <div class="form-outline">
+                                <input type="text" id="form3Example1" class="form-control form-control-lg" />
+                                <label class="form-label" for="form3Example1">Position Name</label>
+                            </div>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+                            <select class="custom-select">
+                                <option value="">Select Election</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                            </select>
+                        </div>
 
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary btn-block btn-lg mb-4">Register</button>
+                    </form>
 
                 </section>
             </div>

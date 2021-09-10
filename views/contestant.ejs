@@ -13,12 +13,39 @@
 
         <!--Main layout-->
         <main style="margin-top: 70px ">
-            <div class="container pt-4 ">
+            <h1 class="mb-4" style="text-align: center;">Add Contestants</h1>
+            <div class="container pt-2">
                 <!--Section: Statistics with subtitles-->
-                <section>
+                <section style="display: grid; justify-items: center;">
 
+                    <form>
+                        <div class="col mb-3">
+                            <div class="form-outline">
+                                <input type="text" id="form3Example1" class="form-control form-control-lg" />
+                                <label class="form-label" for="form3Example1">First Name</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-outline">
+                                <input type="text" id="form3Example2" class="form-control form-control-lg" />
+                                <label class="form-label" for="form3Example2">Middle Name</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-3">
+                            <div class="form-outline">
+                                <input type="text" id="form3Example2" class="form-control form-control-lg" />
+                                <label class="form-label" for="form3Example2">Last Name</label>
+                            </div>
+                        </div>
+                        <!-- </div> -->
 
+                        <!-- Upload file -->
+                        <label class="form-label" for="customFile">Upload contestant's photo</label>
+                        <input type="file" name="img" accept="image/*" class="form-control form-control-lg mb-3" id="customFile" />
 
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary btn-block btn-lg mb-4">Add Contestant</button>
+                    </form>
                 </section>
             </div>
         </main>
