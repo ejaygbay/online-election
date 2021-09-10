@@ -1,35 +1,27 @@
 const express = require('express');
 const app = express();
 const PORT = 3000;
+const dashboard_routes = require('./routers/dashboard-routes');
+const election_routes = require('./routers/election-routes');
+const vote_routes = require('./routers/vote-routes');
+const position_routes = require('./routers/position-routes');
+const contestant_routes = require('./routers/contestant-routes');
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
 app.use(express.static(__dirname, +'/public'));
 
-
-app.get('/', (req, res) => {
-    res.render('dashboard', { page: 'dashboard' });
-})
+app.use(dashboard_routes);
+app.use(election_routes);
+app.use(vote_routes);
+app.use(position_routes);
+app.use(contestant_routes);
 
 app.get('/register', (req, res) => {
     res.render('register', { page: 'register' });
 })
 
-app.get('/election', (req, res) => {
-    res.render('election', { page: 'election' });
-})
 
-app.get('/position', (req, res) => {
-    res.render('position', { page: 'position' });
-})
-
-app.get('/contestant', (req, res) => {
-    res.render('contestant', { page: 'contestant' });
-})
-
-app.get('/vote', (req, res) => {
-    res.render('vote', { page: 'vote' });
-})
 
 
 app.listen(PORT, () => {
