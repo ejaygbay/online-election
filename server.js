@@ -6,8 +6,9 @@ const election_routes = require('./routers/election-routes');
 const vote_routes = require('./routers/vote-routes');
 const position_routes = require('./routers/position-routes');
 const contestant_routes = require('./routers/contestant-routes');
-require('./models/table');
+
 // create_tables
+require('./models/table');
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
