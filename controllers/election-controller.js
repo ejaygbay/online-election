@@ -18,17 +18,16 @@ const createElection = (req, res) => {
 }
 
 const getElections = (req, res) => {
-    db.run(`SELECT * FROM elections`, (err, result) => {
-        console.log(result, err);
-    });
-}
-
-const getElection = (req, res) => {
-    let election_id = 1;
-    db.run(`SELECT * FROM elections WHERE election_id = ?`, election_id, (err, result) => {
-        console.log("Err:", err);
-        console.log("Result:", result);
-    });
+    if (req.query.id) {
+        let election_id = req.query.id;
+        db.all(`SELECT * FROM elections WHERE id = ?`, election_id, (err, data) => {
+            res.send(data);
+        });
+    } else {
+        db.all("SELECT * FROM elections;", (err, data) => {
+            res.send(data);
+        });
+    }
 }
 
 const updateElection = (req, res) => {
@@ -45,7 +44,6 @@ const deleteElection = (req, res) => {
 
 module.exports = {
     createElection,
-    getElection,
     getElections,
     updateElection,
     deleteElection

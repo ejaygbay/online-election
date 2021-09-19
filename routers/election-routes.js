@@ -8,7 +8,7 @@ router.get('/create_election', (req, res) => {
 
 router.post('/election', electionControllers.createElection);
 
-router.get('/election', electionControllers.getElection);
+router.get('/election', electionControllers.getElections);
 
 router.put('/election', electionControllers.updateElection);
 
