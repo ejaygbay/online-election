@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const PORT = 3000;
+const PORT = 3100;
 const dashboard_routes = require('./routers/dashboard-routes');
 const election_routes = require('./routers/election-routes');
 const vote_routes = require('./routers/vote-routes');

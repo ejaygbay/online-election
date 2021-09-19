@@ -10,7 +10,7 @@ router.post('/election', electionControllers.createElection);
 
 router.get('/election', electionControllers.getElections);
 
-router.put('/election', electionControllers.updateElection);
+router.patch('/election', electionControllers.updateElection);
 
 router.delete('/election', electionControllers.deleteElection);
 
