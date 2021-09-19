@@ -17,26 +17,27 @@ const createElection = (req, res) => {
     }
 }
 
+const getElections = (req, res) => {
+    db.run(`SELECT * FROM elections`, (err, result) => {
+        console.log(result, err);
+    });
+}
 
-// electionControllers.createElection(, async(result) => {
-//     await console.log(result);
-//     // res.send({ 'code': 0 });
-// })
-// }
+const getElection = (req, res) => {
+    let election_id = 1;
+    db.run(`SELECT * FROM elections WHERE election_id = ?`, election_id, (err, result) => {
+        console.log("Err:", err);
+        console.log("Result:", result);
+    });
+}
 
-const getElection = (election_name) => {
+const updateElection = (req, res) => {
     db.serialize(function() {
         db.run("CREATE TABLE IF NOT EXISTS roles(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, role_name VARCHAR(20), date_created DATETIME)");
     });
 }
 
-const updateElection = (election_name) => {
-    db.serialize(function() {
-        db.run("CREATE TABLE IF NOT EXISTS roles(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, role_name VARCHAR(20), date_created DATETIME)");
-    });
-}
-
-const deleteElection = (election_name) => {
+const deleteElection = (req, res) => {
     db.serialize(function() {
         db.run("CREATE TABLE IF NOT EXISTS roles(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, role_name VARCHAR(20), date_created DATETIME)");
     });
@@ -45,6 +46,7 @@ const deleteElection = (election_name) => {
 module.exports = {
     createElection,
     getElection,
+    getElections,
     updateElection,
     deleteElection
 }
