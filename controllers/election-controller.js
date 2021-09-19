@@ -21,11 +21,11 @@ const getElections = (req, res) => {
     if (req.query.id) {
         let election_id = req.query.id;
         db.all(`SELECT * FROM elections WHERE id = ?`, election_id, (err, data) => {
-            res.send(data);
+            !err ? res.send(data) : res.send(err);
         });
     } else {
         db.all("SELECT * FROM elections;", (err, data) => {
-            res.send(data);
+            !err ? res.send(data) : res.send(err);
         });
     }
 }
@@ -37,8 +37,13 @@ const updateElection = (req, res) => {
 }
 
 const deleteElection = (req, res) => {
-    db.serialize(function() {
-        db.run("CREATE TABLE IF NOT EXISTS roles(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, role_name VARCHAR(20), date_created DATETIME)");
+    let election_id = req.query.id;
+    db.run(`DELETE FROM elections WHERE id = ?;`, election_id, (err, err2) => {
+        if (!err) {
+            res.send({ status: 0, msg: 'Election deleted' });
+        } else {
+            res.send({ status: 1, msg: 'Election not deleted' });
+        }
     });
 }
 
