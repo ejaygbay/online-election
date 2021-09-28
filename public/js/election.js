@@ -13,17 +13,34 @@ const displayElections = () => {
                     <th scope="row">${index + 1}.</th>
                     <td>${ele.election_name}</td>
                     <td>
-                        <button class="btn outline btn-outline-primary btn-floating">
-                            <i class="fas fa-pencil-alt"></i>
+                        <button id=${ele.id}-edit-btn class="action-btn edit btn outline btn-outline-primary btn-floating">
+                            <i id=${ele.id}-edit class="edit fas fa-pencil-alt"></i>
                         </button>
-                        <button type="button" class="btn btn-outline-danger btn-floating">
-                            <i class="fas fa-trash-alt"></i>
+                        <button id=${ele.id}-del-btn type="button" class="action-btn delete btn btn-outline-danger btn-floating">
+                            <i id=${ele.id}-del class="delete fas fa-trash-alt"></i>
                         </button>
                     </td>
                 </tr>`;
 
                 table.insertAdjacentHTML('beforeend', html);
             });
+
+            document.querySelectorAll(".action-btn").forEach(ele => {
+                ele.addEventListener("click", (e) => {
+                    let id = e.target.id.split("-")[0];
+                    let classes = e.target.classList;
+
+                    classes.forEach(ele => {
+                        if (ele === 'edit') {
+                            console.log(ele);
+                        } else if (ele === 'delete') {
+                            deleteElection(id);
+                        }
+                    })
+                })
+            })
+
+
         })
 }
 displayElections();
@@ -54,3 +71,19 @@ document.querySelector('#create-election-btn').addEventListener('click', (e) => 
             })
         })
 })
+
+const deleteElection = (id) => {
+    fetch(`${URL}/election?id=${id}`, {
+            method: 'DELETE'
+        })
+        .then(response => response.json())
+        .then(data => {
+            Swal.fire({
+                icon: 'success',
+                title: `Deleted`,
+                showConfirmButton: false,
+                timer: 1000
+            })
+            displayElections();
+        })
+}
