@@ -11,7 +11,7 @@ const displayElections = () => {
             election_data.forEach((ele, index) => {
                 let html = `<tr id=${ele.id}>
                     <th scope="row">${index + 1}.</th>
-                    <td>${ele.election_name}</td>
+                    <td id=name-${ele.id}>${ele.election_name}</td>
                     <td>
                         <button id=${ele.id}-edit-btn class="action-btn edit btn outline btn-outline-primary btn-floating">
                             <i id=${ele.id}-edit class="edit fas fa-pencil-alt"></i>
@@ -29,18 +29,17 @@ const displayElections = () => {
                 ele.addEventListener("click", (e) => {
                     let id = e.target.id.split("-")[0];
                     let classes = e.target.classList;
+                    let election_name = document.getElementById(`name-${id}`).innerHTML;
 
                     classes.forEach(ele => {
                         if (ele === 'edit') {
-                            console.log(ele);
+                            displayElectionNameForEditing(id, election_name);
                         } else if (ele === 'delete') {
-                            deleteElection(id);
+                            deleteElection(id, election_name);
                         }
                     })
                 })
             })
-
-
         })
 }
 displayElections();
@@ -72,7 +71,43 @@ document.querySelector('#create-election-btn').addEventListener('click', (e) => 
         })
 })
 
-const deleteElection = (id) => {
+const displayElectionNameForEditing = (id, election_name) => {
+    Swal.fire({
+            title: 'Edit Election',
+            input: 'text',
+            inputValue: election_name,
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Save',
+            showLoaderOnConfirm: true
+        })
+        .then((result) => {
+            if (result.isConfirmed) {
+                editElection(id, election_name, result.value);
+            }
+        })
+}
+
+const editElection = (id, old_name, new_name) => {
+    fetch(`${URL}/election?id=${id}&name=${new_name}`, {
+            method: 'PATCH'
+        })
+        .then(response => response.json())
+        .then(data => {
+            Swal.fire({
+                icon: 'success',
+                title: `${old_name} was changed to ${new_name}`,
+                showConfirmButton: false,
+                timer: 2500
+            })
+            displayElections();
+        })
+}
+
+
+const deleteElection = (id, election_name) => {
     fetch(`${URL}/election?id=${id}`, {
             method: 'DELETE'
         })
@@ -80,7 +115,7 @@ const deleteElection = (id) => {
         .then(data => {
             Swal.fire({
                 icon: 'success',
-                title: `Deleted`,
+                title: `${election_name} was deleted`,
                 showConfirmButton: false,
                 timer: 1000
             })
