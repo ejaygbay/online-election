@@ -8,6 +8,12 @@ db.run(`CREATE TABLE IF NOT EXISTS elections(id INTEGER NOT NULL PRIMARY KEY AUT
     !err ? console.log("Elections table created.") : console.log("Elections table not created.")
 })
 
+/** PARTIES TABLE */
+db.run(`CREATE TABLE IF NOT EXISTS parties(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, party_name VARCHAR(30), date_created DATETIME);
+    `, (err, result) => {
+    !err ? console.log("Parties table created.") : console.log("Parties table not created.")
+})
+
 /** POSITIONS TABLE */
 db.run(`CREATE TABLE IF NOT EXISTS positions(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, position_name VARCHAR(30), election_id INTEGER NOT NULL, date_created DATETIME);
     `, (err, result) => {

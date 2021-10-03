@@ -3,6 +3,7 @@ const app = express();
 const PORT = 3100;
 const dashboard_routes = require('./routers/dashboard-routes');
 const election_routes = require('./routers/election-routes');
+const party_routes = require('./routers/party-routes');
 const vote_routes = require('./routers/vote-routes');
 const position_routes = require('./routers/position-routes');
 const contestant_routes = require('./routers/contestant-routes');
@@ -16,6 +17,7 @@ app.use(express.static(__dirname, +'/public'));
 
 app.use(dashboard_routes);
 app.use(election_routes);
+app.use(party_routes);
 app.use(vote_routes);
 app.use(position_routes);
 app.use(contestant_routes);

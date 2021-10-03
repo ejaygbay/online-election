@@ -1,0 +1,62 @@
+<%- include('./layouts/head') -%>
+    </head>
+
+    <body>
+        <!--Main Navigation-->
+        <header>
+            <!-- Sidebar -->
+            <%- include('./layouts/sidebar') -%>
+
+                <!-- Navbar -->
+                <%- include('./layouts/navbar') -%>
+        </header>
+
+        <!--Main layout-->
+        <main style="margin-top: 70px ">
+            <h1 class="mb-4" style="text-align: center;">Create Party</h1>
+            <div class="container pt-2">
+                <section style="display: grid; justify-items: center;">
+
+                    <!-- <form> -->
+                    <div class="col-12 mb-3">
+                        <div class="form-outline">
+                            <input type="text" id="new-party-name" class="form-control form-control-lg" />
+                            <label class="form-label" for="new-party-name">Party Name</label>
+                        </div>
+                    </div>
+
+                    <!-- Submit button -->
+                    <button type="submit" id="create-party-btn" class="btn btn-primary btn-block btn-lg mb-4">Create</button>
+                    <!-- </form> -->
+                </section>
+
+                <table class="table responsive">
+                    <thead>
+                        <th>#</th>
+                        <th scope="col">Party</th>
+                        <th scope="col">Action</th>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1.</th>
+                            <td>TYA1</td>
+                            <td>
+                                <button class="btn outline btn-outline-primary btn-floating">
+                                    <i class="fas fa-pencil-alt"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-danger btn-floating">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </main>
+
+        <%- include('./layouts/scripts') -%>
+            <script src="/public/js/party.js"></script>
+    </body>
+
+    </html>
