@@ -1,5 +1,4 @@
-let PORT = process.env.PORT || 3000;
-const URL = `http://localhost:${PORT}`;
+const URL = `window.location.origin`;
 
 const displayParties = () => {
     fetch(`${URL}/party`)

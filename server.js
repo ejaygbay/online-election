@@ -7,6 +7,22 @@ const party_routes = require('./routers/party-routes');
 const vote_routes = require('./routers/vote-routes');
 const position_routes = require('./routers/position-routes');
 const contestant_routes = require('./routers/contestant-routes');
+const cookieParser = require("cookie-parser");
+const sessions = require('express-session');
+
+// creating 24 hours from milliseconds
+const oneDay = 1000 * 60 * 60 * 24;
+
+//session middleware
+app.use(sessions({
+    secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
+    saveUninitialized:true,
+    cookie: { maxAge: oneDay },
+    resave: false
+}));
+
+// cookie parser middleware
+app.use(cookieParser());
 
 // create_tables
 require('./models/table');
