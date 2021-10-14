@@ -1,4 +1,4 @@
-const URL = `window.location.origin`;
+const URL = window.location.origin;
 
 const displayParties = () => {
     fetch(`${URL}/party`)

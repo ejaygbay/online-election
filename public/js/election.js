@@ -1,4 +1,5 @@
-const URL = `window.location.origin`;
+const URL = window.location.origin;
+console.log(window.location.origin)
 
 const displayElections = () => {
     fetch(`${URL}/election`)
