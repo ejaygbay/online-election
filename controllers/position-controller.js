@@ -2,51 +2,52 @@ let sqlite3 = require('sqlite3').verbose();
 let db = new sqlite3.Database('./tyaElectionDB.db');
 
 const createPosition = (req, res) => {
-    let party_name = req.query.name.trim();
+    let position_name = req.query.name.trim();
+    let election_id = req.query.id.trim();
 
-    if (party_name.length > 0) {
-        db.run(`INSERT INTO parties("party_name", "date_created") VALUES(?, datetime('now'));`, party_name, (err, result) => {
+    if (position_name.length > 0) {
+        db.run(`INSERT INTO positions("position_name", "election_id", "date_created") VALUES(?, ?, datetime('now'));`, position_name, election_id, (err, result) => {
             if (!err) {
-                res.send({ status: 0, msg: 'Party created' });
+                res.send({ status: 0, msg: 'position created' });
             } else {
-                res.send({ status: 1, msg: 'Party not created' });
+                res.send({ status: 1, msg: 'position not created' });
             }
         })
     } else {
-        res.send({ status: 1, msg: 'Invalid party name' })
+        res.send({ status: 1, msg: 'Invalid position name' })
     }
 }
 
 const getPositions = (req, res) => {
     if (req.query.id) {
-        let party_id = req.query.id;
-        db.all(`SELECT * FROM parties WHERE id = ?`, party_id, (err, data) => {
+        let position_id = req.query.id;
+        db.all(`SELECT * FROM positions WHERE id = ?`, position_id, (err, data) => {
             !err ? res.send(data) : res.send(err);
         });
     } else {
-        db.all("SELECT * FROM parties;", (err, data) => {
+        db.all("SELECT * FROM positions;", (err, data) => {
             !err ? res.send(data) : res.send(err);
         });
     }
 }
 
 const updatePosition = (req, res) => {
-    db.run(`UPDATE parties SET party_name = ? WHERE id = ?;`, req.query.name, req.query.id, (err) => {
+    db.run(`UPDATE positions SET position_name = ? WHERE id = ?;`, req.query.name, req.query.id, (err) => {
         if (!err) {
-            res.send({ status: 0, msg: 'Party updated' });
+            res.send({ status: 0, msg: 'position updated' });
         } else {
-            res.send({ status: 1, msg: 'Party not updated' });
+            res.send({ status: 1, msg: 'position not updated' });
         }
     });
 }
 
 const deletePosition = (req, res) => {
-    let party_id = req.query.id;
-    db.run(`DELETE FROM parties WHERE id = ?;`, party_id, (err, err2) => {
+    let position_id = req.query.id;
+    db.run(`DELETE FROM positions WHERE id = ?;`, position_id, (err, err2) => {
         if (!err) {
-            res.send({ status: 0, msg: 'Party deleted' });
+            res.send({ status: 0, msg: 'position deleted' });
         } else {
-            res.send({ status: 1, msg: 'Party not deleted' });
+            res.send({ status: 1, msg: 'position not deleted' });
         }
     });
 }
