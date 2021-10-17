@@ -20,8 +20,8 @@ const createPosition = (req, res) => {
 
 const getPositions = (req, res) => {
     if (req.query.id) {
-        let position_id = req.query.id;
-        db.all(`SELECT * FROM positions WHERE id = ?`, position_id, (err, data) => {
+        let election_id = req.query.id;
+        db.all(`SELECT * FROM positions WHERE election_id = ?`, election_id, (err, data) => {
             !err ? res.send(data) : res.send(err);
         });
     } else {
