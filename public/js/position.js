@@ -26,9 +26,32 @@ const getFormData = () => {
 
 
 document.querySelector("#create-position").addEventListener("click", (e) => {
-    let position_name = document.querySelector('.position-name');
-    let election_selected = document.getElementById('elections-dropdown');
+    let position_name = document.querySelector('.position-name').value;
+    let election_selected = document.getElementById('elections-dropdown').value;
     console.log(election_selected.value)
+
+    fetch(`${URL}/position?name=${position_name}&id=${election_selected}`, {
+            method: "POST"
+        })
+        .then(response => response.json())
+        .then(data => {
+            Swal.fire({
+                    icon: 'success',
+                    title: `Position name "${position_name}" was created`,
+                    showConfirmButton: false,
+                    timer: 2500
+                })
+                // document.querySelector("#new-position-name").value = "";
+                // displayParties();
+        })
+        .catch(err => {
+            Swal.fire({
+                icon: 'error',
+                title: `Position name "${position_name}" was not created`,
+                showConfirmButton: false,
+                timer: 2500
+            })
+        })
 })
 
 displayElections();
