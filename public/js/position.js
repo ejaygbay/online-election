@@ -74,6 +74,24 @@ document.getElementById('elections-dropdown2').addEventListener("change", () => 
         })
 })
 
+const displayPositionNameForEditing = (id, party_name) => {
+    Swal.fire({
+            title: 'Edit Party',
+            input: 'text',
+            inputValue: party_name,
+            inputAttributes: {
+                autocapitalize: 'off'
+            },
+            showCancelButton: true,
+            confirmButtonText: 'Save',
+            showLoaderOnConfirm: true
+        })
+        .then((result) => {
+            if (result.isConfirmed) {
+                editParty(id, party_name, result.value);
+            }
+        })
+}
 
 
 document.querySelector("#create-position").addEventListener("click", (e) => {
@@ -105,3 +123,48 @@ document.querySelector("#create-position").addEventListener("click", (e) => {
 })
 
 getElections();
+
+
+const editPosition = (id, old_name, new_name) => {
+    console.log("EDIT WAS CALLED")
+    fetch(`${URL}/position?id=${id}&name=${new_name}`, {
+            method: 'PATCH'
+        })
+        .then(response => response.json())
+        .then(data => {
+            Swal.fire({
+                icon: 'success',
+                title: `${old_name} was changed to ${new_name}`,
+                showConfirmButton: false,
+                timer: 2500
+            })
+            displayParties();
+        })
+}
+
+
+const deletePositio = (id, position_name) => {
+    fetch(`${URL}/position?id=${id}`, {
+            method: 'DELETE'
+        })
+        .then(response => response.json())
+        .then(data => {
+            Swal.fire({
+                icon: 'success',
+                title: `${position_name} was deleted`,
+                showConfirmButton: false,
+                timer: 1000
+            })
+            displayParties();
+        })
+}
+
+/**
+ * Send my github link
+ * List my strength
+ * What languages i'm good at
+ * what framework i'm good at
+ * what are my strength and weeknesses
+ * 
+ * And what I want to know
+ */
