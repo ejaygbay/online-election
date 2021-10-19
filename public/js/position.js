@@ -24,6 +24,7 @@ const displayPositions = (data) => {
 
     document.querySelectorAll(".action-btn").forEach(ele => {
         ele.addEventListener("click", (e) => {
+            console.log(e.target.id)
             let id = e.target.id.split("-")[0];
             let classes = e.target.classList;
             let position_name = document.getElementById(`name-${id}`).innerHTML;
@@ -74,11 +75,11 @@ document.getElementById('elections-dropdown2').addEventListener("change", () => 
         })
 })
 
-const displayPositionNameForEditing = (id, party_name) => {
+const displayPositionNameForEditing = (id, position_name) => {
     Swal.fire({
-            title: 'Edit Party',
+            title: 'Edit Position',
             input: 'text',
-            inputValue: party_name,
+            inputValue: position_name,
             inputAttributes: {
                 autocapitalize: 'off'
             },
@@ -88,7 +89,7 @@ const displayPositionNameForEditing = (id, party_name) => {
         })
         .then((result) => {
             if (result.isConfirmed) {
-                editParty(id, party_name, result.value);
+                editPosition(id, position_name, result.value);
             }
         })
 }
@@ -126,7 +127,6 @@ getElections();
 
 
 const editPosition = (id, old_name, new_name) => {
-    console.log("EDIT WAS CALLED")
     fetch(`${URL}/position?id=${id}&name=${new_name}`, {
             method: 'PATCH'
         })
@@ -138,12 +138,12 @@ const editPosition = (id, old_name, new_name) => {
                 showConfirmButton: false,
                 timer: 2500
             })
-            displayParties();
+            document.querySelector(`#name-${id}`).innerHTML = new_name;
         })
 }
 
 
-const deletePositio = (id, position_name) => {
+const deletePosition = (id, position_name) => {
     fetch(`${URL}/position?id=${id}`, {
             method: 'DELETE'
         })
@@ -155,7 +155,7 @@ const deletePositio = (id, position_name) => {
                 showConfirmButton: false,
                 timer: 1000
             })
-            displayParties();
+            displayPositions();
         })
 }
 
