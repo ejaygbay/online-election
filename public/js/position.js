@@ -24,7 +24,6 @@ const displayPositions = (data) => {
 
     document.querySelectorAll(".action-btn").forEach(ele => {
         ele.addEventListener("click", (e) => {
-            console.log(e.target.id)
             let id = e.target.id.split("-")[0];
             let classes = e.target.classList;
             let position_name = document.getElementById(`name-${id}`).innerHTML;
@@ -155,7 +154,7 @@ const deletePosition = (id, position_name) => {
                 showConfirmButton: false,
                 timer: 1000
             })
-            displayPositions();
+            document.getElementById(id).style = "display: none";
         })
 }
 
