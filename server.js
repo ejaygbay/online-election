@@ -39,7 +39,7 @@ app.use(position_routes);
 app.use(contestant_routes);
 
 app.get('/register', (req, res) => {
-    res.render('register', { page: 'register' });
+    res.render('voter-registration', { page: 'register' });
 })
 
 
