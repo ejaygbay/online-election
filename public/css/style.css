@@ -14,12 +14,15 @@
     -moz-appearance: none;
     appearance: none;
 }
+
 select {
     word-wrap: normal;
 }
+
 select {
     text-transform: none;
 }
+
 select {
     margin: 0;
     font-family: inherit;
