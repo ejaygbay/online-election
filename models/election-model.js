@@ -1,5 +1,5 @@
 let sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database('./tyaElectionDB.db');
+let db = new sqlite3.Database('./electionDB.db');
 
 const createElection = (election_name) => {
     // db.run(`INSERT INTO elections("election_name", "date_created") VALUES(?, datetime('now'));`, election_name, (err, result) => {

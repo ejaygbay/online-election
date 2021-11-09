@@ -1,5 +1,5 @@
 let sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database('./tyaElectionDB.db');
+let db = new sqlite3.Database('./electionDB.db');
 
 const createPosition = (req, res) => {
     let position_name = req.query.name.trim();
