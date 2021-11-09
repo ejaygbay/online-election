@@ -1,17 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const positionControllers = require('../controllers/position-controller');
+const votersRegistrationControllers = require('../controllers/voter-registration-controller');
 
-router.get('/position/create', (req, res) => {
-    res.render('position', { page: 'position' });
-})
+router.get('/voters/registration', votersRegistrationControllers.votersRegistrationView);
 
-router.post('/position', positionControllers.createPosition);
+router.post('/position', votersRegistrationControllers.createPosition);
 
-router.get('/position', positionControllers.getPositions);
+router.get('/position', votersRegistrationControllers.getPositions);
 
-router.patch('/position', positionControllers.updatePosition);
+router.patch('/position', votersRegistrationControllers.updatePosition);
 
-router.delete('/position', positionControllers.deletePosition);
+router.delete('/position', votersRegistrationControllers.deletePosition);
 
 module.exports = router;

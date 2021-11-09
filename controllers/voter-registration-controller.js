@@ -1,6 +1,11 @@
 let sqlite3 = require('sqlite3').verbose();
 let db = new sqlite3.Database('./tyaElectionDB.db');
 
+
+const votersRegistrationView = (req, res) => {
+    res.render('voter-registration', { page: 'register' });
+}
+
 const createPosition = (req, res) => {
     let position_name = req.query.name.trim();
     let election_id = req.query.id.trim();
@@ -53,6 +58,7 @@ const deletePosition = (req, res) => {
 }
 
 module.exports = {
+    votersRegistrationView,
     createPosition,
     getPositions,
     updatePosition,

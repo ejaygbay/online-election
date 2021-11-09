@@ -7,6 +7,7 @@ const party_routes = require('./routers/party-routes');
 const vote_routes = require('./routers/vote-routes');
 const position_routes = require('./routers/position-routes');
 const contestant_routes = require('./routers/contestant-routes');
+const voters_registration_routes = require('./routers/voter-registration-routes');
 const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
 
@@ -37,13 +38,7 @@ app.use(party_routes);
 app.use(vote_routes);
 app.use(position_routes);
 app.use(contestant_routes);
-
-app.get('/register', (req, res) => {
-    res.render('voter-registration', { page: 'register' });
-})
-
-
-
+app.use(voters_registration_routes);
 
 app.listen(PORT, () => {
     console.log(`App is listening on port ${PORT}`)
