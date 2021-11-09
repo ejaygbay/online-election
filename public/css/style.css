@@ -1,0 +1,28 @@
+.custom-select {
+    display: inline-block;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: .375rem 1.75rem .375rem .75rem;
+    line-height: 1.5;
+    color: #495057;
+    vertical-align: middle;
+    background: #fff;
+    background-size: 8px 10px;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+select {
+    word-wrap: normal;
+}
+select {
+    text-transform: none;
+}
+select {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}

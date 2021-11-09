@@ -1,4 +1,5 @@
 <%- include('./layouts/head') -%>
+<link rel="stylesheet" href="/public/css/style.css" />
     </head>
 
     <body>
@@ -37,6 +38,13 @@
                                 <label class="form-label" for="form3Example2">Last Name</label>
                             </div>
                         </div>
+
+                        <div class="col-12 mb-3">
+                            <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+                            <select class="custom-select" id="elections-dropdown">
+                                <option value="">Select Election</option>
+                            </select>
+                        </div>
                         <!-- </div> -->
 
                         <!-- Upload file -->
@@ -51,6 +59,7 @@
         </main>
 
         <%- include('./layouts/scripts') -%>
+        <script src="../public/js/voter-registration.js"></script>
     </body>
 
     </html>
