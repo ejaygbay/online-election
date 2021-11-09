@@ -1,37 +1,159 @@
-let sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database('./tyaElectionDB.db');
+const { Sequelize, DataTypes } = require('sequelize');
+const sequelize = new Sequelize({
+    dialect: 'sqlite',
+    storage: './electionDB.db'
+});
 
-// const createTables = () => {
 /** ELECTIONS TABLE */
-db.run(`CREATE TABLE IF NOT EXISTS elections(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, election_name VARCHAR(30), date_created DATETIME);
-    `, (err, result) => {
-    !err ? console.log("Elections table created.") : console.log("Elections table not created.")
-})
+const ELECTIONS = sequelize.define('election', {
+    id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        primaryKey: true,
+        allowNull: false
+    },
+    election_name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    status: {
+        type: DataTypes.STRING,
+        defaultValue: 'active'
+    },
+    visible: {
+        type: DataTypes.STRING,
+        defaultValue: 'true'
+    }
+}, {
+    underscored: true
+});
 
 /** PARTIES TABLE */
-db.run(`CREATE TABLE IF NOT EXISTS parties(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, party_name VARCHAR(30), date_created DATETIME);
-    `, (err, result) => {
-    !err ? console.log("Parties table created.") : console.log("Parties table not created.")
-})
+const PARTY = sequelize.define('party', {
+    id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        primaryKey: true,
+        allowNull: false
+    },
+    party_name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    status: {
+        type: DataTypes.STRING,
+        defaultValue: 'active'
+    },
+    visible: {
+        type: DataTypes.STRING,
+        defaultValue: 'true'
+    }
+}, {
+    underscored: true
+});
 
 /** POSITIONS TABLE */
-db.run(`CREATE TABLE IF NOT EXISTS positions(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, position_name VARCHAR(30), election_id INTEGER NOT NULL, date_created DATETIME);
-    `, (err, result) => {
-    !err ? console.log("Positions table created.") : console.log("Positions table not created.")
-})
+const POSITIONS = sequelize.define('position', {
+    id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        primaryKey: true,
+        allowNull: false
+    },
+    position_name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    election_id: {
+        type: Sequelize.UUID,
+        allowNull: false
+    },
+    visible: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
+    }
+}, {
+    underscored: true
+});
 
-/** POSITIONS TABLE */
-db.run(`CREATE TABLE IF NOT EXISTS voters(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, first_name VARCHAR(30), middle_name VARCHAR(30), last_name VARCHAR(30), election_id INTEGER NOT NULL, date_created DATETIME);
-    `, (err, result) => {
-    !err ? console.log("Voters table created.") : console.log("Voters table not created.")
-})
+/** VOTERS TABLE*/
+const VOTERS = sequelize.define('voter', {
+    id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        primaryKey: true,
+        allowNull: false
+    },
+    first_name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    middle_name: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    last_name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    photo: {
+        type: Sequelize.BLOB,
+        allowNull: false
+    },
+    election_id: {
+        type: Sequelize.UUID,
+        allowNull: false
+    },
+    voted: {
+        type: DataTypes.STRING,
+        defaultValue: 'false'
+    },
+    visible: {
+        type: DataTypes.STRING,
+        defaultValue: 'true'
+    }
+}, {
+    underscored: true
+});
 
-/** CONTESTANT TABLE */
-db.run(`CREATE TABLE IF NOT EXISTS contestants(id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, position_id INTEGER NOT NULL, election_id INTEGER NOT NULL, photo_path VARCHAR(255), date_created DATETIME);
-    `, (err, result) => {
-    !err ? console.log("Contestants table created.") : console.log("Contestants table not created.")
-})
+/** CONTESTANTS TABLE */
+const CONTESTANTS = sequelize.define('contestant', {
+    id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        primaryKey: true,
+        allowNull: false
+    },
+    position_id: {
+        type: Sequelize.UUID,
+        allowNull: false
+    },
+    election_id: {
+        type: Sequelize.UUID,
+        allowNull: false
+    },
+    photo: {
+        type: Sequelize.BLOB,
+        allowNull: false
+    },
+    visible: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
+    }
+}, {
+    underscored: true
+});
 
-// }
+// Reset DB
+// sequelize.sync({
+//     // alter: true,
+//     force: true
+// }).then(suc => console.log("SUCCESS=====", suc.models)).catch(err => console.log("ERROR+++++", err))
 
-// module.exports = createTables;
+module.exports = {
+    ELECTIONS,
+    PARTY,
+    POSITIONS,
+    VOTERS,
+    CONTESTANTS
+};
