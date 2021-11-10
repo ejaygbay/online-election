@@ -2,9 +2,7 @@ const express = require('express');
 const router = express.Router();
 const positionControllers = require('../controllers/position-controller');
 
-router.get('/position/create', (req, res) => {
-    res.render('position', { page: 'position' });
-})
+router.get('/position/create', positionControllers.getPositionView);
 
 router.post('/position', positionControllers.createPosition);
 

@@ -1,6 +1,10 @@
 let sqlite3 = require('sqlite3').verbose();
 let db = new sqlite3.Database('./electionDB.db');
 
+const getPositionView = (req, res) => {
+    res.render('position', { page: 'position' });
+}
+
 const createPosition = (req, res) => {
     let position_name = req.query.name.trim();
     let election_id = req.query.id.trim();
@@ -53,6 +57,7 @@ const deletePosition = (req, res) => {
 }
 
 module.exports = {
+    getPositionView,
     createPosition,
     getPositions,
     updatePosition,

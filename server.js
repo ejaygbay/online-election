@@ -8,6 +8,7 @@ const vote_routes = require('./routers/vote-routes');
 const position_routes = require('./routers/position-routes');
 const contestant_routes = require('./routers/contestant-routes');
 const voters_registration_routes = require('./routers/voter-registration-routes');
+const user_routes = require('./routers/vote-routes');
 const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
 
@@ -17,7 +18,7 @@ const oneDay = 1000 * 60 * 60 * 24;
 //session middleware
 app.use(sessions({
     secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
-    saveUninitialized:true,
+    saveUninitialized: true,
     cookie: { maxAge: oneDay },
     resave: false
 }));
@@ -39,6 +40,7 @@ app.use(vote_routes);
 app.use(position_routes);
 app.use(contestant_routes);
 app.use(voters_registration_routes);
+app.use(user_routes);
 
 app.listen(PORT, () => {
     console.log(`App is listening on port ${PORT}`)
