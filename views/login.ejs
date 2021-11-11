@@ -1,0 +1,46 @@
+<%- include('./layouts/head') -%>
+    <link rel="stylesheet" href="/public/css/style.css" />
+    </head>
+
+    <body>
+
+        <!--Main layout-->
+        <main style="margin-top: 100px; padding-left: 0">
+            <h1 class="mb-4" style="text-align: center;">Login</h1>
+
+            <div class="container pt-2">
+                <!--Section: Statistics with subtitles-->
+                <section style="display: grid; justify-items: center;">
+
+                    <!-- <form> -->
+                    <div class="col-md-4 mb-3">
+                        <div class="form-outline">
+                            <input type="email" id="form3Example1" class="form-control form-control-lg" />
+                            <label class="form-label" for="form3Example1">Email</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="form-outline">
+                            <input type="password" id="form3Example2" class="form-control form-control-lg" />
+                            <label class="form-label" for="form3Example2">Password</label>
+                        </div>
+                    </div>
+
+                    <!-- Submit button -->
+                    <div class="col-4 mb-3">
+                        <button type="submit" class="btn btn-primary btn-block btn-lg mb-4">Login</button>
+                        <article>
+                            <p style="text-align: center; margin-top: -10px">Don't have an account, click <a href="/account/create">REGISTER</a></p>
+                        </article>
+                    </div>
+                    <!-- </form> -->
+
+                </section>
+            </div>
+        </main>
+
+        <%- include('./layouts/scripts') -%>
+            <script src="../public/js/voter-registration.js"></script>
+    </body>
+
+    </html>

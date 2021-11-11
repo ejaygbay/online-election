@@ -1,11 +1,11 @@
-const USERS = require('../models/tables').USERS;
+const USERS = require('../models/table').USERS;
 let res_obj = {
     code: 0,
     msg: "successful"
 }
 
 const loginForm = (req, res) => {
-    res.render('auth/login');
+    res.render('./login', { page: 'login' });
 }
 
 const loginDetails = async(req, res) => {
