@@ -84,6 +84,10 @@ const PARTY = sequelize.define('party', {
         type: Sequelize.UUID,
         allowNull: false
     },
+    election_id: {
+        type: Sequelize.UUID,
+        allowNull: false
+    },
     party_name: {
         type: DataTypes.STRING,
         allowNull: false
