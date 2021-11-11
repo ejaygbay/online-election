@@ -224,6 +224,40 @@ const ROLES = sequelize.define('role', {
     underscored: true
 });
 
+let roles = ['superadmin', 'admin', 'voter'];
+let cnt = 0;
+
+const insertRole = (role) => {
+    let msg;
+    ROLES.findOrCreate({
+            where: { role: role },
+            defaults: role
+        })
+        .then(response => {
+            if (!response[1]) {
+                msg = "role aleready exists";
+            } else {
+                msg = "role created";
+            }
+
+            cnt += 1;
+            if (cnt < roles.length) {
+                insertRole(roles[cnt]);
+            }
+        })
+        .catch(error => {
+            msg = error.message;
+        })
+}
+
+insertRole(roles[cnt]);
+
+// User.create({ firstName: "Jane", lastName: "Doe" }).then(jane => {
+//     console.log("Jane's auto-generated ID:", jane.id);
+//   });
+
+
+
 // Reset DB
 // sequelize.sync({
 //     // alter: true,
