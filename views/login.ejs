@@ -17,14 +17,14 @@
                     <!-- <form> -->
                     <div class="col-md-4 mb-3">
                         <div class="form-outline">
-                            <input autocomplete="off" type="email" id="form3Example1" class="form-control form-control-lg" />
-                            <label class="form-label" for="form3Example1">Email</label>
+                            <input autocomplete="off" value="eman@gmail.com" type="email" id="email" class="form-control form-control-lg" />
+                            <label class="form-label" for="email">Email</label>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <div class="form-outline">
-                            <input type="password" id="form3Example2" class="form-control form-control-lg" />
-                            <label class="form-label" for="form3Example2">Password</label>
+                            <input type="password" value="password" id="password" class="form-control form-control-lg" />
+                            <label class="form-label" for="password">Password</label>
                         </div>
                     </div>
 
@@ -34,7 +34,7 @@
                             <a href="#">Forget Password</a>
                         </article>
 
-                        <button type="submit" class="btn btn-primary btn-block btn-lg mb-4">Login</button>
+                        <button id="login-btn" class="btn btn-primary btn-block btn-lg mb-4">Login</button>
                     </div>
                     <!-- </form> -->
 
@@ -43,7 +43,7 @@
         </main>
 
         <%- include('./layouts/scripts') -%>
-            <script src="../public/js/voter-registration.js"></script>
+            <script src="../public/js/auth/login.js"></script>
     </body>
 
     </html>

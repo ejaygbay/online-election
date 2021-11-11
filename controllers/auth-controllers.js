@@ -13,15 +13,15 @@ const loginDetails = async(req, res) => {
         code: 0,
         msg: 'active user'
     }
+    res.send(res_obj);
+    // getUsers(req.body, result => {
+    //     if (result.status !== 'active') {
+    //         res_obj.code = 1;
+    //         res_obj.msg = 'not active user';
+    //     }
 
-    getUsers(req.body, result => {
-        if (result.status !== 'active') {
-            res_obj.code = 1;
-            res_obj.msg = 'not active user';
-        }
-
-        res.send(res_obj)
-    })
+    //     res.send(res_obj)
+    // })
 }
 
 const getUsers = (data, callback) => {

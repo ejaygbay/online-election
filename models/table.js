@@ -228,6 +228,10 @@ const ROLES = sequelize.define('role', {
     underscored: true
 });
 
+
+/**
+ * ENTER DEFAULT VALUES IN DATABASE
+ */
 let roles = ['superadmin', 'admin', 'voter'];
 let cnt = 0;
 
@@ -287,8 +291,6 @@ const insertDefaultUser = () => {
             })
     })
 }
-
-
 
 // Reset DB
 // sequelize.sync({
