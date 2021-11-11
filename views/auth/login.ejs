@@ -1,0 +1,70 @@
+<!-- STYLES -->
+
+<!-- General Style -->
+<%- include('../layouts/styles') -%>
+
+    <!-- Custom style for only this page starts -->
+    <link rel="stylesheet" href="../../public/css/auth.css">
+    <!-- Custom style for only this page ends -->
+    </head>
+
+    <body class="h-110">
+        <div class="authincation h-200" style="margin: 50px 0px 100px 0px;">
+            <div class="container-fluid h-110">
+                <div class="row justify-content-center h-110 align-items-center">
+                    <div class="col-md-6">
+                        <div class="authincation-content">
+                            <div class="row no-gutters">
+                                <div class="col-xl-12">
+                                    <div class="auth-form" style="color: #404040;">
+                                        <h4 class="text-center mb-4">Sign In</h4>
+                                        <div class="form-group">
+                                            <label><strong>Email</strong></label>
+                                            <input id="email" type="email" class="form-control" placeholder="Enter mail">
+                                        </div>
+                                        <div class="form-group">
+                                            <label><strong>Password</strong></label>
+                                            <input id="password" type="password" class="form-control" placeholder="Enter password">
+                                        </div>
+                                        <div class="form-row d-flex justify-content-between mt-4 mb-2">
+                                            <div class="form-group">
+                                                <div class="form-check ml-2">
+                                                    <input class="form-check-input" type="checkbox" id="basic_checkbox_1">
+                                                    <label class="form-check-label" for="basic_checkbox_1">Remember me</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <a href="#">Forgot Password?</a>
+                                            </div>
+                                        </div>
+                                        <div class="text-center">
+                                            <button id="login-btn" type="button" class="btn btn-primary btn-block">Sign In</button>
+                                        </div>
+                                        <article>
+                                            <p style="text-align: center; margin-top: 10px">Don't have an account, click <a href="/account/create">REGISTER</a></p>
+                                        </article>
+                                        <!-- <a href="#">Register</a> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer start -->
+        <%- include('../layouts/footer') -%>
+
+
+            <!-- SCRIPTS -->
+
+            <!-- General Script -->
+            <%- include('../layouts/scripts') -%>
+
+                <!-- Custom script for only this page starts -->
+                <script src="/public/js/auth/login.js"></script>
+                <!-- Custom script for only this page ends -->
+    </body>
+
+    </html>

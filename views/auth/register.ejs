@@ -1,0 +1,81 @@
+<!-- STYLES -->
+
+<!-- General Style -->
+<%- include('../layouts/styles') -%>
+
+    <!-- Custom style for only this page starts -->
+    <link rel="stylesheet" href="../../public/css/auth.css">
+    <!-- Custom style for only this page ends -->
+    </head>
+
+    <body class="h-100">
+        <div class="authincation h-200" style="margin: 50px 0px;">
+            <div class="container-fluid h-200">
+                <div class="row justify-content-center h-200 align-items-center">
+                    <div class="col-md-6">
+                        <div class="authincation-content">
+                            <div class="row no-gutters">
+                                <div class="col-xl-12">
+                                    <div class="auth-form" style="color: #404040;">
+                                        <!-- <form id="registration-form" action="" method="post"> -->
+                                        <h4 class="text-center mb-4">Sign Up</h4>
+                                        <div class="form-group">
+                                            <label><strong>First Name</strong></label>
+                                            <input id="first-name" value="John" name="first-name" type="text" class="form-control" placeholder="First Name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label><strong>Middle Name</strong></label>
+                                            <input id="middle-name" name="middle-name" type="text" class="form-control" placeholder="Middle Name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label><strong>Last Name</strong></label>
+                                            <input id="last-name" value="Doe" name="last-name" type="text" class="form-control" placeholder="Last Name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label><strong>Contact Number</strong></label>
+                                            <input id="contact" value="0775" name="contact" type="text" class="form-control" placeholder="Contact Number">
+                                        </div>
+                                        <div class="form-group">
+                                            <label><strong>Email</strong></label>
+                                            <input id="email" name="email" type="email" class="form-control" value="" placeholder="Enter mail">
+                                        </div>
+                                        <div class="form-group">
+                                            <label><strong>Password</strong></label>
+                                            <input id="password" value="secret" name="password" type="password" class="form-control" value="" placeholder="Enter password">
+                                        </div>
+                                        <div class="form-row d-flex justify-content-between mt-4 mb-2">
+
+                                        </div>
+                                        <div class="text-center">
+                                            <button id="create-account-btn" type="button" class="btn btn-primary btn-block">Create Account</button>
+                                        </div>
+                                        <!-- </form> -->
+                                        <article>
+                                            <p style="text-align: center;">Already have an account, click <a href="/login">LOGIN</a></p>
+                                        </article>
+                                        <!-- <a href="#">Register</a> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer start -->
+        <%- include('../layouts/footer') -%>
+
+
+            <!-- SCRIPTS -->
+
+            <!-- General Script -->
+            <%- include('../layouts/scripts') -%>
+
+                <!-- Custom script for only this page starts -->
+                <script type="text/javascript" src="/public/js/auth/register.js"></script>
+                <script src="/public/js/sweet-alert.js"></script>
+                <!-- Custom script for only this page ends -->
+    </body>
+
+    </html>
