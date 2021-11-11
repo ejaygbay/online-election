@@ -52,6 +52,10 @@ const ELECTIONS = sequelize.define('election', {
         primaryKey: true,
         allowNull: false
     },
+    user_id: {
+        type: Sequelize.UUID,
+        allowNull: false
+    },
     election_name: {
         type: DataTypes.STRING,
         allowNull: false
@@ -74,6 +78,10 @@ const PARTY = sequelize.define('party', {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
+        allowNull: false
+    },
+    user_id: {
+        type: Sequelize.UUID,
         allowNull: false
     },
     party_name: {
@@ -102,6 +110,10 @@ const POSITIONS = sequelize.define('position', {
     },
     position_name: {
         type: DataTypes.STRING,
+        allowNull: false
+    },
+    user_id: {
+        type: Sequelize.UUID,
         allowNull: false
     },
     election_id: {
@@ -162,6 +174,10 @@ const CONTESTANTS = sequelize.define('contestant', {
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
+        allowNull: false
+    },
+    user_id: {
+        type: Sequelize.UUID,
         allowNull: false
     },
     position_id: {
