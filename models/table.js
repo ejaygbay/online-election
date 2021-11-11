@@ -4,6 +4,46 @@ const sequelize = new Sequelize({
     storage: './electionDB.db'
 });
 
+/** USERS TABLE */
+const USERS = sequelize.define('user', {
+    id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        primaryKey: true,
+        allowNull: false
+    },
+    first_name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    middle_name: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    last_name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    email: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    status: {
+        type: DataTypes.STRING,
+        defaultValue: 'active'
+    },
+    visible: {
+        type: DataTypes.STRING,
+        defaultValue: 'true'
+    }
+}, {
+    underscored: true
+});
+
 /** ELECTIONS TABLE */
 const ELECTIONS = sequelize.define('election', {
     id: {
@@ -144,6 +184,26 @@ const CONTESTANTS = sequelize.define('contestant', {
     underscored: true
 });
 
+/** ROLES TABLE */
+const ROLES = sequelize.define('role', {
+    id: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
+        primaryKey: true,
+        allowNull: false
+    },
+    role: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    visible: {
+        type: DataTypes.STRING,
+        defaultValue: 'true'
+    }
+}, {
+    underscored: true
+});
+
 // Reset DB
 // sequelize.sync({
 //     // alter: true,
@@ -151,9 +211,11 @@ const CONTESTANTS = sequelize.define('contestant', {
 // }).then(suc => console.log("SUCCESS=====", suc.models)).catch(err => console.log("ERROR+++++", err))
 
 module.exports = {
+    USERS,
     ELECTIONS,
     PARTY,
     POSITIONS,
     VOTERS,
-    CONTESTANTS
+    CONTESTANTS,
+    ROLES
 };
