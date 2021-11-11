@@ -1,4 +1,6 @@
 <%- include('./layouts/head') -%>
+    <!-- Added this style.css which has the style for bootstrap 4
+    select because Bootstrap 5 select has a bug -->
     <link rel="stylesheet" href="/public/css/style.css" />
     </head>
 
@@ -15,7 +17,7 @@
                     <!-- <form> -->
                     <div class="col-md-4 mb-3">
                         <div class="form-outline">
-                            <input type="email" id="form3Example1" class="form-control form-control-lg" />
+                            <input autocomplete="off" type="email" id="form3Example1" class="form-control form-control-lg" />
                             <label class="form-label" for="form3Example1">Email</label>
                         </div>
                     </div>

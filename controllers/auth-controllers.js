@@ -44,6 +44,10 @@ const getUsers = (data, callback) => {
         })
 }
 
+const signUpForm = (req, res) => {
+    res.render('./register', { page: 'register' });
+}
+
 const saveSignUpForm = async(req, res) => {
     await USERS.findOrCreate({
             where: { email: req.body.email },
