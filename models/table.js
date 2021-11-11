@@ -32,6 +32,10 @@ const USERS = sequelize.define('user', {
         type: DataTypes.STRING,
         allowNull: false
     },
+    role_id: {
+        type: Sequelize.UUID,
+        allowNull: false
+    },
     status: {
         type: DataTypes.STRING,
         defaultValue: 'active'
@@ -227,7 +231,7 @@ const ROLES = sequelize.define('role', {
 let roles = ['superadmin', 'admin', 'voter'];
 let cnt = 0;
 
-const insertRole = (role) => {
+const insertDefaultRoles = (role) => {
     let msg;
     ROLES.findOrCreate({
             where: { role: role },
@@ -242,7 +246,9 @@ const insertRole = (role) => {
 
             cnt += 1;
             if (cnt < roles.length) {
-                insertRole(roles[cnt]);
+                insertDefaultRoles(roles[cnt]);
+            } else {
+                insertDefaultUser();
             }
         })
         .catch(error => {
@@ -250,19 +256,49 @@ const insertRole = (role) => {
         })
 }
 
-insertRole(roles[cnt]);
+const getRoleID = (role, callback) => {
+    ROLES.findOne({
+            where: { role: role },
+            attributes: ['id', 'role']
+        })
+        .then(project => {
+            return callback(project.dataValues);
+        })
+}
 
-// User.create({ firstName: "Jane", lastName: "Doe" }).then(jane => {
-//     console.log("Jane's auto-generated ID:", jane.id);
-//   });
+const insertDefaultUser = () => {
+    getRoleID('superadmin', data => {
+        let role_id = data.id;
+        USERS
+            .findOrCreate({
+                where: {
+                    email: "emmanuel@gmail.com"
+                },
+                defaults: {
+                    first_name: "Emmanuel",
+                    last_name: "Jaygbay",
+                    email: "emmanuel@gmail.com",
+                    password: "secret",
+                    role_id: role_id
+                }
+            })
+            .then(result => {
+                console.log("USER ID>>>>>>>>>>>>>>>>", result);
+            })
+    })
+}
 
 
 
 // Reset DB
 // sequelize.sync({
-//     // alter: true,
-//     force: true
-// }).then(suc => console.log("SUCCESS=====", suc.models)).catch(err => console.log("ERROR+++++", err))
+//         // alter: true,
+//         force: true
+//     }).then(suc => {
+//         console.log("SUCCESS=====", suc.models);
+//         insertDefaultRoles(roles[cnt]);
+//     })
+//     .catch(err => console.log("ERROR+++++", err))
 
 module.exports = {
     USERS,
