@@ -13,6 +13,8 @@ const loginDetails = async(req, res) => {
         code: 0,
         msg: 'active user'
     }
+    req.session.userID = "f759fa54-6640-416a-a01c-9e1ae1b1fd21";
+    req.session.role = "superadmin";
     res.send(res_obj);
     // getUsers(req.body, result => {
     //     if (result.status !== 'active') {
