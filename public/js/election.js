@@ -13,11 +13,11 @@ const displayElections = () => {
                     <th scope="row">${index + 1}.</th>
                     <td id=name-${ele.id}>${ele.election_name}</td>
                     <td>
-                        <button id=${ele.id}-edit-btn class="action-btn edit btn outline btn-outline-primary btn-floating">
-                            <i id=${ele.id}-edit class="edit fas fa-pencil-alt"></i>
+                        <button id=${ele.id}_edit-btn class="action-btn edit btn outline btn-outline-primary btn-floating">
+                            <i id=${ele.id}_edit class="edit fas fa-pencil-alt"></i>
                         </button>
-                        <button id=${ele.id}-del-btn type="button" class="action-btn delete btn btn-outline-danger btn-floating">
-                            <i id=${ele.id}-del class="delete fas fa-trash-alt"></i>
+                        <button id=${ele.id}_del-btn type="button" class="action-btn delete btn btn-outline-danger btn-floating">
+                            <i id=${ele.id}_del class="delete fas fa-trash-alt"></i>
                         </button>
                     </td>
                 </tr>`;
@@ -27,7 +27,7 @@ const displayElections = () => {
 
             document.querySelectorAll(".action-btn").forEach(ele => {
                 ele.addEventListener("click", (e) => {
-                    let id = e.target.id.split("-")[0];
+                    let id = e.target.id.split("_")[0];
                     let classes = e.target.classList;
                     let election_name = document.getElementById(`name-${id}`).innerHTML;
 
@@ -46,7 +46,7 @@ const displayElections = () => {
         })
 }
 
-// displayElections();
+displayElections();
 
 // Create Election Button
 document.querySelector('#create-election-btn').addEventListener('click', (e) => {

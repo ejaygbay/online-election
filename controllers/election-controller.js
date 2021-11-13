@@ -48,13 +48,20 @@ const getElections = async(req, res) => {
 }
 
 const updateElection = (req, res) => {
-    db.run(`UPDATE elections SET election_name = ? WHERE id = ?;`, req.query.name, req.query.id, (err) => {
-        if (!err) {
-            res.send({ status: 0, msg: 'Election updated' });
-        } else {
-            res.send({ status: 1, msg: 'Election not updated' });
+    let user_id = req.query.id;
+    let election_name = req.query.name;
+
+    ELECTIONS.update({
+        election_name: election_name
+    }, {
+        where: {
+            id: user_id
         }
-    });
+    }).then(() => {
+        res.send({ status: 0, msg: 'Election updated' });
+    }).catch(error => {
+        res.send({ status: 1, msg: 'Election not updated' });
+    })
 }
 
 const deleteElection = (req, res) => {
