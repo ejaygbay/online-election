@@ -4,7 +4,6 @@ const createElection = (req, res) => {
     let election_name = req.query.name.trim();
     req.session.userID = "f759fa54-6640-416a-a01c-9e1ae1b1fd21";
     req.session.role = "superadmin";
-    // console.log(req.session.userID);
     let userID = req.session.userID;
     console.log("ID**********************", userID);
 
@@ -35,38 +34,16 @@ const createElection = (req, res) => {
     }
 }
 
-const getElections = (req, res) => {
+const getElections = async(req, res) => {
+    console.log("Get Elections ====================");
     if (req.query.id) {
-        let election_id = req.query.id;
-        ELECTIONS
-            .findOne({
-                where: { id: election_id, status: 'active' }
-            })
-            .then(result => {
-                console.log(result);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-            // db.all(`SELECT * FROM elections WHERE id = ?`, election_id, (err, data) => {
-            //     !err ? res.send(data) : res.send(err);
-            // });
+        queryElections(req.query.id, data => {
+            res.send(data);
+        })
     } else {
-        ELECTIONS
-            .findAll({
-                where: { status: 'active' },
-                attributes: ['id', 'election_name']
-            })
-            .then(result => {
-                console.log(result);
-            })
-            .catch(err => {
-                console.log(err);
-            })
-
-        // db.all("SELECT * FROM elections;", (err, data) => {
-        //     !err ? res.send(data) : res.send(err);
-        // });
+        queryElections(null, data => {
+            res.send(data);
+        })
     }
 }
 
@@ -90,6 +67,39 @@ const deleteElection = (req, res) => {
         }
     });
 }
+
+const queryElections = async(election_id, callback) => {
+    if (election_id) {
+        ELECTIONS
+            .findOne({
+                where: { id: election_id, status: 'active' }
+            })
+            .then(result => {
+                console.log(result);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    } else {
+        ELECTIONS
+            .findAll({
+                where: { status: 'active' },
+                attributes: ['id', 'election_name']
+            })
+            .then(result => {
+                let results = [];
+                result.forEach(ele => {
+                    results.push(ele.dataValues);
+                })
+                return callback(results);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+}
+
+// queryElections();
 
 module.exports = {
     createElection,

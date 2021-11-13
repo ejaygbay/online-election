@@ -41,6 +41,9 @@ const displayElections = () => {
                 })
             })
         })
+        .catch(err => {
+            console.log(err.message);
+        })
 }
 
 // displayElections();
