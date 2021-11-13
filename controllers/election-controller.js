@@ -48,14 +48,14 @@ const getElections = async(req, res) => {
 }
 
 const updateElection = (req, res) => {
-    let user_id = req.query.id;
+    let election_id = req.query.id;
     let election_name = req.query.name;
 
     ELECTIONS.update({
         election_name: election_name
     }, {
         where: {
-            id: user_id
+            id: election_id
         }
     }).then(() => {
         res.send({ status: 0, msg: 'Election updated' });
@@ -66,13 +66,16 @@ const updateElection = (req, res) => {
 
 const deleteElection = (req, res) => {
     let election_id = req.query.id;
-    db.run(`DELETE FROM elections WHERE id = ?;`, election_id, (err, err2) => {
-        if (!err) {
-            res.send({ status: 0, msg: 'Election deleted' });
-        } else {
-            res.send({ status: 1, msg: 'Election not deleted' });
+
+    ELECTIONS.destroy({
+        where: {
+            id: election_id
         }
-    });
+    }).then(() => {
+        res.send({ status: 0, msg: 'Election deleted' });
+    }).catch(error => {
+        res.send({ status: 1, msg: 'Election not deleted' });
+    })
 }
 
 const queryElections = async(election_id, callback) => {
