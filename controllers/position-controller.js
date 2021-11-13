@@ -78,13 +78,15 @@ const updatePosition = (req, res) => {
 
 const deletePosition = (req, res) => {
     let position_id = req.query.id;
-    db.run(`DELETE FROM positions WHERE id = ?;`, position_id, (err, err2) => {
-        if (!err) {
-            res.send({ status: 0, msg: 'position deleted' });
-        } else {
-            res.send({ status: 1, msg: 'position not deleted' });
+    POSITIONS.destroy({
+        where: {
+            id: position_id
         }
-    });
+    }).then(() => {
+        res.send({ status: 0, msg: 'Position deleted' });
+    }).catch(error => {
+        res.send({ status: 1, msg: 'Position not deleted' });
+    })
 }
 
 
