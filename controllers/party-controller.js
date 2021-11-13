@@ -1,55 +1,117 @@
-let sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database('./electionDB.db');
+const PARTY = require('../models/table').PARTY;
 
 const createParty = (req, res) => {
     let party_name = req.query.name.trim();
+    req.session.userID = "f759fa54-6640-416a-a01c-9e1ae1b1fd21";
+    req.session.electionID = "8c25132a-5e69-4572-8944-565d5c0eabc6";
+    req.session.role = "superadmin";
+    let userID = req.session.userID;
+    let electionID = req.session.electionID;
 
     if (party_name.length > 0) {
-        db.run(`INSERT INTO parties("party_name", "date_created") VALUES(?, datetime('now'));`, party_name, (err, result) => {
-            if (!err) {
-                res.send({ status: 0, msg: 'Party created' });
-            } else {
+        PARTY
+            .findOrCreate({
+                where: {
+                    party_name: party_name
+                },
+                defaults: {
+                    user_id: userID,
+                    election_id: electionID,
+                    party_name: party_name
+                }
+            })
+            .then(result => {
+                if (result[1] === true) {
+                    res.send({ status: 0, msg: 'Party created' });
+                } else {
+                    res.send({ status: 1, msg: 'Party already exists' });
+                }
+            })
+            .catch(err => {
+                console.log("ERRORRRR>>>>>>>>>>>>>", err);
                 res.send({ status: 1, msg: 'Party not created' });
-            }
-        })
+            })
     } else {
         res.send({ status: 1, msg: 'Invalid party name' })
     }
 }
 
-const getParties = (req, res) => {
+const getParties = async(req, res) => {
+    console.log("Get Parties ====================");
     if (req.query.id) {
-        let party_id = req.query.id;
-        db.all(`SELECT * FROM parties WHERE id = ?`, party_id, (err, data) => {
-            !err ? res.send(data) : res.send(err);
-        });
+        queryParties(req.query.id, data => {
+            res.send(data);
+        })
     } else {
-        db.all("SELECT * FROM parties;", (err, data) => {
-            !err ? res.send(data) : res.send(err);
-        });
+        queryParties(null, data => {
+            res.send(data);
+        })
     }
 }
 
 const updateParty = (req, res) => {
-    db.run(`UPDATE parties SET party_name = ? WHERE id = ?;`, req.query.name, req.query.id, (err) => {
-        if (!err) {
-            res.send({ status: 0, msg: 'Party updated' });
-        } else {
-            res.send({ status: 1, msg: 'Party not updated' });
+    let party_id = req.query.id;
+    let party_name = req.query.name;
+
+    PARTY.update({
+        party_name: party_name
+    }, {
+        where: {
+            id: party_id
         }
-    });
+    }).then(() => {
+        res.send({ status: 0, msg: 'Party updated' });
+    }).catch(error => {
+        res.send({ status: 1, msg: 'Party not updated' });
+    })
 }
 
 const deleteParty = (req, res) => {
     let party_id = req.query.id;
-    db.run(`DELETE FROM parties WHERE id = ?;`, party_id, (err, err2) => {
-        if (!err) {
-            res.send({ status: 0, msg: 'Party deleted' });
-        } else {
-            res.send({ status: 1, msg: 'Party not deleted' });
+
+    PARTY.destroy({
+        where: {
+            id: party_id
         }
-    });
+    }).then(() => {
+        res.send({ status: 0, msg: 'Party deleted' });
+    }).catch(error => {
+        res.send({ status: 1, msg: 'Party not deleted' });
+    })
 }
+
+const queryParties = async(party_id, callback) => {
+    if (party_id) {
+        PARTY
+            .findOne({
+                where: { id: party_id, status: 'active' }
+            })
+            .then(result => {
+                console.log(result);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    } else {
+        PARTY
+            .findAll({
+                where: { status: 'active' },
+                attributes: ['id', 'party_name']
+            })
+            .then(result => {
+                let results = [];
+                result.forEach(ele => {
+                    results.push(ele.dataValues);
+                })
+                return callback(results);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+}
+
+// queryParties();
 
 module.exports = {
     createParty,

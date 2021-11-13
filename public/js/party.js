@@ -13,11 +13,11 @@ const displayParties = () => {
                     <th scope="row">${index + 1}.</th>
                     <td id=name-${ele.id}>${ele.party_name}</td>
                     <td>
-                        <button id=${ele.id}-edit-btn class="action-btn edit btn outline btn-outline-primary btn-floating">
-                            <i id=${ele.id}-edit class="edit fas fa-pencil-alt"></i>
+                        <button id=${ele.id}_edit-btn class="action-btn edit btn outline btn-outline-primary btn-floating">
+                            <i id=${ele.id}_edit class="edit fas fa-pencil-alt"></i>
                         </button>
-                        <button id=${ele.id}-del-btn type="button" class="action-btn delete btn btn-outline-danger btn-floating">
-                            <i id=${ele.id}-del class="delete fas fa-trash-alt"></i>
+                        <button id=${ele.id}_del-btn type="button" class="action-btn delete btn btn-outline-danger btn-floating">
+                            <i id=${ele.id}_del class="delete fas fa-trash-alt"></i>
                         </button>
                     </td>
                 </tr>`;
@@ -27,7 +27,7 @@ const displayParties = () => {
 
             document.querySelectorAll(".action-btn").forEach(ele => {
                 ele.addEventListener("click", (e) => {
-                    let id = e.target.id.split("-")[0];
+                    let id = e.target.id.split("_")[0];
                     let classes = e.target.classList;
                     let party_name = document.getElementById(`name-${id}`).innerHTML;
 
@@ -41,7 +41,11 @@ const displayParties = () => {
                 })
             })
         })
+        .catch(err => {
+            console.log(err.message);
+        })
 }
+
 displayParties();
 
 // Create Party Button
@@ -52,13 +56,24 @@ document.querySelector('#create-party-btn').addEventListener('click', (e) => {
         })
         .then(response => response.json())
         .then(data => {
-            Swal.fire({
-                icon: 'success',
-                title: `Party name "${party_name}" was created`,
-                showConfirmButton: false,
-                timer: 2500
-            })
+            if (data.status === 0) {
+                Swal.fire({
+                    icon: 'success',
+                    title: `Party name "${party_name}" was created`,
+                    showConfirmButton: false,
+                    timer: 2500
+                })
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: `Party name "${party_name}" already exist`,
+                    showConfirmButton: false,
+                    timer: 2500
+                })
+            }
+
             document.querySelector("#new-party-name").value = "";
+            document.querySelector("#new-party-name").focus();
             displayParties();
         })
         .catch(err => {
@@ -69,6 +84,9 @@ document.querySelector('#create-party-btn').addEventListener('click', (e) => {
                 timer: 2500
             })
         })
+
+    // document.querySelector("#new-party-name").classList.remove("form-control");
+    // document.querySelector("#new-party-name").classList.add("form-control");
 })
 
 const displayPartyNameForEditing = (id, party_name) => {
