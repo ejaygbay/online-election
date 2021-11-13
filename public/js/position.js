@@ -10,11 +10,11 @@ const displayPositions = (data) => {
                     <th scope="row">${index + 1}.</th>
                     <td id=name-${ele.id}>${ele.position_name}</td>
                     <td>
-                        <button id=${ele.id}-edit-btn class="action-btn edit btn outline btn-outline-primary btn-floating">
-                            <i id=${ele.id}-edit class="edit fas fa-pencil-alt"></i>
+                        <button id=${ele.id}_edit-btn class="action-btn edit btn outline btn-outline-primary btn-floating">
+                            <i id=${ele.id}_edit class="edit fas fa-pencil-alt"></i>
                         </button>
-                        <button id=${ele.id}-del-btn type="button" class="action-btn delete btn btn-outline-danger btn-floating">
-                            <i id=${ele.id}-del class="delete fas fa-trash-alt"></i>
+                        <button id=${ele.id}_del-btn type="button" class="action-btn delete btn btn-outline-danger btn-floating">
+                            <i id=${ele.id}_del class="delete fas fa-trash-alt"></i>
                         </button>
                     </td>
                 </tr>`;
@@ -24,7 +24,7 @@ const displayPositions = (data) => {
 
     document.querySelectorAll(".action-btn").forEach(ele => {
         ele.addEventListener("click", (e) => {
-            let id = e.target.id.split("-")[0];
+            let id = e.target.id.split("_")[0];
             let classes = e.target.classList;
             let position_name = document.getElementById(`name-${id}`).innerHTML;
 
@@ -63,6 +63,10 @@ const getElections = () => {
         })
 }
 
+/**
+ * When the select element for the displaying positions for
+ * a specific election is changed, it is handled by this
+ */
 document.getElementById('elections-dropdown2').addEventListener("change", () => {
     let election_id = document.getElementById('elections-dropdown2').value;
 
@@ -103,7 +107,6 @@ document.querySelector("#create-position").addEventListener("click", (e) => {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
             if (data.status === 0) {
                 Swal.fire({
                     icon: 'success',
@@ -126,7 +129,6 @@ document.querySelector("#create-position").addEventListener("click", (e) => {
             // displayPositions();
         })
         .catch(err => {
-            console.log(err.message)
             Swal.fire({
                 icon: 'error',
                 title: `Position name "${position_name}" was not created`,

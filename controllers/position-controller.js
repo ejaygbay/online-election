@@ -60,13 +60,20 @@ const getPositions = (req, res) => {
 }
 
 const updatePosition = (req, res) => {
-    db.run(`UPDATE positions SET position_name = ? WHERE id = ?;`, req.query.name, req.query.id, (err) => {
-        if (!err) {
-            res.send({ status: 0, msg: 'position updated' });
-        } else {
-            res.send({ status: 1, msg: 'position not updated' });
+    let position_id = req.query.id;
+    let position_name = req.query.name;
+
+    POSITIONS.update({
+        position_name: position_name
+    }, {
+        where: {
+            id: position_id
         }
-    });
+    }).then(() => {
+        res.send({ status: 0, msg: 'Position updated' });
+    }).catch(error => {
+        res.send({ status: 1, msg: 'Position not updated' });
+    })
 }
 
 const deletePosition = (req, res) => {
@@ -144,17 +151,25 @@ const deleteParty = (req, res) => {
     })
 }
 
-const queryPositions = async(position_id, callback) => {
-    if (position_id) {
+const queryPositions = async(election_id, callback) => {
+    if (election_id) {
         POSITIONS
-            .findOne({
-                where: { id: position_id, status: 'active' }
+            .findAll({
+                where: {
+                    election_id: election_id
+                },
+                attributes: ['id', 'position_name']
             })
             .then(result => {
-                console.log(result);
+                let results = [];
+                result.forEach(ele => {
+                    results.push(ele.dataValues);
+                })
+
+                return callback(results);
             })
             .catch(err => {
-                console.log(err);
+                console.log("_---------------", err);
             })
     } else {
         POSITIONS
