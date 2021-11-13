@@ -9,19 +9,6 @@ const createElection = (req, res) => {
     console.log("ID**********************", userID);
 
     if (election_name.length > 0) {
-        // .findOrCreate({
-        //     where: {
-        //         email: "emmanuel@gmail.com"
-        //     },
-        //     defaults: {
-        //         first_name: "Emmanuel",
-        //         last_name: "Jaygbay",
-        //         email: "emmanuel@gmail.com",
-        //         password: "secret",
-        //         role_id: role_id
-        //     }
-        // })
-
         ELECTIONS
             .findOrCreate({
                 where: {
@@ -33,13 +20,11 @@ const createElection = (req, res) => {
                 }
             })
             .then(result => {
-                console.log("RESULTTTTTTTT===========", typeof result[1]);
                 if (result[1] === true) {
                     res.send({ status: 0, msg: 'Election created' });
                 } else {
                     res.send({ status: 1, msg: 'Election already exists' });
                 }
-
             })
             .catch(err => {
                 console.log("ERRORRRR>>>>>>>>>>>>>", err);

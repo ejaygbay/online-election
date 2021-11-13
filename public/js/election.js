@@ -1,15 +1,15 @@
 const URL = window.location.origin;
 
 const displayElections = () => {
-        fetch(`${URL}/election`)
-            .then(response => response.json())
-            .then(data => {
-                let table = document.querySelector("tbody");
-                let election_data = data.reverse();
+    fetch(`${URL}/election`)
+        .then(response => response.json())
+        .then(data => {
+            let table = document.querySelector("tbody");
+            let election_data = data.reverse();
 
-                table.innerHTML = "";
-                election_data.forEach((ele, index) => {
-                    let html = `<tr id=${ele.id}>
+            table.innerHTML = "";
+            election_data.forEach((ele, index) => {
+                let html = `<tr id=${ele.id}>
                     <th scope="row">${index + 1}.</th>
                     <td id=name-${ele.id}>${ele.election_name}</td>
                     <td>
@@ -22,27 +22,28 @@ const displayElections = () => {
                     </td>
                 </tr>`;
 
-                    table.insertAdjacentHTML('beforeend', html);
-                });
+                table.insertAdjacentHTML('beforeend', html);
+            });
 
-                document.querySelectorAll(".action-btn").forEach(ele => {
-                    ele.addEventListener("click", (e) => {
-                        let id = e.target.id.split("-")[0];
-                        let classes = e.target.classList;
-                        let election_name = document.getElementById(`name-${id}`).innerHTML;
+            document.querySelectorAll(".action-btn").forEach(ele => {
+                ele.addEventListener("click", (e) => {
+                    let id = e.target.id.split("-")[0];
+                    let classes = e.target.classList;
+                    let election_name = document.getElementById(`name-${id}`).innerHTML;
 
-                        classes.forEach(ele => {
-                            if (ele === 'edit') {
-                                displayElectionNameForEditing(id, election_name);
-                            } else if (ele === 'delete') {
-                                deleteElection(id, election_name);
-                            }
-                        })
+                    classes.forEach(ele => {
+                        if (ele === 'edit') {
+                            displayElectionNameForEditing(id, election_name);
+                        } else if (ele === 'delete') {
+                            deleteElection(id, election_name);
+                        }
                     })
                 })
             })
-    }
-    // displayElections();
+        })
+}
+
+// displayElections();
 
 // Create Election Button
 document.querySelector('#create-election-btn').addEventListener('click', (e) => {
@@ -52,13 +53,24 @@ document.querySelector('#create-election-btn').addEventListener('click', (e) => 
         })
         .then(response => response.json())
         .then(data => {
-            Swal.fire({
-                icon: 'success',
-                title: `Election name "${election_name}" was created`,
-                showConfirmButton: false,
-                timer: 2500
-            })
+            if (data.status === 0) {
+                Swal.fire({
+                    icon: 'success',
+                    title: `Election name "${election_name}" was created`,
+                    showConfirmButton: false,
+                    timer: 2500
+                })
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: `Election name "${election_name}" already exist`,
+                    showConfirmButton: false,
+                    timer: 2500
+                })
+            }
+
             document.querySelector("#new-election-name").value = "";
+            document.querySelector("#new-election-name").focus();
             displayElections();
         })
         .catch(err => {
@@ -69,6 +81,9 @@ document.querySelector('#create-election-btn').addEventListener('click', (e) => 
                 timer: 2500
             })
         })
+
+    // document.querySelector("#new-election-name").classList.remove("form-control");
+    // document.querySelector("#new-election-name").classList.add("form-control");
 })
 
 const displayElectionNameForEditing = (id, election_name) => {
