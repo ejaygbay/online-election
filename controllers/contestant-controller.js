@@ -18,33 +18,33 @@ const createContestant = (req, res) => {
         election_id = req.query.id.trim();
     }
 
-    if (contestant_name.length > 0) {
-        CONTESTANTS
-            .findOrCreate({
-                where: {
-                    contestant_name: contestant_name,
-                    election_id: election_id
-                },
-                defaults: {
-                    user_id: user_id,
-                    election_id: election_id,
-                    contestant_name: contestant_name
-                }
-            })
-            .then(result => {
-                if (result[1] === true) {
-                    res.send({ status: 0, msg: 'Contestant created' });
-                } else {
-                    res.send({ status: 1, msg: 'Contestant already exists' });
-                }
-            })
-            .catch(err => {
-                console.log("ERRORRRR>>>>>>>>>>>>>", err);
-                res.send({ status: 1, msg: 'Contestant not created' });
-            })
-    } else {
-        res.send({ status: 1, msg: 'Invalid contestant name' })
-    }
+    // if (contestant_name.length > 0) {
+    //     CONTESTANTS
+    //         .findOrCreate({
+    //             where: {
+    //                 contestant_name: contestant_name,
+    //                 election_id: election_id
+    //             },
+    //             defaults: {
+    //                 user_id: user_id,
+    //                 election_id: election_id,
+    //                 contestant_name: contestant_name
+    //             }
+    //         })
+    //         .then(result => {
+    //             if (result[1] === true) {
+    //                 res.send({ status: 0, msg: 'Contestant created' });
+    //             } else {
+    //                 res.send({ status: 1, msg: 'Contestant already exists' });
+    //             }
+    //         })
+    //         .catch(err => {
+    //             console.log("ERRORRRR>>>>>>>>>>>>>", err);
+    //             res.send({ status: 1, msg: 'Contestant not created' });
+    //         })
+    // } else {
+    //     res.send({ status: 1, msg: 'Invalid contestant name' })
+    // }
 }
 
 const getContestants = (req, res) => {
