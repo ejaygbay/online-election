@@ -12,11 +12,12 @@ const createContestant = (req, res) => {
     let role = req.session.role;
     let user_id = req.session.userID;
     let election_id = req.session.electionID;
-    let contestant_name = req.query.name.trim();
+    // let contestant_name = req.query.name.trim();
+    console.log(req.body)
 
-    if (role === "superadmin") {
-        election_id = req.query.id.trim();
-    }
+    // if (role === "superadmin") {
+    //     election_id = req.query.id.trim();
+    // }
 
     // if (contestant_name.length > 0) {
     //     CONTESTANTS
