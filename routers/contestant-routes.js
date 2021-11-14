@@ -1,8 +1,15 @@
 const express = require('express');
 const router = express.Router();
+const contestantControllers = require('../controllers/contestant-controller');
 
-router.get('/contestant', (req, res) => {
-    res.render('contestant', { page: 'contestant' });
-})
+router.get('/contestant', contestantControllers.getContestantView);
+
+router.post('/contestant', contestantControllers.createContestant);
+
+router.get('/contestant', contestantControllers.getContestants);
+
+router.patch('/contestant', contestantControllers.updateContestant);
+
+router.delete('/contestant', contestantControllers.deleteContestant);
 
 module.exports = router;
