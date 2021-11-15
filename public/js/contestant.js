@@ -1,6 +1,6 @@
 const URL = window.location.origin;
 
-const displaycontestants = (data) => {
+const displayContestants = (data) => {
     // let table = document.querySelector("tbody");
     // let contestant_data = data.reverse();
 
@@ -44,21 +44,15 @@ const getElections = () => {
         .then(response => response.json())
         .then(data => {
             let dropdown = document.querySelector("#elections-dropdown");
-            let dropdown2 = document.querySelector("#elections-dropdown2");
             let html = `<option value="" disabled selected>Select Election</option>`;
 
             data = data.reverse();
-
             dropdown.innerHTML = "";
-            dropdown2.innerHTML = "";
-
             dropdown.insertAdjacentHTML('beforeend', html);
-            dropdown2.insertAdjacentHTML('beforeend', html);
 
             data.forEach(ele => {
                 let html = `<option value="${ele.id}">${ele.election_name}</option>`;
                 dropdown.insertAdjacentHTML('beforeend', html);
-                dropdown2.insertAdjacentHTML('beforeend', html);
             });
         })
 }
@@ -78,7 +72,7 @@ const getElections = () => {
 //         })
 // })
 
-const displaycontestantNameForEditing = (id, contestant_name) => {
+const displayContestantNameForEditing = (id, contestant_name) => {
     Swal.fire({
             title: 'Edit contestant',
             input: 'text',
@@ -119,7 +113,7 @@ document.querySelector("#add-contestant-btn").addEventListener("click", (e) => {
     let last_name = document.querySelector('#last-name').value;
     let election_selected = document.getElementById('elections-dropdown').value;
     let contestant_selected = document.getElementById('positions-dropdown').value;
-    let contestant_img = document.getElementById('contestant-img').src;
+    let contestant_img = document.getElementById('img-preview').src;
 
     fetch(`${URL}/contestant`, {
             method: "POST",
@@ -168,7 +162,7 @@ document.querySelector("#add-contestant-btn").addEventListener("click", (e) => {
     // })
 })
 
-// getElections();
+getElections();
 
 
 const editcontestant = (id, old_name, new_name) => {
