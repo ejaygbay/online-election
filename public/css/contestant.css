@@ -7,10 +7,8 @@
 }
 
 #img-preview {
-    background-image: url("../images/user.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-    opacity: 0.5;
 }
 
 #preview-text {

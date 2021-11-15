@@ -97,6 +97,19 @@ const displaycontestantNameForEditing = (id, contestant_name) => {
         })
 }
 
+let img_input_ele = document.getElementById('contestant-img');
+img_input_ele.addEventListener('change', (e) => {
+    if (e.target.files.length > 0) {
+        let img_path = window.URL.createObjectURL(e.target.files[0]);
+        document.getElementById('img-preview').style = `background-image: url("${img_path}");`;
+        document.getElementById('preview-text').style.visibility = 'hidden';
+    } else {
+        document.getElementById('img-preview').style = `background-image: url("");`;
+        document.getElementById('preview-text').style.visibility = 'visible';
+    }
+})
+
+
 
 document.querySelector("#add-contestant-btn").addEventListener("click", (e) => {
     let first_name = document.querySelector('#first-name').value;
