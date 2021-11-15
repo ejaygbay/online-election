@@ -156,37 +156,37 @@ document.querySelector("#add-contestant-btn").addEventListener("click", (e) => {
                 contestant_img: contestant_img
             })
         })
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         if (data.status === 0) {
-        //             Swal.fire({
-        //                 icon: 'success',
-        //                 title: `contestant name "${contestant_name}" was created`,
-        //                 showConfirmButton: false,
-        //                 timer: 2500
-        //             })
-        //             document.querySelector("#contestant-name").value = "";
-        //         } else {
-        //             Swal.fire({
-        //                 icon: 'error',
-        //                 title: `contestant name "${contestant_name}" already exist`,
-        //                 showConfirmButton: false,
-        //                 timer: 2500
-        //             })
-        //         }
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 0) {
+                Swal.fire({
+                    icon: 'success',
+                    title: `Contestant name <b>${first_name} ${middle_name} ${last_name}</b> was created`,
+                    showConfirmButton: false,
+                    timer: 2500
+                })
+                document.querySelector("#contestant-name").value = "";
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: `Contestant name <b>${first_name} ${middle_name} ${last_name}</b> already exist`,
+                    showConfirmButton: false,
+                    timer: 2500
+                })
+            }
 
 
-    //         document.querySelector("#contestant-name").focus();
-    //         // displaycontestants();
-    // })
-    // .catch(err => {
-    //     Swal.fire({
-    //         icon: 'error',
-    //         title: `contestant name "${contestant_name}" was not created`,
-    //         showConfirmButton: false,
-    //         timer: 2500
-    //     })
-    // })
+            document.querySelector("#contestant-name").focus();
+            // displaycontestants();
+        })
+        .catch(err => {
+            Swal.fire({
+                icon: 'error',
+                title: `contestant name "${contestant_name}" was not created`,
+                showConfirmButton: false,
+                timer: 2500
+            })
+        })
 })
 
 getElections();
