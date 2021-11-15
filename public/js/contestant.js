@@ -104,7 +104,7 @@ document.querySelector("#add-contestant-btn").addEventListener("click", (e) => {
     let last_name = document.querySelector('#last-name').value;
     let election_selected = document.getElementById('elections-dropdown').value;
     let contestant_selected = document.getElementById('positions-dropdown').value;
-    let contestant_img = document.getElementById('contestant-img').value;
+    let contestant_img = document.getElementById('contestant-img').src;
 
     fetch(`${URL}/contestant`, {
             method: "POST",

@@ -1,0 +1,19 @@
+#preview-section {
+    height: 160px;
+    width: 160px;
+    border: solid 2px gray;
+    display: grid;
+    position: relative;
+}
+
+#img-preview {
+    background-image: url("../images/user.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.5;
+}
+
+#preview-text {
+    margin: auto;
+    position: absolute;
+}
