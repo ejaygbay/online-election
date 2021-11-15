@@ -17,6 +17,7 @@ const createContestant = (req, res) => {
     let middle_name = req.body.middle_name;
     let last_name = req.body.last_name;
     let position_id = req.body.position_id;
+    let party_id = req.body.party_id;
     let contestant_img = req.body.contestant_img;
 
     if (middle_name.length < 1) {
@@ -30,29 +31,36 @@ const createContestant = (req, res) => {
     console.log(validateContestant(req.body));
 
     if (validateContestant(req.body)) {
-        // CONTESTANTS
-        //     .findOrCreate({
-        //         where: {
-        //             contestant_name: contestant_name,
-        //             election_id: election_id
-        //         },
-        //         defaults: {
-        //             user_id: user_id,
-        //             election_id: election_id,
-        //             contestant_name: contestant_name
-        //         }
-        //     })
-        //         .then(result => {
-        //             if (result[1] === true) {
-        //                 res.send({ status: 0, msg: 'Contestant created' });
-        //             } else {
-        //                 res.send({ status: 1, msg: 'Contestant already exists' });
-        //             }
-        //         })
-        //         .catch(err => {
-        //             console.log("ERRORRRR>>>>>>>>>>>>>", err);
-        //             res.send({ status: 1, msg: 'Contestant not created' });
-        //         })
+        CONTESTANTS
+            .findOrCreate({
+                where: {
+                    first_name: first_name,
+                    middle_name: middle_name,
+                    last_name: last_name,
+                    election_id: election_id
+                },
+                defaults: {
+                    first_name: first_name,
+                    middle_name: middle_name,
+                    last_name: last_name,
+                    user_id: user_id,
+                    election_id: election_id,
+                    position_id: position_id,
+                    party_id: party_id,
+                    photo: contestant_img
+                }
+            })
+            .then(result => {
+                if (result[1] === true) {
+                    res.send({ status: 0, msg: 'Contestant created' });
+                } else {
+                    res.send({ status: 1, msg: 'Contestant already exists' });
+                }
+            })
+            .catch(err => {
+                console.log("ERRORRRR>>>>>>>>>>>>>", err);
+                res.send({ status: 1, msg: 'Contestant not created' });
+            })
     } else {
         res.send({ status: 1, msg: 'Invalid contestant name' })
     }

@@ -210,7 +210,7 @@ const CONTESTANTS = sequelize.define('contestant', {
     },
     party_id: {
         type: Sequelize.UUID,
-        allowNull: true
+        allowNull: false
     },
     photo: {
         type: Sequelize.BLOB,

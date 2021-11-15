@@ -138,6 +138,7 @@ document.querySelector("#add-contestant-btn").addEventListener("click", (e) => {
     let last_name = document.querySelector('#last-name').value;
     let election_selected = document.getElementById('elections-dropdown').value;
     let position_selected = document.getElementById('positions-dropdown').value;
+    let party_selected = document.getElementById('parties-dropdown').value;
     let contestant_img = document.getElementById('img-preview').src;
 
     fetch(`${URL}/contestant`, {
@@ -151,6 +152,7 @@ document.querySelector("#add-contestant-btn").addEventListener("click", (e) => {
                 last_name: last_name,
                 election_id: election_selected,
                 position_id: position_selected,
+                party_id: party_selected,
                 contestant_img: contestant_img
             })
         })
