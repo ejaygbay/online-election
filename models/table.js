@@ -303,15 +303,35 @@ const insertDefaultUser = () => {
                 }
             })
             .then(result => {
-                console.log("USER ID>>>>>>>>>>>>>>>>", result);
+                insertDefaultParty(result[0].dataValues.id);
             })
     })
 }
 
+const insertDefaultParty = (userID) => {
+    PARTY
+        .findOrCreate({
+            where: {
+                party_name: "Independent"
+            },
+            defaults: {
+                user_id: userID,
+                election_id: "",
+                party_name: "Independent"
+            }
+        })
+        .then(result => {
+            console.log("Default party created");
+        })
+        .catch(err => {
+            console.log("Default party not created");
+        })
+}
+
 // Reset DB
 // sequelize.sync({
-//         alter: true,
-//         // force: true
+//         // alter: true,
+//         force: true
 //     }).then(suc => {
 //         console.log("SUCCESS=====", suc.models);
 //         insertDefaultRoles(roles[cnt]);
