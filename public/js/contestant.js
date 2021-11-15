@@ -40,13 +40,21 @@ const displayContestants = (data) => {
 }
 
 /**
- * Make request for all elections
+ * Using Fetch to get all elections
  */
 const getElections = () => {
     fetch(`${URL}/election`)
         .then(response => response.json())
         .then(data => {
             displayElections(data);
+        })
+}
+
+const getParties = () => {
+    fetch(`${URL}/party`)
+        .then(response => response.json())
+        .then(data => {
+            displayParties(data);
         })
 }
 
@@ -65,6 +73,20 @@ const displayElections = (data) => {
 
     data.forEach(ele => {
         let html = `<option value="${ele.id}">${ele.election_name}</option>`;
+        dropdown.insertAdjacentHTML('beforeend', html);
+    });
+}
+
+const displayParties = (data) => {
+    let dropdown = document.querySelector("#parties-dropdown");
+    let html = `<option value="" disabled selected>Select Party</option>`;
+
+    data = data.reverse();
+    dropdown.innerHTML = "";
+    dropdown.insertAdjacentHTML('beforeend', html);
+
+    data.forEach(ele => {
+        let html = `<option value="${ele.id}">${ele.party_name}</option>`;
         dropdown.insertAdjacentHTML('beforeend', html);
     });
 }
@@ -190,6 +212,7 @@ document.querySelector("#add-contestant-btn").addEventListener("click", (e) => {
 })
 
 getElections();
+getParties();
 
 
 const editcontestant = (id, old_name, new_name) => {
