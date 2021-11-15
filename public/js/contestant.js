@@ -39,38 +39,62 @@ const displayContestants = (data) => {
     // })
 }
 
+/**
+ * Make request for all elections
+ */
 const getElections = () => {
     fetch(`${URL}/election`)
         .then(response => response.json())
         .then(data => {
-            let dropdown = document.querySelector("#elections-dropdown");
-            let html = `<option value="" disabled selected>Select Election</option>`;
-
-            data = data.reverse();
-            dropdown.innerHTML = "";
-            dropdown.insertAdjacentHTML('beforeend', html);
-
-            data.forEach(ele => {
-                let html = `<option value="${ele.id}">${ele.election_name}</option>`;
-                dropdown.insertAdjacentHTML('beforeend', html);
-            });
+            displayElections(data);
         })
+}
+
+/**
+ * Display election
+ * @param {array} data array of objects
+ * [{id: exampleID, election_name: "Test Election"}]
+ */
+const displayElections = (data) => {
+    let dropdown = document.querySelector("#elections-dropdown");
+    let html = `<option value="" disabled selected>Select Election</option>`;
+
+    data = data.reverse();
+    dropdown.innerHTML = "";
+    dropdown.insertAdjacentHTML('beforeend', html);
+
+    data.forEach(ele => {
+        let html = `<option value="${ele.id}">${ele.election_name}</option>`;
+        dropdown.insertAdjacentHTML('beforeend', html);
+    });
 }
 
 /**
  * When the select element for the displaying contestants for
  * a specific election is changed, it is handled by this
  */
-// document.getElementById('elections-dropdown2').addEventListener("change", () => {
-//     let election_id = document.getElementById('elections-dropdown2').value;
+document.getElementById('elections-dropdown').addEventListener("change", () => {
+    let election_id = document.getElementById('elections-dropdown').value;
 
-//     fetch(`${URL}/contestant?id=${election_id}`)
-//         .then(response => response.json())
-//         .then(data => {
-//             data = data.reverse();
-//             // displaycontestants(data);
-//         })
-// })
+    fetch(`${URL}/position?id=${election_id}`)
+        .then(response => response.json())
+        .then(data => {
+            displayPositions(data);
+        })
+})
+
+const displayPositions = (data) => {
+    let dropdown = document.querySelector("#positions-dropdown");
+    let html = `<option value="" disabled selected>Select Position</option>`;
+
+    dropdown.innerHTML = "";
+    dropdown.insertAdjacentHTML('beforeend', html);
+
+    data.forEach(ele => {
+        let html = `<option value="${ele.id}">${ele.position_name}</option>`;
+        dropdown.insertAdjacentHTML('beforeend', html);
+    });
+}
 
 const displayContestantNameForEditing = (id, contestant_name) => {
     Swal.fire({
@@ -105,14 +129,15 @@ img_input_ele.addEventListener('change', (e) => {
     }
 })
 
-
-
+/**
+ * Get form data and make request when the Add Contestant btn is clicked
+ */
 document.querySelector("#add-contestant-btn").addEventListener("click", (e) => {
     let first_name = document.querySelector('#first-name').value;
     let middle_name = document.getElementById('middle-name').value;
     let last_name = document.querySelector('#last-name').value;
     let election_selected = document.getElementById('elections-dropdown').value;
-    let contestant_selected = document.getElementById('positions-dropdown').value;
+    let position_selected = document.getElementById('positions-dropdown').value;
     let contestant_img = document.getElementById('img-preview').src;
 
     fetch(`${URL}/contestant`, {
@@ -124,8 +149,8 @@ document.querySelector("#add-contestant-btn").addEventListener("click", (e) => {
                 first_name: first_name,
                 middle_name: middle_name,
                 last_name: last_name,
-                election: election_selected,
-                contestant: contestant_selected,
+                election_id: election_selected,
+                position_id: position_selected,
                 contestant_img: contestant_img
             })
         })

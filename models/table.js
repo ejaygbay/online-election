@@ -184,6 +184,18 @@ const CONTESTANTS = sequelize.define('contestant', {
         primaryKey: true,
         allowNull: false
     },
+    first_name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    middle_name: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    last_name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     user_id: {
         type: Sequelize.UUID,
         allowNull: false
@@ -195,6 +207,10 @@ const CONTESTANTS = sequelize.define('contestant', {
     election_id: {
         type: Sequelize.UUID,
         allowNull: false
+    },
+    party_id: {
+        type: Sequelize.UUID,
+        allowNull: true
     },
     photo: {
         type: Sequelize.BLOB,
@@ -294,8 +310,8 @@ const insertDefaultUser = () => {
 
 // Reset DB
 // sequelize.sync({
-//         // alter: true,
-//         force: true
+//         alter: true,
+//         // force: true
 //     }).then(suc => {
 //         console.log("SUCCESS=====", suc.models);
 //         insertDefaultRoles(roles[cnt]);
