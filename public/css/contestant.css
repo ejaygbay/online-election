@@ -7,8 +7,8 @@
 }
 
 #img-preview {
-    background-repeat: no-repeat;
-    background-size: cover;
+    object-fit: cover;
+    padding: 1px 4px 4px 0px;
 }
 
 #preview-text {
