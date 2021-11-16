@@ -4,12 +4,12 @@ const votersRegistrationControllers = require('../controllers/voter-registration
 
 router.get('/voters/registration', votersRegistrationControllers.votersRegistrationView);
 
-router.post('/Voter', votersRegistrationControllers.createVoter);
+router.post('/voter', votersRegistrationControllers.createVoter);
 
-router.get('/Voter', votersRegistrationControllers.getVoters);
+router.get('/voter', votersRegistrationControllers.getVoters);
 
-router.patch('/Voter', votersRegistrationControllers.updateVoter);
+router.patch('/voter', votersRegistrationControllers.updateVoter);
 
-router.delete('/Voter', votersRegistrationControllers.deleteVoter);
+router.delete('/voter', votersRegistrationControllers.deleteVoter);
 
 module.exports = router;

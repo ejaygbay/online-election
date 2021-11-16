@@ -71,7 +71,7 @@ const displayElections = (data) => {
 }
 
 
-const displayvoterNameForEditing = (id, voter_name) => {
+const displayVoterNameForEditing = (id, voter_name) => {
     Swal.fire({
             title: 'Edit voter',
             input: 'text',

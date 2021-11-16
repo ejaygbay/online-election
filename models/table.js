@@ -164,6 +164,10 @@ const VOTERS = sequelize.define('voter', {
         type: Sequelize.UUID,
         allowNull: false
     },
+    user_id: {
+        type: Sequelize.UUID,
+        allowNull: false
+    },
     voted: {
         type: DataTypes.STRING,
         defaultValue: 'false'
