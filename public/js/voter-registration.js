@@ -71,21 +71,6 @@ const displayElections = (data) => {
 }
 
 
-/**
- * When the select element for the displaying voters for
- * a specific election is changed, it is handled by this
- */
-document.getElementById('elections-dropdown').addEventListener("change", () => {
-    let election_id = document.getElementById('elections-dropdown').value;
-
-    fetch(`${URL}/position?id=${election_id}`)
-        .then(response => response.json())
-        .then(data => {
-            displayPositions(data);
-        })
-})
-
-
 const displayvoterNameForEditing = (id, voter_name) => {
     Swal.fire({
             title: 'Edit voter',
@@ -127,8 +112,6 @@ document.querySelector("#add-voter-btn").addEventListener("click", (e) => {
     let middle_name = document.getElementById('middle-name').value;
     let last_name = document.querySelector('#last-name').value;
     let election_selected = document.getElementById('elections-dropdown').value;
-    let position_selected = document.getElementById('positions-dropdown').value;
-    let party_selected = document.getElementById('parties-dropdown').value;
     let voter_img = document.getElementById('img-preview').src;
 
     fetch(`${URL}/voter`, {
@@ -141,8 +124,6 @@ document.querySelector("#add-voter-btn").addEventListener("click", (e) => {
                 middle_name: middle_name,
                 last_name: last_name,
                 election_id: election_selected,
-                position_id: position_selected,
-                party_id: party_selected,
                 voter_img: voter_img
             })
         })
@@ -151,7 +132,7 @@ document.querySelector("#add-voter-btn").addEventListener("click", (e) => {
             if (data.status === 0) {
                 Swal.fire({
                     icon: 'success',
-                    title: `voter name <b>${first_name} ${middle_name} ${last_name}</b> was created`,
+                    title: `Voter name <b>${first_name} ${middle_name} ${last_name}</b> was created`,
                     showConfirmButton: false,
                     timer: 2500
                 })
@@ -159,7 +140,7 @@ document.querySelector("#add-voter-btn").addEventListener("click", (e) => {
             } else {
                 Swal.fire({
                     icon: 'error',
-                    title: `voter name <b>${first_name} ${middle_name} ${last_name}</b> already exist`,
+                    title: `Voter name <b>${first_name} ${middle_name} ${last_name}</b> already exist`,
                     showConfirmButton: false,
                     timer: 2500
                 })
