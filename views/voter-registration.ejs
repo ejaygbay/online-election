@@ -1,5 +1,6 @@
 <%- include('./layouts/head') -%>
     <link rel="stylesheet" href="/public/css/style.css" />
+    <link rel="stylesheet" href="/public/css/contestant.css" />
     </head>
 
     <body>
@@ -14,49 +15,66 @@
 
         <!--Main layout-->
         <main style="margin-top: 70px ">
-            <h1 class="mb-4" style="text-align: center;">Voters Registration</h1>
+            <h1 class="mb-4" style="text-align: center;">Add Voters</h1>
             <div class="container pt-2">
                 <!--Section: Statistics with subtitles-->
                 <section style="display: grid; justify-items: center;">
 
-                    <!-- <form> -->
                     <div class="col-md-4 mb-3">
                         <div class="form-outline">
-                            <input type="text" id="form3Example1" class="form-control form-control-lg" />
-                            <label class="form-label" for="form3Example1">First Name</label>
+                            <input type="text" id="first-name" class="form-control form-control-lg" />
+                            <label class="form-label" for="first-name">First Name</label>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <div class="form-outline">
-                            <input type="text" id="form3Example2" class="form-control form-control-lg" />
-                            <label class="form-label" for="form3Example2">Middle Name</label>
+                            <input type="text" id="middle-name" class="form-control form-control-lg" />
+                            <label class="form-label" for="middle-name">Middle Name</label>
                         </div>
                     </div>
                     <div class="col-md-4 mb-3">
                         <div class="form-outline">
-                            <input type="text" id="form3Example2" class="form-control form-control-lg" />
-                            <label class="form-label" for="form3Example2">Last Name</label>
+                            <input type="text" id="last-name" class="form-control form-control-lg" />
+                            <label class="form-label" for="last-name">Last Name</label>
                         </div>
                     </div>
 
                     <div class="col-md-4 mb-3">
-                        <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+                        <label class="visually-hidden" for="elections-dropdown">Preference</label>
                         <select class="custom-select" id="elections-dropdown">
                             <option value="">Select Election</option>
                         </select>
                     </div>
 
-                    <!-- Upload file -->
                     <div class="col-md-4 mb-3">
-                        <label class="form-label" for="customFile">Upload your photo</label>
-                        <input type="file" name="img" accept="image/*" class="form-control form-control-lg mb-3" id="customFile" />
+                        <label class="visually-hidden" for="positions-dropdown">Preference</label>
+                        <select class="custom-select" id="positions-dropdown">
+                            <option value="">Select Position</option>
+                        </select>
                     </div>
 
-                    <!-- Submit button -->
-                    <div class="col-4 mb-3">
-                        <button type="submit" class="btn btn-primary btn-block btn-lg mb-4">Register</button>
+                    <div class="col-md-4 mb-3">
+                        <label class="visually-hidden" for="parties-dropdown">Preference</label>
+                        <select class="custom-select" id="parties-dropdown">
+                            <option value="">Select Party</option>
+                        </select>
                     </div>
-                    <!-- </form> -->
+
+                    <!-- Upload file -->
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label" for="voter-img">Upload voter's photo</label>
+                        <input type="file" name="img" accept="image/*" class="form-control form-control-lg mb-3" id="voter-img" />
+                    </div>
+
+                    <!-- <label class="form-label" for="voter-img-preview">Voter's photo preview</label> -->
+                    <div id="preview-section" class="col-md-4 mb-3">
+                        <img id="img-preview" src="">
+                        <h5 id="preview-text">PREVIEW</h5>
+                    </div>
+                    <!-- Submit button -->
+                    <div class="col-md-4 mb-3">
+                        <button id="add-voter-btn" class="btn btn-primary btn-block btn-lg mb-4">Add Voter</button>
+                    </div>
                 </section>
             </div>
         </main>
