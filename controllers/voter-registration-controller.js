@@ -30,7 +30,7 @@ const createVoter = (req, res) => {
 
     console.log(validateVoter(req.body));
 
-    if (validateVoter(req.body)) {
+    if (!validateVoter(req.body)) {
         VOTERS
             .findOrCreate({
                 where: {

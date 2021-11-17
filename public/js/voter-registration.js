@@ -129,6 +129,7 @@ document.querySelector("#add-voter-btn").addEventListener("click", (e) => {
         })
         .then(response => response.json())
         .then(data => {
+            console.log("Result:::::", data);
             if (data.status === 0) {
                 Swal.fire({
                     icon: 'success',
@@ -147,13 +148,13 @@ document.querySelector("#add-voter-btn").addEventListener("click", (e) => {
             }
 
 
-            document.querySelector("#voter-name").focus();
+            // document.querySelector("#voter-name").focus();
             // displayvoters();
         })
         .catch(err => {
             Swal.fire({
                 icon: 'error',
-                title: `voter name "${voter_name}" was not created`,
+                title: `voter name <b>${first_name} ${middle_name} ${last_name}</b> was not created`,
                 showConfirmButton: false,
                 timer: 2500
             })

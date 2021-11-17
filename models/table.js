@@ -338,7 +338,7 @@ const insertDefaultParty = (userID) => {
 //         force: true
 //     }).then(suc => {
 //         console.log("SUCCESS=====", suc.models);
-//         insertDefaultRoles(roles[cnt]);
+//         // insertDefaultRoles(roles[cnt]);
 //     })
 //     .catch(err => console.log("ERROR+++++", err))
 
