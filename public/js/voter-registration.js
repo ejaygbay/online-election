@@ -146,15 +146,12 @@ document.querySelector("#add-voter-btn").addEventListener("click", (e) => {
                     timer: 2500
                 })
             }
-
-
-            // document.querySelector("#voter-name").focus();
-            // displayvoters();
         })
         .catch(err => {
+            console.log("Error Message:===========", err.message);
             Swal.fire({
                 icon: 'error',
-                title: `voter name <b>${first_name} ${middle_name} ${last_name}</b> was not created`,
+                title: `Voter name <b>${first_name} ${middle_name} ${last_name}</b> was not created`,
                 showConfirmButton: false,
                 timer: 2500
             })
