@@ -28,9 +28,7 @@ const createVoter = (req, res) => {
         election_id = req.body.election_id;
     }
 
-    console.log(validateVoter(req.body));
-
-    if (!validateVoter(req.body)) {
+    if (validateVoterData(req.body)) {
         VOTERS
             .findOrCreate({
                 where: {
@@ -58,7 +56,6 @@ const createVoter = (req, res) => {
                 }
             })
             .catch(err => {
-                console.log("ERRORRRR>>>>>>>>>>>>>", err);
                 res.send({ status: 1, msg: 'Voter not created' });
             })
     } else {
@@ -109,7 +106,7 @@ const deleteVoter = (req, res) => {
 }
 
 
-const validateVoter = (data) => {
+const validateVoterData = (data) => {
     let count = 0;
     for (let items in data) {
         if (data[items].length < 1) {
@@ -118,12 +115,10 @@ const validateVoter = (data) => {
         }
     }
 
-    console.log("Count::", count);
-
     if (count > 0)
-        return true
+        return false
     else
-        return false;
+        return true;
 }
 
 // ================================================
