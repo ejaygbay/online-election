@@ -28,9 +28,7 @@ const createContestant = (req, res) => {
         election_id = req.body.election_id;
     }
 
-    console.log(validateContestant(req.body));
-
-    if (validateContestant(req.body)) {
+    if (validateContestantData(req.body)) {
         CONTESTANTS
             .findOrCreate({
                 where: {
@@ -108,8 +106,7 @@ const deleteContestant = (req, res) => {
     })
 }
 
-
-const validateContestant = (data) => {
+const validateContestantData = (data) => {
     let count = 0;
     for (let items in data) {
         if (data[items].length < 1) {
@@ -118,12 +115,13 @@ const validateContestant = (data) => {
         }
     }
 
+    console.log("Validate Data:", data);
     console.log("Count::", count);
 
     if (count > 0)
-        return true
+        return false
     else
-        return false;
+        return true;
 }
 
 // ================================================

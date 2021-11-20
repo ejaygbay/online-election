@@ -137,7 +137,6 @@ document.querySelector("#add-voter-btn").addEventListener("click", (e) => {
                     showConfirmButton: false,
                     timer: 2500
                 })
-                document.querySelector("#voter-name").value = "";
             } else {
                 Swal.fire({
                     icon: 'error',
