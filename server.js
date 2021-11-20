@@ -7,7 +7,7 @@ const party_routes = require('./routers/party-routes');
 const vote_routes = require('./routers/vote-routes');
 const position_routes = require('./routers/position-routes');
 const contestant_routes = require('./routers/contestant-routes');
-const voters_registration_routes = require('./routers/voter-registration-routes');
+const voter_routes = require('./routers/voter-routes');
 const user_routes = require('./routers/vote-routes');
 const auth_routes = require('./routers/auth-routes');
 const cookieParser = require("cookie-parser");
@@ -42,7 +42,7 @@ app.use(party_routes);
 app.use(vote_routes);
 app.use(position_routes);
 app.use(contestant_routes);
-app.use(voters_registration_routes);
+app.use(voter_routes);
 app.use(user_routes);
 app.use(auth_routes);
 

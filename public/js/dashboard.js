@@ -1,99 +1,107 @@
 const URL = window.location.origin;
 
-const displayElections = () => {
-    fetch(`${URL}/election`)
-        .then(response => response.json())
-        .then(data => {
-            let table = document.querySelector("tbody");
-            let election_data = data.reverse();
+document.querySelector("#registered-voters").innerHTML = 10;
 
-            table.innerHTML = "";
-            election_data.forEach((ele, index) => {
-                let html = `<tr id=${ele.id}>
-                    <th scope="row">${index + 1}.</th>
-                    <td id=name-${ele.id}>${ele.election_name}</td>
-                    <td>
-                        <button id=${ele.id}_edit-btn class="action-btn edit btn outline btn-outline-primary btn-floating">
-                            <i id=${ele.id}_edit class="edit fas fa-pencil-alt"></i>
-                        </button>
-                        <button id=${ele.id}_del-btn type="button" class="action-btn delete btn btn-outline-danger btn-floating">
-                            <i id=${ele.id}_del class="delete fas fa-trash-alt"></i>
-                        </button>
-                    </td>
-                </tr>`;
+const displayContestants = (data) => {
+    // let table = document.querySelector("tbody");
+    // let contestant_data = data.reverse();
 
-                table.insertAdjacentHTML('beforeend', html);
-            });
+    // table.innerHTML = "";
+    // contestant_data.forEach((ele, index) => {
+    //     let html = `<tr id=${ele.id}>
+    //                 <th scope="row">${index + 1}.</th>
+    //                 <td id=name-${ele.id}>${ele.contestant_name}</td>
+    //                 <td>
+    //                     <button id=${ele.id}_edit-btn class="action-btn edit btn outline btn-outline-primary btn-floating">
+    //                         <i id=${ele.id}_edit class="edit fas fa-pencil-alt"></i>
+    //                     </button>
+    //                     <button id=${ele.id}_del-btn type="button" class="action-btn delete btn btn-outline-danger btn-floating">
+    //                         <i id=${ele.id}_del class="delete fas fa-trash-alt"></i>
+    //                     </button>
+    //                 </td>
+    //             </tr>`;
 
-            document.querySelectorAll(".action-btn").forEach(ele => {
-                ele.addEventListener("click", (e) => {
-                    let id = e.target.id.split("_")[0];
-                    let classes = e.target.classList;
-                    let election_name = document.getElementById(`name-${id}`).innerHTML;
+    //     table.insertAdjacentHTML('beforeend', html);
+    // });
 
-                    classes.forEach(ele => {
-                        if (ele === 'edit') {
-                            displayElectionNameForEditing(id, election_name);
-                        } else if (ele === 'delete') {
-                            deleteElection(id, election_name);
-                        }
-                    })
-                })
-            })
-        })
-        .catch(err => {
-            console.log(err.message);
-        })
+    // document.querySelectorAll(".action-btn").forEach(ele => {
+    //     ele.addEventListener("click", (e) => {
+    //         let id = e.target.id.split("_")[0];
+    //         let classes = e.target.classList;
+    //         let contestant_name = document.getElementById(`name-${id}`).innerHTML;
+
+    //         classes.forEach(ele => {
+    //             if (ele === 'edit') {
+    //                 displaycontestantNameForEditing(id, contestant_name);
+    //             } else if (ele === 'delete') {
+    //                 deletecontestant(id, contestant_name);
+    //             }
+    //         })
+    //     })
+    // })
 }
 
-displayElections();
 
-// Create Election Button
-document.querySelector('#create-election-btn').addEventListener('click', (e) => {
-    let election_name = document.querySelector("#new-election-name").value;
-    fetch(`${URL}/election?name=${election_name}`, {
-            method: "POST"
-        })
+const getVoterCounts = () => {
+    fetch(`${URL}/voter/count`)
         .then(response => response.json())
         .then(data => {
-            if (data.status === 0) {
-                Swal.fire({
-                    icon: 'success',
-                    title: `Election name "${election_name}" was created`,
-                    showConfirmButton: false,
-                    timer: 2500
-                })
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: `Election name "${election_name}" already exist`,
-                    showConfirmButton: false,
-                    timer: 2500
-                })
-            }
-
-            document.querySelector("#new-election-name").value = "";
-            document.querySelector("#new-election-name").focus();
-            displayElections();
+            document.querySelector("#registered-voters").innerHTML = data.count;
         })
-        .catch(err => {
-            Swal.fire({
-                icon: 'error',
-                title: `Election name "${election_name}" was not created`,
-                showConfirmButton: false,
-                timer: 2500
-            })
-        })
+}
+getVoterCounts();
 
-    // document.querySelector("#new-election-name").classList.remove("form-control");
-    // document.querySelector("#new-election-name").classList.add("form-control");
-})
+/**
+ * Display election
+ * @param {array} data array of objects
+ * [{id: exampleID, election_name: "Test Election"}]
+ */
+const displayElections = (data) => {
+    let dropdown = document.querySelector("#elections-dropdown");
+    let html = `<option value="" disabled selected>Select Election</option>`;
 
-const displayElectionNameForEditing = (id, election_name) => {
+    data = data.reverse();
+    dropdown.innerHTML = "";
+    dropdown.insertAdjacentHTML('beforeend', html);
+
+    data.forEach(ele => {
+        let html = `<option value="${ele.id}">${ele.election_name}</option>`;
+        dropdown.insertAdjacentHTML('beforeend', html);
+    });
+}
+
+const displayParties = (data) => {
+    let dropdown = document.querySelector("#parties-dropdown");
+    let html = `<option value="" disabled selected>Select Party</option>`;
+
+    data = data.reverse();
+    dropdown.innerHTML = "";
+    dropdown.insertAdjacentHTML('beforeend', html);
+
+    data.forEach(ele => {
+        let html = `<option value="${ele.id}">${ele.party_name}</option>`;
+        dropdown.insertAdjacentHTML('beforeend', html);
+    });
+}
+
+const displayPositions = (data) => {
+    let dropdown = document.querySelector("#positions-dropdown");
+    let html = `<option value="" disabled selected>Select Position</option>`;
+
+    dropdown.innerHTML = "";
+    dropdown.insertAdjacentHTML('beforeend', html);
+
+    data.forEach(ele => {
+        let html = `<option value="${ele.id}">${ele.position_name}</option>`;
+        dropdown.insertAdjacentHTML('beforeend', html);
+    });
+}
+
+const displayContestantNameForEditing = (id, contestant_name) => {
     Swal.fire({
-            title: 'Edit Election',
+            title: 'Edit contestant',
             input: 'text',
-            inputValue: election_name,
+            inputValue: contestant_name,
             inputAttributes: {
                 autocapitalize: 'off'
             },
@@ -103,40 +111,7 @@ const displayElectionNameForEditing = (id, election_name) => {
         })
         .then((result) => {
             if (result.isConfirmed) {
-                editElection(id, election_name, result.value);
+                editcontestant(id, contestant_name, result.value);
             }
-        })
-}
-
-const editElection = (id, old_name, new_name) => {
-    fetch(`${URL}/election?id=${id}&name=${new_name}`, {
-            method: 'PATCH'
-        })
-        .then(response => response.json())
-        .then(data => {
-            Swal.fire({
-                icon: 'success',
-                title: `${old_name} was changed to ${new_name}`,
-                showConfirmButton: false,
-                timer: 2500
-            })
-            displayElections();
-        })
-}
-
-
-const deleteElection = (id, election_name) => {
-    fetch(`${URL}/election?id=${id}`, {
-            method: 'DELETE'
-        })
-        .then(response => response.json())
-        .then(data => {
-            Swal.fire({
-                icon: 'success',
-                title: `${election_name} was deleted`,
-                showConfirmButton: false,
-                timer: 1000
-            })
-            displayElections();
         })
 }

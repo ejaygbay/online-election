@@ -64,8 +64,12 @@ const createVoter = (req, res) => {
 }
 
 const getVoters = (req, res) => {
-    if (req.query.id) {
-        queryVoters(req.query.id, data => {
+    req.session.electionID = "33f23b2b-f1c8-4eb4-902e-774eb6a8e759";
+    // let electionID = req.session.electionID;
+
+    if (req.session.electionID) {
+        queryVoters(req.session.electionID, data => {
+            console.log("Res:=======", data);
             res.send(data);
         })
     } else {
@@ -73,6 +77,19 @@ const getVoters = (req, res) => {
             res.send(data);
         })
     }
+}
+
+const getVoterCounts = (req, res) => {
+    req.session.electionID = "33f23b2b-f1c8-4eb4-902e-774eb6a8e759";
+
+    VOTERS
+        .count({
+            where: {
+                election_id: req.session.electionID
+            }
+        })
+        .then(result => res.send({ count: result }))
+        .catch(err => console.log("_-------", err))
 }
 
 const updateVoter = (req, res) => {
@@ -187,19 +204,20 @@ const deleteParty = (req, res) => {
 const queryVoters = async(election_id, callback) => {
     if (election_id) {
         VOTERS
-            .findAll({
+            .findAndCountAll({
                 where: {
                     election_id: election_id
                 },
-                attributes: ['id', 'voter_name']
+                // attributes: ['id', 'voter_name']
             })
             .then(result => {
-                let results = [];
-                result.forEach(ele => {
-                    results.push(ele.dataValues);
-                })
+                console.log(result);
+                // let results = [];
+                // result.forEach(ele => {
+                //     results.push(ele.dataValues);
+                // })
 
-                return callback(results);
+                // return callback(results);
             })
             .catch(err => {
                 console.log("_---------------", err);
@@ -237,5 +255,6 @@ module.exports = {
     createVoter,
     getVoters,
     updateVoter,
-    deleteVoter
+    deleteVoter,
+    getVoterCounts
 }
