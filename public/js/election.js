@@ -51,42 +51,9 @@ displayElections();
 // Create Election Button
 document.querySelector('#create-election-btn').addEventListener('click', (e) => {
     let election_name = document.querySelector("#new-election-name").value;
-    fetch(`${URL}/election?name=${election_name}`, {
-            method: "POST"
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 0) {
-                Swal.fire({
-                    icon: 'success',
-                    title: `Election name "${election_name}" was created`,
-                    showConfirmButton: false,
-                    timer: 2500
-                })
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: `Election name "${election_name}" already exist`,
-                    showConfirmButton: false,
-                    timer: 2500
-                })
-            }
-
-            document.querySelector("#new-election-name").value = "";
-            document.querySelector("#new-election-name").focus();
-            displayElections();
-        })
-        .catch(err => {
-            Swal.fire({
-                icon: 'error',
-                title: `Election name "${election_name}" was not created`,
-                showConfirmButton: false,
-                timer: 2500
-            })
-        })
-
-    // document.querySelector("#new-election-name").classList.remove("form-control");
-    // document.querySelector("#new-election-name").classList.add("form-control");
+    validateInputs(election_name.trim(), result => {
+        console.log(result);
+    })
 })
 
 const displayElectionNameForEditing = (id, election_name) => {
@@ -138,5 +105,48 @@ const deleteElection = (id, election_name) => {
                 timer: 1000
             })
             displayElections();
+        })
+}
+
+const validateInputs = async(data, callback) => {
+    if (data.length > 0)
+        return callback(true);
+    else
+        return callback(false);
+}
+
+const makeAPICall = async(data) => {
+    fetch(`${URL}/election?name=${election_name}`, {
+            method: "POST"
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 0) {
+                Swal.fire({
+                    icon: 'success',
+                    title: `Election name "${election_name}" was created`,
+                    showConfirmButton: false,
+                    timer: 2500
+                })
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: `Election name "${election_name}" already exist`,
+                    showConfirmButton: false,
+                    timer: 2500
+                })
+            }
+
+            document.querySelector("#new-election-name").value = "";
+            document.querySelector("#new-election-name").focus();
+            displayElections();
+        })
+        .catch(err => {
+            Swal.fire({
+                icon: 'error',
+                title: `Election name "${election_name}" was not created`,
+                showConfirmButton: false,
+                timer: 2500
+            })
         })
 }
