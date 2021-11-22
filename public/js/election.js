@@ -1,4 +1,5 @@
 const URL = window.location.origin;
+let election_name = document.querySelector("#new-election-name");
 
 const displayElections = () => {
     fetch(`${URL}/election`)
@@ -50,9 +51,18 @@ displayElections();
 
 // Create Election Button
 document.querySelector('#create-election-btn').addEventListener('click', (e) => {
-    let election_name = document.querySelector("#new-election-name").value;
+    election_name.value;
     validateInputs(election_name.trim(), result => {
         console.log(result);
+    })
+})
+
+election_name.addEventListener('keyup', (e) => {
+    validateInputs(election_name.value.trim(), result => {
+        if (result)
+            enableBtn('#create-election-btn');
+        else
+            disableBtn('#create-election-btn');
     })
 })
 
@@ -150,3 +160,9 @@ const makeAPICall = async(data) => {
             })
         })
 }
+
+const enableBtn = (id) => document.querySelector(id).disabled = false;
+
+const disableBtn = (id) => document.querySelector(id).disabled = true;
+
+// disableBtn('#create-election-btn');
