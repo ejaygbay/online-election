@@ -1,4 +1,5 @@
 const URL = window.location.origin;
+let party_name = document.querySelector("#new-party-name");
 
 const displayParties = () => {
     fetch(`${URL}/party`)
@@ -50,43 +51,38 @@ displayParties();
 
 // Create Party Button
 document.querySelector('#create-party-btn').addEventListener('click', (e) => {
-    let party_name = document.querySelector("#new-party-name").value;
-    fetch(`${URL}/party?name=${party_name}`, {
-            method: "POST"
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 0) {
-                Swal.fire({
-                    icon: 'success',
-                    title: `Party name "${party_name}" was created`,
-                    showConfirmButton: false,
-                    timer: 2500
-                })
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: `Party name "${party_name}" already exist`,
-                    showConfirmButton: false,
-                    timer: 2500
-                })
-            }
+    let data_to_send = {
+        party_name: party_name.value
+    }
 
-            document.querySelector("#new-party-name").value = "";
-            document.querySelector("#new-party-name").focus();
-            displayParties();
-        })
-        .catch(err => {
+    makeAPICall(data_to_send, result => {
+        if (result.status === 0) {
             Swal.fire({
-                icon: 'error',
-                title: `Party name "${party_name}" was not created`,
+                icon: 'success',
+                title: `Party name "${party_name.value}" was created`,
                 showConfirmButton: false,
                 timer: 2500
             })
-        })
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: `Party name "${party_name.value}" already exist`,
+                showConfirmButton: false,
+                timer: 2500
+            })
+        }
 
-    // document.querySelector("#new-party-name").classList.remove("form-control");
-    // document.querySelector("#new-party-name").classList.add("form-control");
+        document.querySelector("#new-party-name").value = "";
+        document.querySelector("#new-party-name").focus();
+        displayParties();
+        disableBtn('#create-party-btn');
+    })
+})
+
+party_name.addEventListener('keyup', (e) => {
+    validateInputs(party_name.value.trim(), result => {
+        result ? enableBtn('#create-party-btn') : disableBtn('#create-party-btn');
+    })
 })
 
 const displayPartyNameForEditing = (id, party_name) => {
@@ -124,7 +120,6 @@ const editParty = (id, old_name, new_name) => {
         })
 }
 
-
 const deleteParty = (id, party_name) => {
     fetch(`${URL}/party?id=${id}`, {
             method: 'DELETE'
@@ -140,3 +135,30 @@ const deleteParty = (id, party_name) => {
             displayParties();
         })
 }
+
+const validateInputs = async(data, callback) => {
+    if (data.length > 0)
+        return callback(true);
+    else
+        return callback(false);
+}
+
+const makeAPICall = async(data, callback) => {
+    fetch(`${URL}/party?name=${data.party_name}`, {
+            method: "POST"
+        })
+        .then(response => response.json())
+        .then(data => callback(data))
+        .catch(err => {
+            Swal.fire({
+                icon: 'error',
+                title: `Party name "${party_name.value}" was not created`,
+                showConfirmButton: false,
+                timer: 2500
+            })
+        })
+}
+
+const enableBtn = (id) => document.querySelector(id).disabled = false;
+
+const disableBtn = (id) => document.querySelector(id).disabled = true;
