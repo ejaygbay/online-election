@@ -51,10 +51,6 @@ displayElections();
 
 // Create Election Button
 document.querySelector('#create-election-btn').addEventListener('click', (e) => {
-
-    // validateInputs(election_name.trim(), result => {
-    //     console.log(result);
-    // })
     let data_to_send = {
         election_name: election_name.value
     }
@@ -63,14 +59,14 @@ document.querySelector('#create-election-btn').addEventListener('click', (e) => 
         if (result.status === 0) {
             Swal.fire({
                 icon: 'success',
-                title: `Election name "${election_name}" was created`,
+                title: `Election name "${election_name.value}" was created`,
                 showConfirmButton: false,
                 timer: 2500
             })
         } else {
             Swal.fire({
                 icon: 'error',
-                title: `Election name "${election_name}" already exist`,
+                title: `Election name "${election_name.value}" already exist`,
                 showConfirmButton: false,
                 timer: 2500
             })
@@ -85,10 +81,7 @@ document.querySelector('#create-election-btn').addEventListener('click', (e) => 
 
 election_name.addEventListener('keyup', (e) => {
     validateInputs(election_name.value.trim(), result => {
-        if (result)
-            enableBtn('#create-election-btn');
-        else
-            disableBtn('#create-election-btn');
+        result ? enableBtn('#create-election-btn') : disableBtn('#create-election-btn');
     })
 })
 
@@ -159,7 +152,7 @@ const makeAPICall = async(data, callback) => {
         .catch(err => {
             Swal.fire({
                 icon: 'error',
-                title: `Election name "${election_name}" was not created`,
+                title: `Election name "${election_name.value}" was not created`,
                 showConfirmButton: false,
                 timer: 2500
             })
