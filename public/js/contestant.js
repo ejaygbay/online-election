@@ -91,6 +91,19 @@ const displayParties = (data) => {
     });
 }
 
+const displayPositions = (data) => {
+    let dropdown = document.querySelector("#positions-dropdown");
+    let html = `<option value="" disabled selected>Select Position</option>`;
+
+    dropdown.innerHTML = "";
+    dropdown.insertAdjacentHTML('beforeend', html);
+
+    data.forEach(ele => {
+        let html = `<option value="${ele.id}">${ele.position_name}</option>`;
+        dropdown.insertAdjacentHTML('beforeend', html);
+    });
+}
+
 /**
  * When the select element for the displaying contestants for
  * a specific election is changed, it is handled by this
@@ -104,19 +117,6 @@ document.getElementById('elections-dropdown').addEventListener("change", () => {
             displayPositions(data);
         })
 })
-
-const displayPositions = (data) => {
-    let dropdown = document.querySelector("#positions-dropdown");
-    let html = `<option value="" disabled selected>Select Position</option>`;
-
-    dropdown.innerHTML = "";
-    dropdown.insertAdjacentHTML('beforeend', html);
-
-    data.forEach(ele => {
-        let html = `<option value="${ele.id}">${ele.position_name}</option>`;
-        dropdown.insertAdjacentHTML('beforeend', html);
-    });
-}
 
 const displayContestantNameForEditing = (id, contestant_name) => {
     Swal.fire({
@@ -163,50 +163,16 @@ document.querySelector("#add-contestant-btn").addEventListener("click", (e) => {
     let party_selected = document.getElementById('parties-dropdown').value;
     let contestant_img = document.getElementById('img-preview').src;
 
-    fetch(`${URL}/contestant`, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                first_name: first_name,
-                middle_name: middle_name,
-                last_name: last_name,
-                election_id: election_selected,
-                position_id: position_selected,
-                party_id: party_selected,
-                contestant_img: contestant_img
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log("Contestant:", data);
-            if (data.status === 0) {
-                Swal.fire({
-                    icon: 'success',
-                    title: `Contestant name <b>${first_name} ${middle_name} ${last_name}</b> was created`,
-                    showConfirmButton: false,
-                    timer: 2500
-                })
+    let data_to_send = {
+        first_name: first_name,
+        middle_name: middle_name,
+        last_name: last_name,
+        election_id: election_selected,
+        position_id: position_selected,
+        party_id: party_selected,
+        contestant_img: contestant_img
+    }
 
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: `Contestant name <b>${first_name} ${middle_name} ${last_name}</b> already exist`,
-                    showConfirmButton: false,
-                    timer: 2500
-                })
-            }
-        })
-        .catch(err => {
-            console.log("Contestant:::", err.message)
-            Swal.fire({
-                icon: 'error',
-                title: `Contestant name <b>${first_name} ${middle_name} ${last_name}</b> was not created`,
-                showConfirmButton: false,
-                timer: 2500
-            })
-        })
 })
 
 getElections();
@@ -245,3 +211,61 @@ const deleteContestant = (id, contestant_name) => {
             document.getElementById(id).style = "display: none";
         })
 }
+
+const makeAPICall = async(data, callback) => {
+    fetch(`${URL}/contestant`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                first_name: data.first_name,
+                middle_name: data.middle_name,
+                last_name: data.last_name,
+                election_id: data.election_selected,
+                position_id: data.position_selected,
+                party_id: data.party_selected,
+                contestant_img: data.contestant_img
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log("Contestant:", data);
+            if (data.status === 0) {
+                Swal.fire({
+                    icon: 'success',
+                    title: `Contestant name <b>${first_name} ${middle_name} ${last_name}</b> was created`,
+                    showConfirmButton: false,
+                    timer: 2500
+                })
+
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: `Contestant name <b>${first_name} ${middle_name} ${last_name}</b> already exist`,
+                    showConfirmButton: false,
+                    timer: 2500
+                })
+            }
+        })
+        .catch(err => {
+            console.log("Contestant:::", err.message)
+            Swal.fire({
+                icon: 'error',
+                title: `Contestant name <b>${first_name} ${middle_name} ${last_name}</b> was not created`,
+                showConfirmButton: false,
+                timer: 2500
+            })
+        })
+}
+
+const validateInputs = (data) => {
+    if (data.length > 0)
+        return true;
+    else
+        return false;
+}
+
+const enableBtn = (id) => document.querySelector(id).disabled = false;
+
+const disableBtn = (id) => document.querySelector(id).disabled = true;
