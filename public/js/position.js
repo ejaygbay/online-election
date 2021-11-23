@@ -100,10 +100,27 @@ const displayPositionNameForEditing = (id, position_name) => {
         })
 }
 
+election_selected.addEventListener("change", () => {
+    if (election_selected.value.trim().length > 0 && position_name.value.trim().length > 0) {
+        enableBtn('#create-position-btn');
+    } else {
+        disableBtn('#create-position-btn');
+    }
+})
+
 position_name.addEventListener('keyup', (e) => {
-    validateInputs(position_name.value.trim(), result => {
-        result ? enableBtn('#create-position-btn') : disableBtn('#create-position-btn');
-    })
+    if (election_selected.value.trim().length > 0) {
+        validateInputs(position_name.value.trim(), result => {
+            result ? enableBtn('#create-position-btn') : disableBtn('#create-position-btn');
+        })
+    } else {
+        disableBtn('#create-position-btn');
+    }
+
+    // validateInputs(election_selected.value.trim(), result => {
+    //     result ? enableBtn('#create-position-btn') : disableBtn('#create-position-btn');
+    // })
+    // console.log(election_selected.value);
 })
 
 document.querySelector("#create-position-btn").addEventListener("click", (e) => {
