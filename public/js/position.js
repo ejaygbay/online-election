@@ -137,6 +137,9 @@ document.querySelector("#create-position-btn").addEventListener("click", (e) => 
                 showConfirmButton: false,
                 timer: 2500
             })
+            position_name.value = "";
+            election_selected.selectedIndex = 0;
+            disableBtn('#create-position-btn');
         } else {
             Swal.fire({
                 icon: 'error',
@@ -146,11 +149,7 @@ document.querySelector("#create-position-btn").addEventListener("click", (e) => 
             })
         }
 
-        position_name.value = "";
         position_name.focus();
-        election_selected.selectIndex = 0;
-        displayParties();
-        disableBtn('#create-position-btn');
     })
 })
 
@@ -191,7 +190,7 @@ const deletePosition = (id, position_name) => {
 }
 
 const makeAPICall = async(data, callback) => {
-    fetch(`${URL}/position?name=${data.position_name}&id=${data.election_selected}`, {
+    fetch(`${URL}/position?name=${data.position_name}&id=${data.election_id}`, {
             method: "POST"
         })
         .then(response => response.json())
@@ -199,7 +198,7 @@ const makeAPICall = async(data, callback) => {
         .catch(err => {
             Swal.fire({
                 icon: 'error',
-                title: `Position name "${position_name.value}" was not created`,
+                title: `Position name "${data.position_name}" was not created`,
                 showConfirmButton: false,
                 timer: 2500
             })
