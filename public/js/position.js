@@ -1,4 +1,7 @@
 const URL = window.location.origin;
+let position_name = document.querySelector('#new-position-name');
+let election_selected = document.getElementById('elections-dropdown');
+
 
 const displayPositions = (data) => {
     let table = document.querySelector("tbody");
@@ -97,45 +100,41 @@ const displayPositionNameForEditing = (id, position_name) => {
         })
 }
 
+position_name.addEventListener('keyup', (e) => {
+    validateInputs(position_name.value.trim(), result => {
+        result ? enableBtn('#create-position-btn') : disableBtn('#create-position-btn');
+    })
+})
 
-document.querySelector("#create-position").addEventListener("click", (e) => {
-    let position_name = document.querySelector('#position-name').value;
-    let election_selected = document.getElementById('elections-dropdown').value;
+document.querySelector("#create-position-btn").addEventListener("click", (e) => {
+    let data_to_send = {
+        position_name: position_name.value,
+        election_id: election_selected.value
+    }
 
-    fetch(`${URL}/position?name=${position_name}&id=${election_selected}`, {
-            method: "POST"
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 0) {
-                Swal.fire({
-                    icon: 'success',
-                    title: `Position name "${position_name}" was created`,
-                    showConfirmButton: false,
-                    timer: 2500
-                })
-                document.querySelector("#position-name").value = "";
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: `Position name "${position_name}" already exist`,
-                    showConfirmButton: false,
-                    timer: 2500
-                })
-            }
-
-
-            document.querySelector("#position-name").focus();
-            // displayPositions();
-        })
-        .catch(err => {
+    makeAPICall(data_to_send, result => {
+        if (result.status === 0) {
             Swal.fire({
-                icon: 'error',
-                title: `Position name "${position_name}" was not created`,
+                icon: 'success',
+                title: `Position name "${position_name.value}" was created`,
                 showConfirmButton: false,
                 timer: 2500
             })
-        })
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: `Position name "${position_name.value}" already exist`,
+                showConfirmButton: false,
+                timer: 2500
+            })
+        }
+
+        position_name.value = "";
+        position_name.focus();
+        election_selected.selectIndex = 0;
+        displayParties();
+        disableBtn('#create-position-btn');
+    })
 })
 
 getElections();
@@ -173,3 +172,30 @@ const deletePosition = (id, position_name) => {
             document.getElementById(id).style = "display: none";
         })
 }
+
+const makeAPICall = async(data, callback) => {
+    fetch(`${URL}/position?name=${data.position_name}&id=${data.election_selected}`, {
+            method: "POST"
+        })
+        .then(response => response.json())
+        .then(data => callback(data))
+        .catch(err => {
+            Swal.fire({
+                icon: 'error',
+                title: `Position name "${position_name.value}" was not created`,
+                showConfirmButton: false,
+                timer: 2500
+            })
+        })
+}
+
+const validateInputs = async(data, callback) => {
+    if (data.length > 0)
+        return callback(true);
+    else
+        return callback(false);
+}
+
+const enableBtn = (id) => document.querySelector(id).disabled = false;
+
+const disableBtn = (id) => document.querySelector(id).disabled = true;
