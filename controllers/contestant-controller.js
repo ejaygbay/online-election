@@ -9,8 +9,6 @@ const createContestant = (req, res) => {
     req.session.electionID = "8c25132a-5e69-4572-8944-565d5c0eabc6";
     req.session.role = "superadmin";
 
-    console.log(req.body)
-
     let role = req.session.role;
     let user_id = req.session.userID;
     let election_id = req.session.electionID;

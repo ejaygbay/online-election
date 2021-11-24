@@ -175,7 +175,25 @@ const validateForm = (e) => {
         contestant_img: contestant_img
     }
 
-    console.log(data_to_send);
+    makeAPICall(data_to_send, result => {
+        if (result.status === 0) {
+            Swal.fire({
+                icon: 'success',
+                title: `Contestant name <b>${first_name} ${middle_name} ${last_name}</b> was created`,
+                showConfirmButton: false,
+                timer: 2500
+            })
+
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: `Contestant name <b>${first_name} ${middle_name} ${last_name}</b> already exist`,
+                showConfirmButton: false,
+                timer: 2500
+            })
+        }
+    })
+
 }
 
 getElections();
@@ -221,41 +239,15 @@ const makeAPICall = async(data, callback) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                first_name: data.first_name,
-                middle_name: data.middle_name,
-                last_name: data.last_name,
-                election_id: data.election_selected,
-                position_id: data.position_selected,
-                party_id: data.party_selected,
-                contestant_img: data.contestant_img
-            })
+            body: JSON.stringify(data)
         })
         .then(response => response.json())
-        .then(data => {
-            console.log("Contestant:", data);
-            if (data.status === 0) {
-                Swal.fire({
-                    icon: 'success',
-                    title: `Contestant name <b>${first_name} ${middle_name} ${last_name}</b> was created`,
-                    showConfirmButton: false,
-                    timer: 2500
-                })
-
-            } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: `Contestant name <b>${first_name} ${middle_name} ${last_name}</b> already exist`,
-                    showConfirmButton: false,
-                    timer: 2500
-                })
-            }
-        })
+        .then(data => callback(data))
         .catch(err => {
             console.log("Contestant:::", err.message)
             Swal.fire({
                 icon: 'error',
-                title: `Contestant name <b>${first_name} ${middle_name} ${last_name}</b> was not created`,
+                title: `Contestant name <b>${data.first_name} ${data.middle_name} ${data.last_name}</b> was not created`,
                 showConfirmButton: false,
                 timer: 2500
             })
