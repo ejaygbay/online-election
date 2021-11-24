@@ -154,7 +154,9 @@ img_input_ele.addEventListener('change', (e) => {
 /**
  * Get form data and make request when the Add Contestant btn is clicked
  */
-document.querySelector("#add-contestant-btn").addEventListener("click", (e) => {
+const validateForm = (e) => {
+    e.preventDefault();
+
     let first_name = document.querySelector('#first-name').value;
     let middle_name = document.getElementById('middle-name').value;
     let last_name = document.querySelector('#last-name').value;
@@ -173,7 +175,8 @@ document.querySelector("#add-contestant-btn").addEventListener("click", (e) => {
         contestant_img: contestant_img
     }
 
-})
+    console.log(data_to_send);
+}
 
 getElections();
 getParties();

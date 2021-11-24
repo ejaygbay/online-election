@@ -19,43 +19,43 @@
             <div class="container pt-2">
                 <!--Section: Statistics with subtitles-->
                 <section style="display: grid; justify-items: center;">
-                    <form action="/contestant" method="post">
+                    <form action="/contestant" onsubmit="return validateForm(event)" method="post">
                         <div class="mb-3">
                             <div class="form-outline">
-                                <input type="text" id="first-name" class="form-control form-control-lg" required />
+                                <input type="text" name="first-name" id="first-name" class="form-control form-control-lg" required />
                                 <label class="form-label" for="first-name">First Name</label>
                             </div>
                         </div>
                         <div class="mb-3">
                             <div class="form-outline">
-                                <input type="text" id="middle-name" class="form-control form-control-lg" />
+                                <input type="text" name="middle-name" id="middle-name" class="form-control form-control-lg" />
                                 <label class="form-label" for="middle-name">Middle Name</label>
                             </div>
                         </div>
                         <div class="mb-3">
                             <div class="form-outline">
-                                <input type="text" id="last-name" class="form-control form-control-lg" required />
+                                <input type="text" name="last-name" id="last-name" class="form-control form-control-lg" required />
                                 <label class="form-label" for="last-name">Last Name</label>
                             </div>
                         </div>
 
                         <div class="mb-3">
                             <label class="visually-hidden" for="elections-dropdown">Preference</label>
-                            <select class="custom-select" id="elections-dropdown" required>
+                            <select class="custom-select" name="elections-dropdown" id="elections-dropdown" required>
                             <option value="">Select Election</option>
                         </select>
                         </div>
 
                         <div class="mb-3">
                             <label class="visually-hidden" for="positions-dropdown">Preference</label>
-                            <select class="custom-select" id="positions-dropdown" required>
+                            <select class="custom-select" name="positions-dropdown" id="positions-dropdown" required>
                             <option value="">Select Position</option>
                         </select>
                         </div>
 
                         <div class="mb-3">
                             <label class="visually-hidden" for="parties-dropdown">Preference</label>
-                            <select class="custom-select" id="parties-dropdown" required>
+                            <select class="custom-select" name="parties-dropdown" id="parties-dropdown" required>
                             <option value="">Select Party</option>
                         </select>
                         </div>
