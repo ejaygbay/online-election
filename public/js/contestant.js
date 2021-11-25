@@ -1,4 +1,5 @@
 const URL = window.location.origin;
+let election_id = document.getElementById('elections-dropdown');
 
 const displayContestants = (data) => {
     // let table = document.querySelector("tbody");
@@ -51,10 +52,13 @@ const getElections = () => {
 }
 
 const getParties = () => {
-    fetch(`${URL}/party`)
+    election_id = election_id.value;
+
+    fetch(`${URL}/party?id=${election_id}`)
         .then(response => response.json())
         .then(data => {
-            displayParties(data);
+            console.log("PARTIES:::", data);
+            // displayParties(data);
         })
 }
 
@@ -109,12 +113,13 @@ const displayPositions = (data) => {
  * a specific election is changed, it is handled by this
  */
 document.getElementById('elections-dropdown').addEventListener("change", () => {
-    let election_id = document.getElementById('elections-dropdown').value;
+    election_id = election_id.value;
 
     fetch(`${URL}/position?id=${election_id}`)
         .then(response => response.json())
         .then(data => {
             displayPositions(data);
+            getParties();
         })
 })
 
@@ -197,7 +202,6 @@ const validateForm = (e) => {
 }
 
 getElections();
-getParties();
 
 
 const editContestant = (id, old_name, new_name) => {

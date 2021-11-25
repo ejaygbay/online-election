@@ -87,10 +87,14 @@ const queryParties = async(party_id, callback) => {
                 where: { id: party_id, status: 'active' }
             })
             .then(result => {
-                console.log(result);
+                let results = [];
+                result.forEach(ele => {
+                    results.push(ele.dataValues);
+                })
+                return callback(results);
             })
             .catch(err => {
-                console.log(err);
+                return callback({ status: 1, message: 'election id not found' });
             })
     } else {
         PARTY
@@ -106,7 +110,7 @@ const queryParties = async(party_id, callback) => {
                 return callback(results);
             })
             .catch(err => {
-                console.log(err);
+                return callback({ status: 1, message: 'election id not found' });
             })
     }
 }
