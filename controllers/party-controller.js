@@ -7,7 +7,7 @@ const getPartyView = (req, res) => {
     if (userID && role) {
         res.render('party', { page: 'party', role: role });
     } else {
-        res.render('login', { page: 'login' });
+        res.redirect('/login');
     }
 }
 

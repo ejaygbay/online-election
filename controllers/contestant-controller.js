@@ -7,7 +7,7 @@ const getContestantView = (req, res) => {
     if (userID && role) {
         res.render('contestant', { page: 'contestant', role: role });
     } else {
-        res.render('./login', { page: 'login' });
+        res.redirect('/login');
     }
 }
 

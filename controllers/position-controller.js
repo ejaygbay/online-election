@@ -7,7 +7,7 @@ const getPositionView = (req, res) => {
     if (userID && role) {
         res.render('position', { page: 'position', role: role });
     } else {
-        res.render('login', { page: 'login' });
+        res.redirect('/login');
     }
 }
 

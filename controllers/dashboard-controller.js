@@ -5,7 +5,7 @@ const dashboardView = (req, res) => {
     if (userID && role) {
         res.render('dashboard', { page: 'dashboard', role: role });
     } else {
-        res.render('./login', { page: 'login' });
+        res.redirect('/login');
     }
 }
 

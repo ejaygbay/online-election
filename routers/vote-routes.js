@@ -8,7 +8,7 @@ router.get('/vote', (req, res) => {
     if (userID && role) {
         res.render('vote', { page: 'vote', role: role });
     } else {
-        res.render('login', { page: 'login' });
+        res.redirect('/login');
     }
 })
 

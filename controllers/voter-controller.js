@@ -7,7 +7,7 @@ const votersRegistrationView = (req, res) => {
     if (userID && role) {
         res.render('voter-registration', { page: 'register', role: role });
     } else {
-        res.render('login', { page: 'login' });
+        res.redirect('/login');
     }
 }
 
