@@ -1,7 +1,14 @@
 const POSITIONS = require('../models/table').POSITIONS;
 
 const getPositionView = (req, res) => {
-    res.render('position', { page: 'position' });
+    let userID = req.session.userID;
+    let role = req.session.role;
+
+    if (userID && role) {
+        res.render('position', { page: 'position', role: role });
+    } else {
+        res.render({ login: 'login' });
+    }
 }
 
 const createPosition = (req, res) => {
