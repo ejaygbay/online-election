@@ -2,9 +2,7 @@ const express = require('express');
 const router = express.Router();
 const partyControllers = require('../controllers/party-controller');
 
-router.get('/party/create', (req, res) => {
-    res.render('party', { page: 'party' });
-})
+router.get('/party/create', partyControllers.getPartyView);
 
 router.post('/party', partyControllers.createParty);
 

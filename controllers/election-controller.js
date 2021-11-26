@@ -7,7 +7,7 @@ const getElectionView = (req, res) => {
     if (userID && role) {
         res.render('election', { page: 'election', role: role });
     } else {
-        res.render({ login: 'login' });
+        res.render('login', { page: 'login' });
     }
 }
 

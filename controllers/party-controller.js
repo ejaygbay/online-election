@@ -1,5 +1,16 @@
 const PARTY = require('../models/table').PARTY;
 
+const getPartyView = (req, res) => {
+    let userID = req.session.userID;
+    let role = req.session.role;
+
+    if (userID && role) {
+        res.render('party', { page: 'party', role: role });
+    } else {
+        res.render('login', { page: 'login' });
+    }
+}
+
 const createParty = (req, res) => {
     let party_name = req.query.name.trim();
     req.session.userID = "f759fa54-6640-416a-a01c-9e1ae1b1fd21";
@@ -118,6 +129,7 @@ const queryParties = async(party_id, callback) => {
 // queryParties();
 
 module.exports = {
+    getPartyView,
     createParty,
     getParties,
     updateParty,
