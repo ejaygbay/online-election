@@ -2,9 +2,7 @@ const express = require('express');
 const router = express.Router();
 const electionControllers = require('../controllers/election-controller');
 
-router.get('/election/create', (req, res) => {
-    res.render('election', { page: 'election' });
-})
+router.get('/election/create', electionControllers.getElectionView);
 
 router.post('/election', electionControllers.createElection);
 

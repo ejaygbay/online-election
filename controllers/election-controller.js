@@ -1,5 +1,16 @@
 const ELECTIONS = require('../models/table').ELECTIONS;
 
+const getElectionView = (req, res) => {
+    let userID = req.session.userID;
+    let role = req.session.role;
+
+    if (userID && role) {
+        res.render('election', { page: 'election', role: role });
+    } else {
+        res.render({ login: 'login' });
+    }
+}
+
 const createElection = (req, res) => {
     let election_name = req.query.name.trim();
     req.session.userID = "f759fa54-6640-416a-a01c-9e1ae1b1fd21";
@@ -112,6 +123,7 @@ const queryElections = async(election_id, callback) => {
 // queryElections();
 
 module.exports = {
+    getElectionView,
     createElection,
     getElections,
     updateElection,
