@@ -3,6 +3,8 @@ const authController = require('../controllers/auth-controllers');
 
 routers.get('/login', authController.loginForm);
 
+routers.get('/logout', authController.logOut)
+
 routers.post('/login', authController.loginDetails)
 
 routers.get('/account/create', authController.signUpForm);

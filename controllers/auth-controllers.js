@@ -6,7 +6,6 @@ let res_obj = {
 }
 
 const loginForm = (req, res) => {
-    req.session.destroy;
     res.render('./login', { page: 'login' });
 }
 
@@ -20,6 +19,7 @@ const loginDetails = async(req, res) => {
         if (result.id) {
             req.session.userID = result.id;
             req.session.role = result.role.dataValues.role;
+            console.log("==========222", req.session);
         } else {
             res_obj.code = 1;
             res_obj.msg = 'not active user';
@@ -72,6 +72,13 @@ const saveSignUpForm = async(req, res) => {
         })
 
     res.send(res_obj);
+}
+
+const logOut = (req, res) => {
+    req.session.destroy(function(err) {
+        console.log("==========111", req.session);
+        res.redirect('/login'); //Inside a callback… bulletproof!
+    });
 }
 
 const getJobs = async(req, res) => {
@@ -157,5 +164,6 @@ module.exports = {
     loginForm,
     loginDetails,
     signUpForm,
-    saveSignUpForm
+    saveSignUpForm,
+    logOut
 }
