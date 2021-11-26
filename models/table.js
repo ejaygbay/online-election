@@ -310,6 +310,26 @@ const insertDefaultUser = () => {
                 insertDefaultParty(result[0].dataValues.id);
             })
     })
+
+    getRoleID('admin', data => {
+        let role_id = data.id;
+        USERS
+            .findOrCreate({
+                where: {
+                    email: "emmanuel@gmail.co"
+                },
+                defaults: {
+                    first_name: "Emmanuel",
+                    last_name: "Jaygbay",
+                    email: "emmanuel@gmail.com",
+                    password: "secret",
+                    role_id: role_id
+                }
+            })
+            .then(result => {
+                insertDefaultParty(result[0].dataValues.id);
+            })
+    })
 }
 
 const insertDefaultParty = (userID) => {
