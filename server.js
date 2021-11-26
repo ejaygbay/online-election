@@ -14,13 +14,14 @@ const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
 
 // creating 24 hours from milliseconds
-const oneDay = 1000 * 60 * 60 * 24;
+// const oneDay = 1000 * 60 * 60 * 24;
+const thirtyMins = 60000 * 30;
 
 //session middleware
 app.use(sessions({
     secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
     saveUninitialized: true,
-    cookie: { maxAge: oneDay },
+    cookie: { maxAge: thirtyMins },
     resave: false
 }));
 

@@ -1,8 +1,12 @@
 const dashboardView = (req, res) => {
-    session=req.session;
-    session.port = process.env.PORT || 3000;
-    console.log(req.session);
-    res.render('dashboard', { page: 'dashboard' });
+    let userID = req.session.userID;
+    let role = req.session.role;
+
+    if (userID && role) {
+        res.render('dashboard', { page: 'dashboard', role: role });
+    } else {
+        res.render('./login', { page: 'login' });
+    }
 }
 
 module.exports = dashboardView;
