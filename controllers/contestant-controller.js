@@ -1,7 +1,13 @@
 const CONTESTANTS = require('../models/table').CONTESTANTS;
+let userID = req.session.userID;
+let role = req.session.role;
 
 const getContestantView = (req, res) => {
-    res.render('contestant', { page: 'contestant' });
+    if (userID && role) {
+        res.render('contestant', { page: 'contestant', role: role });
+    } else {
+        res.render('./login', { page: 'login' });
+    }
 }
 
 const createContestant = (req, res) => {
