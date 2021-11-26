@@ -15,30 +15,29 @@ const loginDetails = async(req, res) => {
     }
     req.session.userID = "f759fa54-6640-416a-a01c-9e1ae1b1fd21";
     req.session.role = "superadmin";
-    res.send(res_obj);
-    // getUsers(req.body, result => {
-    //     if (result.status !== 'active') {
-    //         res_obj.code = 1;
-    //         res_obj.msg = 'not active user';
-    //     }
 
-    //     res.send(res_obj)
-    // })
+    getUsers(req.body, result => {
+        if (result.code === 1) {
+            res_obj = result;
+        }
+        res.send(res_obj)
+    })
 }
 
 const getUsers = (data, callback) => {
     USERS.findAll({
-            attributes: ['email', 'password', 'status'],
+            attributes: ['email', 'password'],
             where: {
                 email: data.email,
-                password: data.password
+                password: data.password,
+                status: 'active'
             }
         })
         .then(response => {
             if (response.length > 0) {
                 return callback(response[0].dataValues);
             } else {
-                return callback(response);
+                return callback({ code: 1, message: 'user not found' });
             }
         })
         .catch(err => {

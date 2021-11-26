@@ -1,10 +1,10 @@
-document.querySelector('#login-btn').addEventListener('click', (e) => {
-    let email = document.getElementById('email').value.trim();
-    let password = document.getElementById('password').value.trim();
+let email = document.getElementById('email');
+let password = document.getElementById('password');
 
+document.querySelector('#login-btn').addEventListener('click', (e) => {
     let login_details = {
-        email: email,
-        password: password
+        email: email.value.trim(),
+        password: password.value.trim()
     }
 
     if (!validateInputs(login_details)) {
@@ -13,12 +13,21 @@ document.querySelector('#login-btn').addEventListener('click', (e) => {
             if (result.code === 0) {
                 window.location.href = "/";
             } else {
-                console.log("Wrong details");
-                // document.getElementById('email').style = "color: red";
-                // document.getElementById('password').style = "color: red";
+                email.style = "color: red";
+                password.style = "color: red";
             }
         })
     }
+})
+
+email.addEventListener('focus', () => {
+    email.style = "color: #4f4f4f";
+    password.style = "color: #4f4f4f";
+})
+
+password.addEventListener('focus', () => {
+    email.style = "color: #4f4f4f";
+    password.style = "color: #4f4f4f";
 })
 
 const validateInputs = (data) => {
