@@ -74,12 +74,7 @@ const saveSignUpForm = async(req, res) => {
     res.send(res_obj);
 }
 
-const logOut = (req, res) => {
-    req.session.destroy(function(err) {
-        console.log("==========111", req.session);
-        res.redirect('/login'); //Inside a callback… bulletproof!
-    });
-}
+const logOut = (req, res) => req.session.destroy((err) => res.redirect('/login'));
 
 const getJobs = async(req, res) => {
     let auth_result = await auth(req.query);
