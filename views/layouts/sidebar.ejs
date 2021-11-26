@@ -1,7 +1,7 @@
 <nav style="margin-top: 10px;" id="sidebarMenu" class="collapse d-lg-block sidebar collapse bg-white">
     <div class="position-sticky">
         <div class="list-group list-group-flush mx-3 mt-4">
-            <% if(role === 'superadmin'){ %>
+            <% if(role === 'superadmin' || role === 'admin'){ %>
                 <a href="/" class="list-group-item list-group-item-action py-2 ripple <% if(page === 'dashboard'){ %>active<% } %>">
                     <i class="fas fa-chart-area fa-fw me-3"></i><span>Dashboard</span>
                 </a>
@@ -16,11 +16,18 @@
                 <a href="/party/create" class="list-group-item list-group-item-action py-2 ripple <% if(page === 'party'){ %>active<% } %>">
                     <i class="fas fa-chart-pie fa-fw me-3"></i><span>Create Party</span>
                 </a>
-                <a href="/position/create" class="list-group-item list-group-item-action py-2 ripple <% if(page === 'position'){ %>active<% } %>"><i
-      class="fas fa-chart-bar fa-fw me-3"></i><span>Create Position</span></a>
-                <a href="/contestant" class="list-group-item list-group-item-action py-2 ripple <% if(page === 'contestant'){ %>active<% } %>"><i
-      class="fas fa-globe fa-fw me-3"></i><span>Create Contestant</span></a>
+                <a href="/position/create" class="list-group-item list-group-item-action py-2 ripple <% if(page === 'position'){ %>active<% } %>">
+                    <i class="fas fa-chart-bar fa-fw me-3"></i><span>Create Position</span>
+                </a>
+                <a href="/contestant" class="list-group-item list-group-item-action py-2 ripple <% if(page === 'contestant'){ %>active<% } %>">
+                    <i class="fas fa-globe fa-fw me-3"></i><span>Create Contestant</span>
+                </a>
                 <% } %>
+                    <% if(role === 'superadmin'){ %>
+                        <a href="#" class="list-group-item list-group-item-action py-2 ripple <% if(page === 'user'){ %>active<% } %>">
+                            <i class="fas fa-chart-pie fa-fw me-3"></i><span>Create User</span>
+                        </a>
+                        <% } %>
         </div>
     </div>
 </nav>
