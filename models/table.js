@@ -332,6 +332,12 @@ const insertDefaultParty = (userID) => {
         })
 }
 
+/**
+ * ASSOCIATIONS
+ */
+ROLES.hasMany(USERS);
+USERS.belongsTo(ROLES);
+
 // Reset DB
 // sequelize.sync({
 //         // alter: true,

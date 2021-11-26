@@ -1,4 +1,5 @@
 const USERS = require('../models/table').USERS;
+const ROLES = require('../models/table').ROLES;
 let res_obj = {
     code: 0,
     msg: "successful"
@@ -13,12 +14,14 @@ const loginDetails = async(req, res) => {
         code: 0,
         msg: 'active user'
     }
-    req.session.userID = "f759fa54-6640-416a-a01c-9e1ae1b1fd21";
-    req.session.role = "superadmin";
 
     getUsers(req.body, result => {
-        if (result.code === 1) {
-            res_obj = result;
+        if (result.id) {
+            req.session.userID = result.id;
+            req.session.role = result.role.dataValues.role;
+        } else {
+            res_obj.code = 1;
+            res_obj.msg = 'not active user';
         }
         res.send(res_obj)
     })
@@ -26,7 +29,8 @@ const loginDetails = async(req, res) => {
 
 const getUsers = (data, callback) => {
     USERS.findAll({
-            attributes: ['email', 'password'],
+            include: [ROLES],
+            attributes: ['id'],
             where: {
                 email: data.email,
                 password: data.password,
