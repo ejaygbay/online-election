@@ -36,6 +36,10 @@ const USERS = sequelize.define('user', {
         type: Sequelize.UUID,
         allowNull: false
     },
+    election_id: {
+        type: Sequelize.UUID,
+        allowNull: true
+    },
     status: {
         type: DataTypes.STRING,
         defaultValue: 'active'
@@ -327,22 +331,22 @@ const insertDefaultParty = (userID) => {
         .then(result => {
             console.log("Default party created");
 
-            getRoleID('admin', data => {
-                let role_id = data.id;
-                USERS
-                    .findOrCreate({
-                        where: {
-                            email: "emmanuel@gmail.co"
-                        },
-                        defaults: {
-                            first_name: "Ruth",
-                            last_name: "Kollie",
-                            email: "emmanuel@gmail.co",
-                            password: "secret",
-                            role_id: role_id
-                        }
-                    })
-            })
+            // getRoleID('admin', data => {
+            //     let role_id = data.id;
+            //     USERS
+            //         .findOrCreate({
+            //             where: {
+            //                 email: "emmanuel@gmail.co"
+            //             },
+            //             defaults: {
+            //                 first_name: "Ruth",
+            //                 last_name: "Kollie",
+            //                 email: "emmanuel@gmail.co",
+            //                 password: "secret",
+            //                 role_id: role_id
+            //             }
+            //         })
+            // })
         })
         .catch(err => {
             console.log("Default party not created");
