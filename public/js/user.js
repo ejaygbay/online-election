@@ -1,114 +1,113 @@
 const URL = window.location.origin;
-let user_name = document.querySelector('#new-user-name');
-let election_selected = document.getElementById('elections-dropdown');
-let role_selected = document.getElementById('roles-dropdown');
-
+let election_id = document.getElementById('elections-dropdown');
 
 const displayUsers = (data) => {
-    let table = document.querySelector("tbody");
-    let user_data = data.reverse();
+    // let table = document.querySelector("tbody");
+    // let user_data = data.reverse();
 
-    table.innerHTML = "";
-    user_data.forEach((ele, index) => {
-        let html = `<tr id=${ele.id}>
-                    <th scope="row">${index + 1}.</th>
-                    <td id=name-${ele.id}>${ele.user_name}</td>
-                    <td>
-                        <button id=${ele.id}_edit-btn class="action-btn edit btn outline btn-outline-primary btn-floating">
-                            <i id=${ele.id}_edit class="edit fas fa-pencil-alt"></i>
-                        </button>
-                        <button id=${ele.id}_del-btn type="button" class="action-btn delete btn btn-outline-danger btn-floating">
-                            <i id=${ele.id}_del class="delete fas fa-trash-alt"></i>
-                        </button>
-                    </td>
-                </tr>`;
+    // table.innerHTML = "";
+    // user_data.forEach((ele, index) => {
+    //     let html = `<tr id=${ele.id}>
+    //                 <th scope="row">${index + 1}.</th>
+    //                 <td id=name-${ele.id}>${ele.user_name}</td>
+    //                 <td>
+    //                     <button id=${ele.id}_edit-btn class="action-btn edit btn outline btn-outline-primary btn-floating">
+    //                         <i id=${ele.id}_edit class="edit fas fa-pencil-alt"></i>
+    //                     </button>
+    //                     <button id=${ele.id}_del-btn type="button" class="action-btn delete btn btn-outline-danger btn-floating">
+    //                         <i id=${ele.id}_del class="delete fas fa-trash-alt"></i>
+    //                     </button>
+    //                 </td>
+    //             </tr>`;
 
-        table.insertAdjacentHTML('beforeend', html);
+    //     table.insertAdjacentHTML('beforeend', html);
+    // });
+
+    // document.querySelectorAll(".action-btn").forEach(ele => {
+    //     ele.addEventListener("click", (e) => {
+    //         let id = e.target.id.split("_")[0];
+    //         let classes = e.target.classList;
+    //         let user_name = document.getElementById(`name-${id}`).innerHTML;
+
+    //         classes.forEach(ele => {
+    //             if (ele === 'edit') {
+    //                 displayuserNameForEditing(id, user_name);
+    //             } else if (ele === 'delete') {
+    //                 deleteuser(id, user_name);
+    //             }
+    //         })
+    //     })
+    // })
+}
+
+/**
+ * Using Fetch to get all elections
+ */
+const getElections = () => {
+    fetch(`${URL}/election`)
+        .then(response => response.json())
+        .then(data => {
+            displayElections(data);
+        })
+}
+
+const getRoles = (callback) => {
+    fetch(`${URL}/role`)
+        .then(response => response.json())
+        .then(data => {
+            return callback(data);
+        })
+}
+
+/**
+ * Display election
+ * @param {array} data array of objects
+ * [{id: exampleID, election_name: "Test Election"}]
+ */
+const displayElections = (data) => {
+    let dropdown = document.querySelector("#elections-dropdown");
+    let html = `<option value="" disabled selected>Select Election</option>`;
+
+    data = data.reverse();
+    dropdown.innerHTML = "";
+    dropdown.insertAdjacentHTML('beforeend', html);
+
+    data.forEach(ele => {
+        let html = `<option value="${ele.id}">${ele.election_name}</option>`;
+        dropdown.insertAdjacentHTML('beforeend', html);
     });
-
-    document.querySelectorAll(".action-btn").forEach(ele => {
-        ele.addEventListener("click", (e) => {
-            let id = e.target.id.split("_")[0];
-            let classes = e.target.classList;
-            let user_name = document.getElementById(`name-${id}`).innerHTML;
-
-            classes.forEach(ele => {
-                if (ele === 'edit') {
-                    displayUserNameForEditing(id, user_name);
-                } else if (ele === 'delete') {
-                    deleteUser(id, user_name);
-                }
-            })
-        })
-    })
 }
 
-const getElections = () => {
-    fetch(`${URL}/election`)
-        .then(response => response.json())
-        .then(data => {
-            let dropdown = document.querySelector("#elections-dropdown");
-            let dropdown2 = document.querySelector("#elections-dropdown2");
-            let html = `<option value="" disabled selected>Select Election</option>`;
+const displayRoles = (data) => {
+    let dropdown = document.querySelector("#roles-dropdown");
+    let html = `<option value="" disabled selected>Select Role</option>`;
 
-            data = data.reverse();
+    dropdown.innerHTML = "";
+    dropdown.insertAdjacentHTML('beforeend', html);
 
-            dropdown.innerHTML = "";
-            dropdown2.innerHTML = "";
-
-            dropdown.insertAdjacentHTML('beforeend', html);
-            dropdown2.insertAdjacentHTML('beforeend', html);
-
-            data.forEach(ele => {
-                let html = `<option value="${ele.id}">${ele.election_name}</option>`;
-                dropdown.insertAdjacentHTML('beforeend', html);
-                dropdown2.insertAdjacentHTML('beforeend', html);
-            });
-        })
-}
-
-const getElections = () => {
-    fetch(`${URL}/election`)
-        .then(response => response.json())
-        .then(data => {
-            let dropdown = document.querySelector("#elections-dropdown");
-            let dropdown2 = document.querySelector("#elections-dropdown2");
-            let html = `<option value="" disabled selected>Select Election</option>`;
-
-            data = data.reverse();
-
-            dropdown.innerHTML = "";
-            dropdown2.innerHTML = "";
-
-            dropdown.insertAdjacentHTML('beforeend', html);
-            dropdown2.insertAdjacentHTML('beforeend', html);
-
-            data.forEach(ele => {
-                let html = `<option value="${ele.id}">${ele.election_name}</option>`;
-                dropdown.insertAdjacentHTML('beforeend', html);
-                dropdown2.insertAdjacentHTML('beforeend', html);
-            });
-        })
+    data.forEach(ele => {
+        let html = `<option value="${ele.id}">${ele.role}</option>`;
+        dropdown.insertAdjacentHTML('beforeend', html);
+    });
 }
 
 /**
  * When the select element for the displaying users for
  * a specific election is changed, it is handled by this
  */
-document.getElementById('elections-dropdown2').addEventListener("change", () => {
-    let election_id = document.getElementById('elections-dropdown2').value;
+document.getElementById('elections-dropdown').addEventListener("change", () => {
+    election_id = election_id.value;
 
-    fetch(`${URL}/user?id=${election_id}`)
+    fetch(`${URL}/position?id=${election_id}`)
         .then(response => response.json())
         .then(data => {
-            data = data.reverse();
-            displayUsers(data);
+            // getRoles();
         })
 })
 
 const displayUserNameForEditing = (id, user_name) => {
     Swal.fire({
-            title: 'Edit User',
+            title: 'Edit user',
             input: 'text',
             inputValue: user_name,
             inputAttributes: {
@@ -120,63 +119,58 @@ const displayUserNameForEditing = (id, user_name) => {
         })
         .then((result) => {
             if (result.isConfirmed) {
-                editUser(id, user_name, result.value);
+                edituser(id, user_name, result.value);
             }
         })
 }
 
-election_selected.addEventListener("change", () => {
-    if (election_selected.value.trim().length > 0 && user_name.value.trim().length > 0) {
-        enableBtn('#create-user-btn');
-    } else {
-        disableBtn('#create-user-btn');
-    }
-})
+getRoles(result => displayRoles(result));
 
-user_name.addEventListener('keyup', (e) => {
-    if (election_selected.value.trim().length > 0) {
-        validateInputs(user_name.value.trim(), result => {
-            result ? enableBtn('#create-user-btn') : disableBtn('#create-user-btn');
-        })
-    } else {
-        disableBtn('#create-user-btn');
-    }
+/**
+ * Get form data and make request when the Add User btn is clicked
+ */
+const validateForm = (e) => {
+    e.preventDefault();
 
-    // validateInputs(election_selected.value.trim(), result => {
-    //     result ? enableBtn('#create-user-btn') : disableBtn('#create-user-btn');
-    // })
-    // console.log(election_selected.value);
-})
+    let first_name = document.querySelector('#first-name').value;
+    let middle_name = document.getElementById('middle-name').value;
+    let last_name = document.querySelector('#last-name').value;
+    let role_selected = document.getElementById('roles-dropdown').value;
+    let election_selected = document.getElementById('elections-dropdown').value;
+    let email = document.getElementById('email').value;
+    let password = document.getElementById('password').value;
 
-document.querySelector("#create-user-btn").addEventListener("click", (e) => {
     let data_to_send = {
-        user_name: user_name.value,
-        election_id: election_selected.value
+        first_name: first_name.trim(),
+        middle_name: middle_name.trim(),
+        last_name: last_name.trim(),
+        election_id: election_selected.trim(),
+        role_id: role_selected.trim(),
+        email: email.trim(),
+        password: password.trim()
     }
 
-    makeAPICall(data_to_send, result => {
-        if (result.status === 0) {
-            Swal.fire({
-                icon: 'success',
-                title: `User name "${user_name.value}" was created`,
-                showConfirmButton: false,
-                timer: 2500
-            })
-            user_name.value = "";
-            election_selected.selectedIndex = 0;
-            disableBtn('#create-user-btn');
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: `User name "${user_name.value}" already exist`,
-                showConfirmButton: false,
-                timer: 2500
-            })
-        }
+    console.log(data_to_send);
+    // makeAPICall(data_to_send, result => {
+    //     if (result.status === 0) {
+    //         Swal.fire({
+    //             icon: 'success',
+    //             title: `User name <b>${first_name} ${middle_name} ${last_name}</b> was created`,
+    //             showConfirmButton: false,
+    //             timer: 2500
+    //         })
 
-        user_name.focus();
-    })
-})
+    //     } else {
+    //         Swal.fire({
+    //             icon: 'error',
+    //             title: `User name <b>${first_name} ${middle_name} ${last_name}</b> already exist`,
+    //             showConfirmButton: false,
+    //             timer: 2500
+    //         })
+    //     }
+    // })
+
+}
 
 getElections();
 
@@ -215,26 +209,31 @@ const deleteUser = (id, user_name) => {
 }
 
 const makeAPICall = async(data, callback) => {
-    fetch(`${URL}/user?name=${data.user_name}&id=${data.election_id}`, {
-            method: "POST"
+    fetch(`${URL}/user`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
         })
         .then(response => response.json())
         .then(data => callback(data))
         .catch(err => {
+            console.log("User:::", err.message)
             Swal.fire({
                 icon: 'error',
-                title: `User name "${data.user_name}" was not created`,
+                title: `User name <b>${data.first_name} ${data.middle_name} ${data.last_name}</b> was not created`,
                 showConfirmButton: false,
                 timer: 2500
             })
         })
 }
 
-const validateInputs = async(data, callback) => {
+const validateInputs = (data) => {
     if (data.length > 0)
-        return callback(true);
+        return true;
     else
-        return callback(false);
+        return false;
 }
 
 const enableBtn = (id) => document.querySelector(id).disabled = false;

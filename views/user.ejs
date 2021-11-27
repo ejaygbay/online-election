@@ -19,31 +19,59 @@
             <div class="container pt-2">
                 <!--Section: Statistics with subtitles-->
                 <section style="display: grid; justify-items: center;">
-                    <div class="col-md-4 mb-3">
-                        <div class="form-outline">
-                            <input type="text" autocomplete="off" id="new-user-name" class="form-control form-control-lg" required />
-                            <label class="form-label" for="user-name">User Name</label>
+                    <form action="/user" onsubmit="return validateForm(event)" method="post" autocomplete="off">
+                        <div class="mb-3">
+                            <div class="form-outline">
+                                <input type="text" name="first-name" id="first-name" class="form-control form-control-lg" required />
+                                <label class="form-label" for="first-name">First Name</label>
+                            </div>
                         </div>
-                    </div>
+                        <div class="mb-3">
+                            <div class="form-outline">
+                                <input type="text" name="middle-name" id="middle-name" class="form-control form-control-lg" />
+                                <label class="form-label" for="middle-name">Middle Name</label>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-outline">
+                                <input type="text" name="last-name" id="last-name" class="form-control form-control-lg" required />
+                                <label class="form-label" for="last-name">Last Name</label>
+                            </div>
+                        </div>
 
-                    <div class="col-4 mb-3">
-                        <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
-                        <select class="custom-select" id="roles-dropdown">
-                            <option value="">Select Role</option>
-                        </select>
-                    </div>
+                        <div class="mb-3">
+                            <div class="form-outline">
+                                <input autocomplete="off" value="emmanuel@gmail.com" type="email" id="email" class="form-control form-control-lg" />
+                                <label class="form-label" for="email">Email</label>
+                            </div>
+                        </div>
 
-                    <div class="col-4 mb-3">
-                        <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
-                        <select class="custom-select" id="elections-dropdown">
-                            <option value="">Select Election</option>
-                        </select>
-                    </div>
+                        <div class="mb-3">
+                            <div class="form-outline">
+                                <input type="password" value="secret" id="password" class="form-control form-control-lg" />
+                                <label class="form-label" for="password">Password</label>
+                            </div>
+                        </div>
 
-                    <div class="col-4 mb-3">
+                        <div class="mb-3">
+                            <label class="visually-hidden" for="roles-dropdown">Preference</label>
+                            <select class="custom-select" name="roles-dropdown" id="roles-dropdown" required>
+                                <option value="">Select Role</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="visually-hidden" for="elections-dropdown">Preference</label>
+                            <select class="custom-select" name="elections-dropdown" id="elections-dropdown" required>
+                                <option value="">Select Election</option>
+                            </select>
+                        </div>
+
                         <!-- Submit button -->
-                        <button type="button" class="btn btn-primary btn-block btn-lg mb-4" id="create-position-btn" disabled>Create Position</button>
-                    </div>
+                        <div class="mb-3">
+                            <input type="submit" value="Add User" id="add-user-btn" class="btn btn-primary btn-block btn-lg mb-4" disable>
+                        </div>
+                    </form>
                 </section>
 
                 <section>
@@ -68,7 +96,7 @@
         </main>
 
         <%- include('./layouts/scripts') -%>
-            <script src="../public/js/position.js"></script>
+            <script src="../public/js/user.js"></script>
     </body>
 
     </html>
