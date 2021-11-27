@@ -1,8 +1,12 @@
-let sqlite3 = require('sqlite3').verbose();
-let db = new sqlite3.Database('./electionDB.db');
-
 const getUserView = (req, res) => {
-    res.render('position', { page: 'position' });
+    let userID = req.session.userID;
+    let role = req.session.role;
+
+    if (userID && role) {
+        res.render('position', { page: 'position', role: role });
+    } else {
+        res.redirect('/login');
+    }
 }
 
 const createUser = (req, res) => {
