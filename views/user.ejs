@@ -1,0 +1,69 @@
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
+<link rel="stylesheet" href="/public/css/style.css" />
+<%- include('./layouts/head') -%>
+    </head>
+
+    <body>
+        <!--Main Navigation-->
+        <header>
+            <!-- Sidebar -->
+            <%- include('./layouts/sidebar') -%>
+
+                <!-- Navbar -->
+                <%- include('./layouts/navbar') -%>
+        </header>
+
+        <!--Main layout-->
+        <main style="margin-top: 70px ">
+            <h1 class="mb-4" style="text-align: center;">Create Positions</h1>
+            <div class="container pt-2">
+                <!--Section: Statistics with subtitles-->
+                <section style="display: grid; justify-items: center;">
+                    <div class="col-md-4 mb-3">
+                        <div class="form-outline">
+                            <input type="text" autocomplete="off" id="new-position-name" class="form-control form-control-lg" />
+                            <label class="form-label" for="position-name">Position Name</label>
+                        </div>
+                    </div>
+
+                    <% if(role === 'superadmin'){ %>
+                        <div class="col-4 mb-3">
+                            <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+                            <select class="custom-select" id="elections-dropdown">
+                            <option value="">Select Election</option>
+                        </select>
+                        </div>
+                        <% } %>
+
+                            <div class="col-4 mb-3">
+                                <!-- Submit button -->
+                                <button type="button" class="btn btn-primary btn-block btn-lg mb-4" id="create-position-btn" disabled>Create Position</button>
+                            </div>
+                </section>
+
+                <section>
+                    <h2 class="mb-4" style="text-align: center;">View Positions</h2>
+                    <select class="custom-select" id="elections-dropdown2">
+                        <option value="">Select Election</option>
+                    </select>
+
+                    <table class="table responsive">
+                        <thead>
+                            <th>#</th>
+                            <th scope="col">Position</th>
+                            <th scope="col">Action</th>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </section>
+            </div>
+
+
+        </main>
+
+        <%- include('./layouts/scripts') -%>
+            <script src="../public/js/position.js"></script>
+    </body>
+
+    </html>
