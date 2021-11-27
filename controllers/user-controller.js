@@ -1,3 +1,5 @@
+const USERS = require('../models/table').USERS;
+
 const getUserView = (req, res) => {
     let userID = req.session.userID;
     let role = req.session.role;
