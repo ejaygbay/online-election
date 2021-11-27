@@ -1,6 +1,7 @@
 const URL = window.location.origin;
 let user_name = document.querySelector('#new-user-name');
 let election_selected = document.getElementById('elections-dropdown');
+let role_selected = document.getElementById('roles-dropdown');
 
 
 const displayUsers = (data) => {
@@ -40,6 +41,30 @@ const displayUsers = (data) => {
             })
         })
     })
+}
+
+const getElections = () => {
+    fetch(`${URL}/election`)
+        .then(response => response.json())
+        .then(data => {
+            let dropdown = document.querySelector("#elections-dropdown");
+            let dropdown2 = document.querySelector("#elections-dropdown2");
+            let html = `<option value="" disabled selected>Select Election</option>`;
+
+            data = data.reverse();
+
+            dropdown.innerHTML = "";
+            dropdown2.innerHTML = "";
+
+            dropdown.insertAdjacentHTML('beforeend', html);
+            dropdown2.insertAdjacentHTML('beforeend', html);
+
+            data.forEach(ele => {
+                let html = `<option value="${ele.id}">${ele.election_name}</option>`;
+                dropdown.insertAdjacentHTML('beforeend', html);
+                dropdown2.insertAdjacentHTML('beforeend', html);
+            });
+        })
 }
 
 const getElections = () => {
