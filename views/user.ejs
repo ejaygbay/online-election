@@ -15,34 +15,39 @@
 
         <!--Main layout-->
         <main style="margin-top: 70px ">
-            <h1 class="mb-4" style="text-align: center;">Create Positions</h1>
+            <h1 class="mb-4" style="text-align: center;">Create Users</h1>
             <div class="container pt-2">
                 <!--Section: Statistics with subtitles-->
                 <section style="display: grid; justify-items: center;">
                     <div class="col-md-4 mb-3">
                         <div class="form-outline">
-                            <input type="text" autocomplete="off" id="new-position-name" class="form-control form-control-lg" />
-                            <label class="form-label" for="position-name">Position Name</label>
+                            <input type="text" autocomplete="off" id="new-user-name" class="form-control form-control-lg" required />
+                            <label class="form-label" for="user-name">User Name</label>
                         </div>
                     </div>
 
-                    <% if(role === 'superadmin'){ %>
-                        <div class="col-4 mb-3">
-                            <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
-                            <select class="custom-select" id="elections-dropdown">
+                    <div class="col-4 mb-3">
+                        <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+                        <select class="custom-select" id="roles-dropdown">
+                            <option value="">Select Role</option>
+                        </select>
+                    </div>
+
+                    <div class="col-4 mb-3">
+                        <label class="visually-hidden" for="inlineFormSelectPref">Preference</label>
+                        <select class="custom-select" id="elections-dropdown">
                             <option value="">Select Election</option>
                         </select>
-                        </div>
-                        <% } %>
+                    </div>
 
-                            <div class="col-4 mb-3">
-                                <!-- Submit button -->
-                                <button type="button" class="btn btn-primary btn-block btn-lg mb-4" id="create-position-btn" disabled>Create Position</button>
-                            </div>
+                    <div class="col-4 mb-3">
+                        <!-- Submit button -->
+                        <button type="button" class="btn btn-primary btn-block btn-lg mb-4" id="create-position-btn" disabled>Create Position</button>
+                    </div>
                 </section>
 
                 <section>
-                    <h2 class="mb-4" style="text-align: center;">View Positions</h2>
+                    <h2 class="mb-4" style="text-align: center;">View Users</h2>
                     <select class="custom-select" id="elections-dropdown2">
                         <option value="">Select Election</option>
                     </select>
@@ -50,7 +55,7 @@
                     <table class="table responsive">
                         <thead>
                             <th>#</th>
-                            <th scope="col">Position</th>
+                            <th scope="col">User</th>
                             <th scope="col">Action</th>
                         </thead>
                         <tbody>

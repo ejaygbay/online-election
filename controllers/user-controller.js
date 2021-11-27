@@ -5,7 +5,7 @@ const getUserView = (req, res) => {
     let role = req.session.role;
 
     if (userID && role) {
-        res.render('position', { page: 'position', role: role });
+        res.render('user', { page: 'user', role: role });
     } else {
         res.redirect('/login');
     }
