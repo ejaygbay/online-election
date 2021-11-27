@@ -10,6 +10,8 @@ const contestant_routes = require('./routers/contestant-routes');
 const voter_routes = require('./routers/voter-routes');
 const user_routes = require('./routers/user-routes');
 const auth_routes = require('./routers/auth-routes');
+const role_routes = require('./routers/role-routes');
+
 const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
 
@@ -46,6 +48,8 @@ app.use(contestant_routes);
 app.use(voter_routes);
 app.use(user_routes);
 app.use(auth_routes);
+app.use(role_routes);
+
 
 app.listen(PORT, () => {
     console.log(`App is listening on port ${PORT}`)

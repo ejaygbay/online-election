@@ -12,7 +12,6 @@ const getRoles = (req, res) => {
     }
 }
 
-
 const queryRoles = async(election_id, callback) => {
     if (election_id) {
         ROLES
@@ -51,4 +50,4 @@ const queryRoles = async(election_id, callback) => {
     }
 }
 
-module.exports = getRoles;
+module.exports = { getRoles };
