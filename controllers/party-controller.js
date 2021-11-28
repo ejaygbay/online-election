@@ -55,8 +55,8 @@ const createParty = (req, res) => {
 
 const getParties = async(req, res) => {
     console.log("Get Parties ====================");
-    if (req.query.id) {
-        queryParties(req.query.id, data => {
+    if (req.session.role === "admin") {
+        queryParties(req.session.electionID, data => {
             res.send(data);
         })
     } else {
@@ -97,11 +97,11 @@ const deleteParty = (req, res) => {
     })
 }
 
-const queryParties = async(party_id, callback) => {
-    if (party_id) {
+const queryParties = async(election_id, callback) => {
+    if (election_id) {
         PARTY
-            .findOne({
-                where: { id: party_id, status: 'active' }
+            .findAll({
+                where: { election_id: election_id, status: 'active' }
             })
             .then(result => {
                 let results = [];
