@@ -193,7 +193,7 @@ const validateInputs = async(data, callback) => {
 }
 
 const makeAPICall = async(data, callback) => {
-    fetch(`${URL}/party?name=${data.party_name}`, {
+    fetch(`${URL}/party?name=${data.party_name}&id=${data.election_id}`, {
             method: "POST"
         })
         .then(response => response.json())
