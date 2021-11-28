@@ -69,13 +69,17 @@ const getElections = () => {
         })
 }
 
-getElections();
 displayParties();
 
 // Create Party Button
 document.querySelector('#create-party-btn').addEventListener('click', (e) => {
     let data_to_send = {
-        party_name: party_name.value
+        party_name: party_name.value,
+        election_id: undefined
+    }
+
+    if (election_selected) {
+        data_to_send.election_id = election_selected.value;
     }
 
     makeAPICall(data_to_send, result => {
@@ -102,27 +106,32 @@ document.querySelector('#create-party-btn').addEventListener('click', (e) => {
     })
 })
 
-election_selected.addEventListener("change", () => {
-    if (election_selected.value.trim().length > 0 && party_name.value.trim().length > 0) {
-        enableBtn('#create-party-btn');
-    } else {
-        disableBtn('#create-party-btn');
-    }
-})
+if (election_selected) {
+    election_selected.addEventListener("change", () => {
+        if (election_selected.value.trim().length > 0 && party_name.value.trim().length > 0) {
+            enableBtn('#create-party-btn');
+        } else {
+            disableBtn('#create-party-btn');
+        }
+    })
+
+    getElections();
+}
 
 party_name.addEventListener('keyup', (e) => {
-    if (election_selected.value.trim().length > 0) {
+    if (election_selected) {
+        if (election_selected.value.trim().length > 0) {
+            validateInputs(party_name.value.trim(), result => {
+                result ? enableBtn('#create-party-btn') : disableBtn('#create-party-btn');
+            })
+        } else {
+            disableBtn('#create-party-btn');
+        }
+    } else {
         validateInputs(party_name.value.trim(), result => {
             result ? enableBtn('#create-party-btn') : disableBtn('#create-party-btn');
         })
-    } else {
-        disableBtn('#create-party-btn');
     }
-
-    // validateInputs(election_selected.value.trim(), result => {
-    //     result ? enableBtn('#create-party-btn') : disableBtn('#create-party-btn');
-    // })
-    // console.log(election_selected.value);
 })
 
 const displayPartyNameForEditing = (id, party_name) => {
