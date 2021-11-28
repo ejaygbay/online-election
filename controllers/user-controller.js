@@ -11,7 +11,7 @@ const getUserView = (req, res) => {
     }
 }
 
-const createUser = (req, res) => {
+const createUserOld = (req, res) => {
     let position_name = req.query.name.trim();
     let election_id = req.query.id.trim();
 
@@ -25,6 +25,59 @@ const createUser = (req, res) => {
         })
     } else {
         res.send({ status: 1, msg: 'Invalid position name' })
+    }
+}
+
+const createUser = (req, res) => {
+    console.log(req.body)
+
+    let first_name = req.body.first_name;
+    let middle_name = req.body.middle_name;
+    let last_name = req.body.last_name;
+    let election_id = req.session.electionID;
+    let role_id = req.body.role;
+
+
+
+    if (middle_name.length < 1) {
+        delete req.body.middle_name;
+    }
+
+    if (role === "superadmin") {
+        election_id = req.body.election_id;
+    }
+
+    if (validateContestantData(req.body)) {
+        CONTESTANTS
+            .findOrCreate({
+                where: {
+                    email: first_name,
+                    election_id: election_id
+                },
+                defaults: {
+                    first_name: first_name,
+                    middle_name: middle_name,
+                    last_name: last_name,
+                    user_id: user_id,
+                    election_id: election_id,
+                    position_id: position_id,
+                    party_id: party_id,
+                    photo: contestant_img
+                }
+            })
+            .then(result => {
+                if (result[1] === true) {
+                    res.send({ status: 0, msg: 'Contestant created' });
+                } else {
+                    res.send({ status: 1, msg: 'Contestant already exists' });
+                }
+            })
+            .catch(err => {
+                console.log("ERRORRRR>>>>>>>>>>>>>", err);
+                res.send({ status: 1, msg: 'Contestant not created' });
+            })
+    } else {
+        res.send({ status: 1, msg: 'Invalid contestant name' })
     }
 }
 

@@ -18,6 +18,7 @@ const loginDetails = async(req, res) => {
     getUsers(req.body, result => {
         if (result.id) {
             req.session.userID = result.id;
+            req.session.roleID = result.role.dataValues.id;
             req.session.role = result.role.dataValues.role;
             console.log("==========222", req.session);
         } else {

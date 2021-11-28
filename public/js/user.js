@@ -150,25 +150,24 @@ const validateForm = (e) => {
         password: password.trim()
     }
 
-    console.log(data_to_send);
-    // makeAPICall(data_to_send, result => {
-    //     if (result.status === 0) {
-    //         Swal.fire({
-    //             icon: 'success',
-    //             title: `User name <b>${first_name} ${middle_name} ${last_name}</b> was created`,
-    //             showConfirmButton: false,
-    //             timer: 2500
-    //         })
+    makeAPICall(data_to_send, result => {
+        if (result.status === 0) {
+            Swal.fire({
+                icon: 'success',
+                title: `User name <b>${first_name} ${middle_name} ${last_name}</b> was created`,
+                showConfirmButton: false,
+                timer: 2500
+            })
 
-    //     } else {
-    //         Swal.fire({
-    //             icon: 'error',
-    //             title: `User name <b>${first_name} ${middle_name} ${last_name}</b> already exist`,
-    //             showConfirmButton: false,
-    //             timer: 2500
-    //         })
-    //     }
-    // })
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: `User name <b>${first_name} ${middle_name} ${last_name}</b> already exist`,
+                showConfirmButton: false,
+                timer: 2500
+            })
+        }
+    })
 
 }
 
