@@ -1,7 +1,34 @@
 let email = document.getElementById('email');
 let password = document.getElementById('password');
 
-document.querySelector('#login-btn').addEventListener('click', (e) => {
+const validateInputs = (data) => {
+    let result = false;
+
+    for (item in data) {
+        if (data[item].length < 1) {
+            result = true;
+            break;
+        }
+    }
+    return result;
+}
+
+const makeRequest = (data, callback) => {
+    fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => callback(data))
+        .catch(error => callback(error))
+}
+
+document.querySelector('form').addEventListener('submit', (e) => {
+    e.preventDefault(email.setSelectedRange());
+
     let login_details = {
         email: email.value.trim(),
         password: password.value.trim()
@@ -29,28 +56,3 @@ password.addEventListener('focus', () => {
     email.style = "color: #4f4f4f";
     password.style = "color: #4f4f4f";
 })
-
-const validateInputs = (data) => {
-    let result = false;
-
-    for (item in data) {
-        if (data[item].length < 1) {
-            result = true;
-            break;
-        }
-    }
-    return result;
-}
-
-const makeRequest = (data, callback) => {
-    fetch('/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(data => callback(data))
-        .catch(error => callback(error))
-}
