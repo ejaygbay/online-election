@@ -11,35 +11,14 @@ const getUserView = (req, res) => {
     }
 }
 
-const createUserOld = (req, res) => {
-    let position_name = req.query.name.trim();
-    let election_id = req.query.id.trim();
-
-    if (position_name.length > 0) {
-        db.run(`INSERT INTO positions("position_name", "election_id", "date_created") VALUES(?, ?, datetime('now'));`, position_name, election_id, (err, result) => {
-            if (!err) {
-                res.send({ status: 0, msg: 'position created' });
-            } else {
-                res.send({ status: 1, msg: 'position not created' });
-            }
-        })
-    } else {
-        res.send({ status: 1, msg: 'Invalid position name' })
-    }
-}
-
 const createUser = (req, res) => {
-    console.log(req.body)
-
     let first_name = req.body.first_name;
     let middle_name = req.body.middle_name;
     let last_name = req.body.last_name;
     let email = req.body.email;
     let password = req.body.password;
     let election_id = req.body.election_id;
-    let role_id = req.body.roleID;
-
-
+    let role_id = req.body.role_id;
 
     if (middle_name.length < 1) {
         delete req.body.middle_name;
