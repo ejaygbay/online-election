@@ -16,7 +16,6 @@ const createParty = (req, res) => {
     let userID = req.session.userID;
     let electionID = req.session.electionID;
     let role = req.session.role;
-    console.log(req.session);
 
     if (party_name.length > 0) {
         PARTY
