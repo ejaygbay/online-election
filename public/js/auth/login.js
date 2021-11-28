@@ -27,7 +27,7 @@ const makeRequest = (data, callback) => {
 }
 
 document.querySelector('form').addEventListener('submit', (e) => {
-    e.preventDefault(email.setSelectedRange());
+    e.preventDefault();
 
     let login_details = {
         email: email.value.trim(),
