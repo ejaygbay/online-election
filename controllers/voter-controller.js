@@ -87,8 +87,6 @@ const getVoters = (req, res) => {
 }
 
 const getVoterCounts = (req, res) => {
-    req.session.electionID = "33f23b2b-f1c8-4eb4-902e-774eb6a8e759";
-
     VOTERS
         .count({
             where: {

@@ -13,11 +13,10 @@ const getPartyView = (req, res) => {
 
 const createParty = (req, res) => {
     let party_name = req.query.name.trim();
-    req.session.userID = "f759fa54-6640-416a-a01c-9e1ae1b1fd21";
-    req.session.electionID = "8c25132a-5e69-4572-8944-565d5c0eabc6";
-    req.session.role = "superadmin";
     let userID = req.session.userID;
     let electionID = req.session.electionID;
+    let role = req.session.role;
+    console.log(req.session);
 
     if (party_name.length > 0) {
         PARTY

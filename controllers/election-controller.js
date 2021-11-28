@@ -13,10 +13,7 @@ const getElectionView = (req, res) => {
 
 const createElection = (req, res) => {
     let election_name = req.query.name.trim();
-    req.session.userID = "f759fa54-6640-416a-a01c-9e1ae1b1fd21";
-    req.session.role = "superadmin";
     let userID = req.session.userID;
-    console.log("ID**********************", userID);
 
     if (election_name.length > 0) {
         ELECTIONS

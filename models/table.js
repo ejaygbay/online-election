@@ -256,7 +256,7 @@ const ROLES = sequelize.define('role', {
 /**
  * ENTER DEFAULT VALUES IN DATABASE
  */
-let roles = ['superadmin', 'admin', 'voter'];
+let roles = ['superadmin', 'admin'];
 let cnt = 0;
 
 const insertDefaultRoles = (role) => {
