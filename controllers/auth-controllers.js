@@ -16,8 +16,11 @@ const loginDetails = async(req, res) => {
     }
 
     getUsers(req.body, result => {
+        console.log("Resut====>>>>", result);
+
         if (result.id) {
             req.session.userID = result.id;
+            req.session.electionID = result.election_id;
             req.session.roleID = result.role.dataValues.id;
             req.session.role = result.role.dataValues.role;
             console.log("==========222", req.session);
@@ -32,7 +35,7 @@ const loginDetails = async(req, res) => {
 const getUsers = (data, callback) => {
     USERS.findAll({
             include: [ROLES],
-            attributes: ['id'],
+            // attributes: ['id'],
             where: {
                 email: data.email,
                 password: data.password,
