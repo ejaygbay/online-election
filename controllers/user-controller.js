@@ -34,8 +34,10 @@ const createUser = (req, res) => {
     let first_name = req.body.first_name;
     let middle_name = req.body.middle_name;
     let last_name = req.body.last_name;
-    let election_id = req.session.electionID;
-    let role_id = req.body.role;
+    let email = req.body.email;
+    let password = req.body.password;
+    let election_id = req.body.election_id;
+    let role_id = req.body.roleID;
 
 
 
@@ -43,12 +45,8 @@ const createUser = (req, res) => {
         delete req.body.middle_name;
     }
 
-    if (role === "superadmin") {
-        election_id = req.body.election_id;
-    }
-
-    if (validateContestantData(req.body)) {
-        CONTESTANTS
+    if (validateUserData(req.body)) {
+        USERS
             .findOrCreate({
                 where: {
                     email: first_name,
@@ -58,26 +56,25 @@ const createUser = (req, res) => {
                     first_name: first_name,
                     middle_name: middle_name,
                     last_name: last_name,
-                    user_id: user_id,
-                    election_id: election_id,
-                    position_id: position_id,
-                    party_id: party_id,
-                    photo: contestant_img
+                    email: email,
+                    password: password,
+                    role_id: role_id,
+                    election_id: election_id
                 }
             })
             .then(result => {
                 if (result[1] === true) {
-                    res.send({ status: 0, msg: 'Contestant created' });
+                    res.send({ status: 0, msg: 'User created' });
                 } else {
-                    res.send({ status: 1, msg: 'Contestant already exists' });
+                    res.send({ status: 1, msg: 'User already exists' });
                 }
             })
             .catch(err => {
                 console.log("ERRORRRR>>>>>>>>>>>>>", err);
-                res.send({ status: 1, msg: 'Contestant not created' });
+                res.send({ status: 1, msg: 'User not created' });
             })
     } else {
-        res.send({ status: 1, msg: 'Invalid contestant name' })
+        res.send({ status: 1, msg: 'Invalid user name' })
     }
 }
 
@@ -113,6 +110,21 @@ const deleteUser = (req, res) => {
             res.send({ status: 1, msg: 'position not deleted' });
         }
     });
+}
+
+const validateUserData = (data) => {
+    let count = 0;
+    for (let items in data) {
+        if (data[items].length < 1) {
+            count++;
+            break;
+        }
+    }
+
+    if (count > 0)
+        return false
+    else
+        return true;
 }
 
 module.exports = {
