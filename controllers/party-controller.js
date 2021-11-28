@@ -13,35 +13,43 @@ const getPartyView = (req, res) => {
 
 const createParty = (req, res) => {
     let party_name = req.query.name.trim();
+    let election_id = req.query.id.trim();
     let userID = req.session.userID;
-    let electionID = req.session.electionID;
-    let role = req.session.role;
 
-    if (party_name.length > 0) {
-        PARTY
-            .findOrCreate({
-                where: {
-                    party_name: party_name
-                },
-                defaults: {
-                    user_id: userID,
-                    election_id: electionID,
-                    party_name: party_name
-                }
-            })
-            .then(result => {
-                if (result[1] === true) {
-                    res.send({ status: 0, msg: 'Party created' });
-                } else {
-                    res.send({ status: 1, msg: 'Party already exists' });
-                }
-            })
-            .catch(err => {
-                console.log("ERRORRRR>>>>>>>>>>>>>", err);
-                res.send({ status: 1, msg: 'Party not created' });
-            })
+    if (userID) {
+        if (!election_id) {
+            election_id = req.session.electionID;
+        }
+
+        if (party_name.length > 0) {
+            PARTY
+                .findOrCreate({
+                    where: {
+                        party_name: party_name,
+                        election_id: election_id
+                    },
+                    defaults: {
+                        user_id: userID,
+                        election_id: election_id,
+                        party_name: party_name
+                    }
+                })
+                .then(result => {
+                    if (result[1] === true) {
+                        res.send({ status: 0, msg: 'Party created' });
+                    } else {
+                        res.send({ status: 1, msg: 'Party already exists' });
+                    }
+                })
+                .catch(err => {
+                    console.log("ERRORRRR>>>>>>>>>>>>>", err.message);
+                    res.send({ status: 1, msg: 'Party not created' });
+                })
+        } else {
+            res.send({ status: 1, msg: 'Invalid party name' })
+        }
     } else {
-        res.send({ status: 1, msg: 'Invalid party name' })
+        res.send("You are not authorized");
     }
 }
 

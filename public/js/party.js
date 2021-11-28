@@ -75,7 +75,7 @@ displayParties();
 document.querySelector('#create-party-btn').addEventListener('click', (e) => {
     let data_to_send = {
         party_name: party_name.value,
-        election_id: undefined
+        election_id: ''
     }
 
     if (election_selected) {
