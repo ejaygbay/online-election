@@ -43,26 +43,28 @@ const displayPositions = (data) => {
     })
 }
 
+const displayElections = (data) => {
+    let html = `<option value="" disabled selected>Select Election</option>`;
+
+    data = data.reverse();
+
+    election_dropdown1.innerHTML = "";
+    election_dropdown2.innerHTML = "";
+
+    election_dropdown1.insertAdjacentHTML('beforeend', html);
+    election_dropdown2.insertAdjacentHTML('beforeend', html);
+
+    data.forEach(ele => {
+        let html = `<option value="${ele.id}">${ele.election_name}</option>`;
+        election_dropdown1.insertAdjacentHTML('beforeend', html);
+        election_dropdown2.insertAdjacentHTML('beforeend', html);
+    });
+}
+
 const getElections = () => {
     fetch(`${URL}/election`)
         .then(response => response.json())
-        .then(data => {
-            let html = `<option value="" disabled selected>Select Election</option>`;
-
-            data = data.reverse();
-
-            election_dropdown1.innerHTML = "";
-            election_dropdown2.innerHTML = "";
-
-            election_dropdown1.insertAdjacentHTML('beforeend', html);
-            election_dropdown2.insertAdjacentHTML('beforeend', html);
-
-            data.forEach(ele => {
-                let html = `<option value="${ele.id}">${ele.election_name}</option>`;
-                election_dropdown1.insertAdjacentHTML('beforeend', html);
-                election_dropdown2.insertAdjacentHTML('beforeend', html);
-            });
-        })
+        .then(data => displayElections(data));
 }
 
 const editPosition = (id, old_name, new_name) => {
