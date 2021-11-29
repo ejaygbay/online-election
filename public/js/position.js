@@ -141,6 +141,15 @@ const displayPositionNameForEditing = (id, position_name) => {
         })
 }
 
+const getPositions = (election_id) => {
+    fetch(`${URL}/position?id=${election_id}`)
+        .then(response => response.json())
+        .then(data => {
+            data = data.reverse();
+            displayPositions(data);
+        })
+}
+
 const enableBtn = (id) => document.querySelector(id).disabled = false;
 
 const disableBtn = (id) => document.querySelector(id).disabled = true;
@@ -160,13 +169,7 @@ if (election_dropdown1 && election_dropdown2) {
 
     election_dropdown2.addEventListener("change", () => {
         let election_id = election_dropdown2.value;
-
-        fetch(`${URL}/position?id=${election_id}`)
-            .then(response => response.json())
-            .then(data => {
-                data = data.reverse();
-                displayPositions(data);
-            })
+        getPositions(election_id);
     })
 
     getElections();
@@ -223,3 +226,5 @@ document.querySelector("#create-position-btn").addEventListener("click", (e) => 
         position_name.focus();
     })
 })
+
+getPositions('');

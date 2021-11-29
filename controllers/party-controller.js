@@ -54,7 +54,6 @@ const createParty = (req, res) => {
 }
 
 const getParties = async(req, res) => {
-    console.log("Get Parties ====================");
     if (req.session.role === "admin") {
         queryParties(req.session.electionID, data => {
             res.send(data);

@@ -54,12 +54,12 @@ const createPosition = (req, res) => {
 }
 
 const getPositions = (req, res) => {
-    if (req.query.id) {
-        queryPositions(req.query.id, data => {
+    if (req.session.role === "admin") {
+        queryPositions(req.session.electionID, data => {
             res.send(data);
         })
     } else {
-        queryPositions(null, data => {
+        queryPositions(req.query.id, data => {
             res.send(data);
         })
     }
