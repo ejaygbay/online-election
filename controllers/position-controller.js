@@ -12,45 +12,44 @@ const getPositionView = (req, res) => {
 }
 
 const createPosition = (req, res) => {
-    req.session.userID = "f759fa54-6640-416a-a01c-9e1ae1b1fd21";
-    req.session.electionID = "8c25132a-5e69-4572-8944-565d5c0eabc6";
-    req.session.role = "superadmin";
-
-    let role = req.session.role;
-    let user_id = req.session.userID;
-    let election_id = req.session.electionID;
     let position_name = req.query.name.trim();
+    let election_id = req.query.id.trim();
+    let userID = req.session.userID;
 
-    if (role === "superadmin") {
-        election_id = req.query.id.trim();
-    }
+    if (userID) {
+        if (!election_id) {
+            election_id = req.session.electionID;
+        }
 
-    if (position_name.length > 0) {
-        POSITIONS
-            .findOrCreate({
-                where: {
-                    position_name: position_name,
-                    election_id: election_id
-                },
-                defaults: {
-                    user_id: user_id,
-                    election_id: election_id,
-                    position_name: position_name
-                }
-            })
-            .then(result => {
-                if (result[1] === true) {
-                    res.send({ status: 0, msg: 'Position created' });
-                } else {
-                    res.send({ status: 1, msg: 'Position already exists' });
-                }
-            })
-            .catch(err => {
-                console.log("ERRORRRR>>>>>>>>>>>>>", err);
-                res.send({ status: 1, msg: 'Position not created' });
-            })
+        if (position_name.length > 0) {
+            POSITIONS
+                .findOrCreate({
+                    where: {
+                        position_name: position_name,
+                        election_id: election_id
+                    },
+                    defaults: {
+                        user_id: userID,
+                        election_id: election_id,
+                        position_name: position_name
+                    }
+                })
+                .then(result => {
+                    if (result[1] === true) {
+                        res.send({ status: 0, msg: 'Position created' });
+                    } else {
+                        res.send({ status: 1, msg: 'Position already exists' });
+                    }
+                })
+                .catch(err => {
+                    console.log("ERRORRRR>>>>>>>>>>>>>", err);
+                    res.send({ status: 1, msg: 'Position not created' });
+                })
+        } else {
+            res.send({ status: 1, msg: 'Invalid position name' })
+        }
     } else {
-        res.send({ status: 1, msg: 'Invalid position name' })
+        res.send("You are not authorized");
     }
 }
 
@@ -96,70 +95,6 @@ const deletePosition = (req, res) => {
     })
 }
 
-
-// ================================================
-
-
-
-const createParty = (req, res) => {
-    let party_name = req.query.name.trim();
-    req.session.userID = "f759fa54-6640-416a-a01c-9e1ae1b1fd21";
-    req.session.electionID = "8c25132a-5e69-4572-8944-565d5c0eabc6";
-    req.session.role = "superadmin";
-    let userID = req.session.userID;
-    let electionID = req.session.electionID;
-
-    if (party_name.length > 0) {
-
-    } else {
-        res.send({ status: 1, msg: 'Invalid party name' })
-    }
-}
-
-const getParties = async(req, res) => {
-    console.log("Get Parties ====================");
-    if (req.query.id) {
-        queryParties(req.query.id, data => {
-            res.send(data);
-        })
-    } else {
-        queryParties(null, data => {
-            res.send(data);
-        })
-    }
-}
-
-const updateParty = (req, res) => {
-    let party_id = req.query.id;
-    let party_name = req.query.name;
-
-    PARTY.update({
-        party_name: party_name
-    }, {
-        where: {
-            id: party_id
-        }
-    }).then(() => {
-        res.send({ status: 0, msg: 'Party updated' });
-    }).catch(error => {
-        res.send({ status: 1, msg: 'Party not updated' });
-    })
-}
-
-const deleteParty = (req, res) => {
-    let party_id = req.query.id;
-
-    PARTY.destroy({
-        where: {
-            id: party_id
-        }
-    }).then(() => {
-        res.send({ status: 0, msg: 'Party deleted' });
-    }).catch(error => {
-        res.send({ status: 1, msg: 'Party not deleted' });
-    })
-}
-
 const queryPositions = async(election_id, callback) => {
     if (election_id) {
         POSITIONS
@@ -198,15 +133,6 @@ const queryPositions = async(election_id, callback) => {
             })
     }
 }
-
-// queryParties();
-
-// module.exports = {
-//     createParty,
-//     getParties,
-//     updateParty,
-//     deleteParty
-// }
 
 module.exports = {
     getPositionView,

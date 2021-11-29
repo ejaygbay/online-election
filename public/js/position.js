@@ -172,7 +172,6 @@ if (election_dropdown1 && election_dropdown2) {
     getElections();
 }
 
-
 position_name.addEventListener('keyup', (e) => {
     if (election_dropdown1 && election_dropdown2) {
         if (election_dropdown1.value.trim().length > 0) {
@@ -192,7 +191,11 @@ position_name.addEventListener('keyup', (e) => {
 document.querySelector("#create-position-btn").addEventListener("click", (e) => {
     let data_to_send = {
         position_name: position_name.value,
-        election_id: election_dropdown1.value
+        election_id: ''
+    }
+
+    if (election_dropdown1) {
+        data_to_send.election_id = election_dropdown1.value;
     }
 
     makeAPICall(data_to_send, result => {
@@ -204,7 +207,9 @@ document.querySelector("#create-position-btn").addEventListener("click", (e) => 
                 timer: 2500
             })
             position_name.value = "";
-            election_dropdown1.selectedIndex = 0;
+            if (election_dropdown1) {
+                election_dropdown1.selectedIndex = 0;
+            }
             disableBtn('#create-position-btn');
         } else {
             Swal.fire({
