@@ -174,18 +174,19 @@ if (election_dropdown1 && election_dropdown2) {
 
 
 position_name.addEventListener('keyup', (e) => {
-    if (election_dropdown1.value.trim().length > 0) {
+    if (election_dropdown1 && election_dropdown2) {
+        if (election_dropdown1.value.trim().length > 0) {
+            validateInputs(position_name.value.trim(), result => {
+                result ? enableBtn('#create-position-btn') : disableBtn('#create-position-btn');
+            })
+        } else {
+            disableBtn('#create-position-btn');
+        }
+    } else {
         validateInputs(position_name.value.trim(), result => {
             result ? enableBtn('#create-position-btn') : disableBtn('#create-position-btn');
         })
-    } else {
-        disableBtn('#create-position-btn');
     }
-
-    // validateInputs(election_dropdown1.value.trim(), result => {
-    //     result ? enableBtn('#create-position-btn') : disableBtn('#create-position-btn');
-    // })
-    // console.log(election_dropdown1.value);
 })
 
 document.querySelector("#create-position-btn").addEventListener("click", (e) => {
