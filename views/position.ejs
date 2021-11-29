@@ -43,19 +43,21 @@
 
                 <section>
                     <h2 class="mb-4" style="text-align: center;">View Positions</h2>
-                    <select class="custom-select" id="elections-dropdown2">
-                        <option value="">Select Election</option>
-                    </select>
+                    <% if(role === 'superadmin'){ %>
+                        <select class="custom-select" id="elections-dropdown2">
+                            <option value="">Select Election</option>
+                        </select>
+                        <% } %>
 
-                    <table class="table responsive">
-                        <thead>
-                            <th>#</th>
-                            <th scope="col">Position</th>
-                            <th scope="col">Action</th>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                            <table class="table responsive">
+                                <thead>
+                                    <th>#</th>
+                                    <th scope="col">Position</th>
+                                    <th scope="col">Action</th>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
                 </section>
             </div>
 
