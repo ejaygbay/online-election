@@ -142,10 +142,12 @@ const displayPositionNameForEditing = (id, position_name) => {
 }
 
 const getPositions = (election_id) => {
+    console.log("Get positions")
     fetch(`${URL}/position?id=${election_id}`)
         .then(response => response.json())
         .then(data => {
             data = data.reverse();
+            console.log("sec res::::", data);
             displayPositions(data);
         })
 }
@@ -212,6 +214,10 @@ document.querySelector("#create-position-btn").addEventListener("click", (e) => 
             position_name.value = "";
             if (election_dropdown1) {
                 election_dropdown1.selectedIndex = 0;
+                alert("DOne")
+                    // getPositions('');
+            } else {
+                // getPositions(election_dropdown1.value);
             }
             disableBtn('#create-position-btn');
         } else {
