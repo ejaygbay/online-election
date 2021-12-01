@@ -2,29 +2,49 @@ const URL = window.location.origin;
 let position_name = document.querySelector('#new-position-name');
 let election_dropdown1 = document.querySelector('#elections-dropdown');
 let election_dropdown2 = document.querySelector("#elections-dropdown2");
+let positions = {};
 
 
 const displayPositions = (data) => {
+    let index = 1;
     let table = document.querySelector("tbody");
-    let position_data = data.reverse();
+    // let position_data = data.reverse();
 
     table.innerHTML = "";
-    position_data.forEach((ele, index) => {
-        let html = `<tr id=${ele.id}>
-                    <th scope="row">${index + 1}.</th>
-                    <td id=name-${ele.id}>${ele.position_name}</td>
-                    <td>
-                        <button id=${ele.id}_edit-btn class="action-btn edit btn outline btn-outline-primary btn-floating">
-                            <i id=${ele.id}_edit class="edit fas fa-pencil-alt"></i>
-                        </button>
-                        <button id=${ele.id}_del-btn type="button" class="action-btn delete btn btn-outline-danger btn-floating">
-                            <i id=${ele.id}_del class="delete fas fa-trash-alt"></i>
-                        </button>
-                    </td>
-                </tr>`;
+
+    for (let id in data) {
+        let html = `<tr id=${id}>
+            <th scope="row">${index}.</th>
+            <td id=name-${id}>${data[id].position_name}</td>
+            <td>
+                <button id=${id}_edit-btn class="action-btn edit btn outline btn-outline-primary btn-floating">
+                    <i id=${id}_edit class="edit fas fa-pencil-alt"></i>
+                </button>
+                <button id=${id}_del-btn type="button" class="action-btn delete btn btn-outline-danger btn-floating">
+                    <i id=${id}_del class="delete fas fa-trash-alt"></i>
+                </button>
+            </td>
+        </tr>`;
 
         table.insertAdjacentHTML('beforeend', html);
-    });
+        index++;
+    }
+    // data.forEach((ele, index) => {
+    //     // let html = `<tr id=${ele.id}>
+    //     //             <th scope="row">${index + 1}.</th>
+    //     //             <td id=name-${ele.id}>${ele.position_name}</td>
+    //     //             <td>
+    //     //                 <button id=${ele.id}_edit-btn class="action-btn edit btn outline btn-outline-primary btn-floating">
+    //     //                     <i id=${ele.id}_edit class="edit fas fa-pencil-alt"></i>
+    //     //                 </button>
+    //     //                 <button id=${ele.id}_del-btn type="button" class="action-btn delete btn btn-outline-danger btn-floating">
+    //     //                     <i id=${ele.id}_del class="delete fas fa-trash-alt"></i>
+    //     //                 </button>
+    //     //             </td>
+    //     //         </tr>`;
+
+    //     // table.insertAdjacentHTML('beforeend', html);
+    // });
 
     document.querySelectorAll(".action-btn").forEach(ele => {
         ele.addEventListener("click", (e) => {
@@ -95,7 +115,9 @@ const deletePosition = (id, position_name) => {
                 showConfirmButton: false,
                 timer: 1000
             })
-            document.getElementById(id).style = "display: none";
+
+            delete positions[id];
+            displayPositions(positions);
         })
 }
 
@@ -142,13 +164,22 @@ const displayPositionNameForEditing = (id, position_name) => {
 }
 
 const getPositions = (election_id) => {
-    console.log("Get positions")
     fetch(`${URL}/position?id=${election_id}`)
         .then(response => response.json())
         .then(data => {
             data = data.reverse();
-            console.log("sec res::::", data);
-            displayPositions(data);
+
+            data.forEach(ele => {
+                let id = ele.id;
+                let position_name = ele.position_name;
+
+                positions[id] = {
+                    id: id,
+                    position_name: position_name
+                }
+            })
+
+            displayPositions(positions);
         })
 }
 
@@ -174,7 +205,7 @@ if (election_dropdown1 && election_dropdown2) {
         getPositions(election_id);
     })
 
-    getElections();
+    getElections('');
 }
 
 position_name.addEventListener('keyup', (e) => {
