@@ -212,12 +212,12 @@ document.querySelector("#create-position-btn").addEventListener("click", (e) => 
                 timer: 2500
             })
             position_name.value = "";
+
             if (election_dropdown1) {
+                getPositions(election_dropdown1.value);
                 election_dropdown1.selectedIndex = 0;
-                alert("DOne")
-                    // getPositions('');
             } else {
-                // getPositions(election_dropdown1.value);
+                getPositions('');
             }
             disableBtn('#create-position-btn');
         } else {
