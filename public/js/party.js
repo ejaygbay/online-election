@@ -148,6 +148,8 @@ const displayPartyNameForEditing = (id, party_name) => {
 }
 
 const getParties = (election_id) => {
+    parties = {};
+
     fetch(`${URL}/party?election_id=${election_id}`)
         .then(response => response.json())
         .then(data => {
