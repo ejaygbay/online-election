@@ -42,28 +42,34 @@
                             <!-- </form> -->
                 </section>
 
-                <table class="table responsive">
-                    <thead>
-                        <th>#</th>
-                        <th scope="col">Party</th>
-                        <th scope="col">Action</th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1.</th>
-                            <td>TYA1</td>
-                            <td>
-                                <button class="btn outline btn-outline-primary btn-floating">
+                <% if(role === 'superadmin'){ %>
+                    <select class="custom-select" id="elections-dropdown2">
+                        <option value="">Select Election</option>
+                    </select>
+                    <% } %>
+
+                        <table class="table responsive">
+                            <thead>
+                                <th>#</th>
+                                <th scope="col">Party</th>
+                                <th scope="col">Action</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">1.</th>
+                                    <td>TYA1</td>
+                                    <td>
+                                        <button class="btn outline btn-outline-primary btn-floating">
                                     <i class="fas fa-pencil-alt"></i>
                                 </button>
-                                <button type="button" class="btn btn-outline-danger btn-floating">
+                                        <button type="button" class="btn btn-outline-danger btn-floating">
                                     <i class="fas fa-trash-alt"></i>
                                 </button>
-                            </td>
-                        </tr>
+                                    </td>
+                                </tr>
 
-                    </tbody>
-                </table>
+                            </tbody>
+                        </table>
             </div>
         </main>
 
