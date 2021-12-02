@@ -1,7 +1,7 @@
 const URL = window.location.origin;
 let party_name = document.querySelector("#new-party-name");
-let election_selected = document.getElementById('elections-dropdown');
-let election_selected2 = document.getElementById('elections-dropdown2');
+let election_dropdown = document.getElementById('elections-dropdown');
+let election_dropdown2 = document.getElementById('elections-dropdown2');
 
 const displayParties = () => {
     fetch(`${URL}/party`)
@@ -73,7 +73,9 @@ const getElections = () => {
         })
 }
 
-displayParties();
+if (!election_dropdown) {
+    displayParties();
+}
 
 // Create Party Button
 document.querySelector('#create-party-btn').addEventListener('click', (e) => {
@@ -82,8 +84,8 @@ document.querySelector('#create-party-btn').addEventListener('click', (e) => {
         election_id: ''
     }
 
-    if (election_selected) {
-        data_to_send.election_id = election_selected.value;
+    if (election_dropdown) {
+        data_to_send.election_id = election_dropdown.value;
     }
 
     makeAPICall(data_to_send, result => {
@@ -110,21 +112,26 @@ document.querySelector('#create-party-btn').addEventListener('click', (e) => {
     })
 })
 
-if (election_selected) {
-    election_selected.addEventListener("change", () => {
-        if (election_selected.value.trim().length > 0 && party_name.value.trim().length > 0) {
+if (election_dropdown) {
+    election_dropdown.addEventListener("change", () => {
+        if (election_dropdown.value.trim().length > 0 && party_name.value.trim().length > 0) {
             enableBtn('#create-party-btn');
         } else {
             disableBtn('#create-party-btn');
         }
     })
 
+    election_dropdown2.addEventListener("change", () => {
+        let election_id = election_dropdown2.value;
+        getPositions(election_id);
+    })
+
     getElections();
 }
 
 party_name.addEventListener('keyup', (e) => {
-    if (election_selected) {
-        if (election_selected.value.trim().length > 0) {
+    if (election_dropdown) {
+        if (election_dropdown.value.trim().length > 0) {
             validateInputs(party_name.value.trim(), result => {
                 result ? enableBtn('#create-party-btn') : disableBtn('#create-party-btn');
             })
