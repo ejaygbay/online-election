@@ -164,6 +164,8 @@ const displayPositionNameForEditing = (id, position_name) => {
 }
 
 const getPositions = (election_id) => {
+    positions = {};
+
     fetch(`${URL}/position?id=${election_id}`)
         .then(response => response.json())
         .then(data => {
