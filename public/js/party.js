@@ -49,6 +49,26 @@ const displayParties = () => {
         })
 }
 
+const getParties = (election_id) => {
+    fetch(`${URL}/?election_id=${election_id}`)
+        .then(response => response.json())
+        .then(data => {
+            data = data.reverse();
+
+            data.forEach(ele => {
+                let id = ele.id;
+                let position_name = ele.position_name;
+
+                positions[id] = {
+                    id: id,
+                    position_name: position_name
+                }
+            })
+
+            displayPositions(positions);
+        })
+}
+
 const getElections = () => {
     fetch(`${URL}/election`)
         .then(response => response.json())

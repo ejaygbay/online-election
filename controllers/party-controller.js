@@ -54,15 +54,15 @@ const createParty = (req, res) => {
 }
 
 const getParties = async(req, res) => {
+    let election_id = req.query.election_id;
+
     if (req.session.role === "admin") {
-        queryParties(req.session.electionID, data => {
-            res.send(data);
-        })
-    } else {
-        queryParties(null, data => {
-            res.send(data);
-        })
+        election_id = req.session.electionID;
     }
+
+    queryParties(election_id, data => {
+        res.send(data);
+    })
 }
 
 const updateParty = (req, res) => {
