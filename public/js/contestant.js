@@ -29,16 +29,16 @@ const getPositions = async(election_id) => {
  * [{id: exampleID, election_name: "Test Election"}]
  */
 const displayElections = (data) => {
-    let dropdown = document.querySelector("#elections-dropdown");
+    let election_dropdown = document.querySelector("#elections-dropdown");
     let html = `<option value="" disabled selected>Select Election</option>`;
 
     data = data.reverse();
-    dropdown.innerHTML = "";
-    dropdown.insertAdjacentHTML('beforeend', html);
+    election_dropdown.innerHTML = "";
+    election_dropdown.insertAdjacentHTML('beforeend', html);
 
     data.forEach(ele => {
         let html = `<option value="${ele.id}">${ele.election_name}</option>`;
-        dropdown.insertAdjacentHTML('beforeend', html);
+        election_dropdown.insertAdjacentHTML('beforeend', html);
     });
 }
 
@@ -112,10 +112,16 @@ const displayContestants = (data) => {
  * When the select element for the displaying contestants for
  * a specific election is changed, it is handled by this
  */
-document.getElementById('elections-dropdown').addEventListener("change", async() => {
-    displayPositions(await getPositions(election_id.value));
-    displayParties(await getParties(election_id.value));
-})
+if (election_id) {
+    document.getElementById('elections-dropdown').addEventListener("change", async() => {
+        displayPositions(await getPositions(election_id.value));
+        displayParties(await getParties(election_id.value));
+    })
+} else {
+    getPositions('').then(data => displayPositions(data))
+        // displayPositions(getPositions(''));
+        // displayParties(getParties(''));
+}
 
 const displayContestantNameForEditing = (id, contestant_name) => {
     Swal.fire({
@@ -195,8 +201,9 @@ const validateForm = (e) => {
 
 }
 
-getElections().then(data => displayElections(data));
-
+if (election_id) {
+    getElections().then(data => displayElections(data));
+}
 
 const editContestant = (id, old_name, new_name) => {
     fetch(`${URL}/contestant?id=${id}&name=${new_name}`, {
