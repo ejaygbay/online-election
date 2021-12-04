@@ -11,7 +11,7 @@ const getElections = async() => {
 }
 
 const getParties = async(election_id) => {
-    return await fetch(`${URL}/party?id=${election_id}`)
+    return await fetch(`${URL}/party?election_id=${election_id}`)
         .then(response => response.json())
         .then(data => data)
 }
