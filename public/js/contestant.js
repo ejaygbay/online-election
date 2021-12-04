@@ -1,66 +1,27 @@
 const URL = window.location.origin;
 let election_id = document.getElementById('elections-dropdown');
 
-const displayContestants = (data) => {
-    // let table = document.querySelector("tbody");
-    // let contestant_data = data.reverse();
-
-    // table.innerHTML = "";
-    // contestant_data.forEach((ele, index) => {
-    //     let html = `<tr id=${ele.id}>
-    //                 <th scope="row">${index + 1}.</th>
-    //                 <td id=name-${ele.id}>${ele.contestant_name}</td>
-    //                 <td>
-    //                     <button id=${ele.id}_edit-btn class="action-btn edit btn outline btn-outline-primary btn-floating">
-    //                         <i id=${ele.id}_edit class="edit fas fa-pencil-alt"></i>
-    //                     </button>
-    //                     <button id=${ele.id}_del-btn type="button" class="action-btn delete btn btn-outline-danger btn-floating">
-    //                         <i id=${ele.id}_del class="delete fas fa-trash-alt"></i>
-    //                     </button>
-    //                 </td>
-    //             </tr>`;
-
-    //     table.insertAdjacentHTML('beforeend', html);
-    // });
-
-    // document.querySelectorAll(".action-btn").forEach(ele => {
-    //     ele.addEventListener("click", (e) => {
-    //         let id = e.target.id.split("_")[0];
-    //         let classes = e.target.classList;
-    //         let contestant_name = document.getElementById(`name-${id}`).innerHTML;
-
-    //         classes.forEach(ele => {
-    //             if (ele === 'edit') {
-    //                 displaycontestantNameForEditing(id, contestant_name);
-    //             } else if (ele === 'delete') {
-    //                 deletecontestant(id, contestant_name);
-    //             }
-    //         })
-    //     })
-    // })
-}
-
 /**
  * Using Fetch to get all elections
  */
-const getElections = () => {
-    fetch(`${URL}/election`)
+const getElections = async() => {
+    return await fetch(`${URL}/election`)
         .then(response => response.json())
-        .then(data => {
-            displayElections(data);
-        })
+        .then(data => data)
 }
 
-const getParties = () => {
-    election_id = election_id.value;
-
-    fetch(`${URL}/party?id=${election_id}`)
+const getParties = async(election_id) => {
+    return await fetch(`${URL}/party?id=${election_id}`)
         .then(response => response.json())
-        .then(data => {
-            console.log("PARTIES:::", data);
-            // displayParties(data);
-        })
+        .then(data => data)
 }
+
+const getPositions = async(election_id) => {
+    return await fetch(`${URL}/position?id=${election_id}`)
+        .then(response => response.json())
+        .then(data => data)
+}
+
 
 /**
  * Display election
@@ -108,19 +69,52 @@ const displayPositions = (data) => {
     });
 }
 
+const displayContestants = (data) => {
+    // let table = document.querySelector("tbody");
+    // let contestant_data = data.reverse();
+
+    // table.innerHTML = "";
+    // contestant_data.forEach((ele, index) => {
+    //     let html = `<tr id=${ele.id}>
+    //                 <th scope="row">${index + 1}.</th>
+    //                 <td id=name-${ele.id}>${ele.contestant_name}</td>
+    //                 <td>
+    //                     <button id=${ele.id}_edit-btn class="action-btn edit btn outline btn-outline-primary btn-floating">
+    //                         <i id=${ele.id}_edit class="edit fas fa-pencil-alt"></i>
+    //                     </button>
+    //                     <button id=${ele.id}_del-btn type="button" class="action-btn delete btn btn-outline-danger btn-floating">
+    //                         <i id=${ele.id}_del class="delete fas fa-trash-alt"></i>
+    //                     </button>
+    //                 </td>
+    //             </tr>`;
+
+    //     table.insertAdjacentHTML('beforeend', html);
+    // });
+
+    // document.querySelectorAll(".action-btn").forEach(ele => {
+    //     ele.addEventListener("click", (e) => {
+    //         let id = e.target.id.split("_")[0];
+    //         let classes = e.target.classList;
+    //         let contestant_name = document.getElementById(`name-${id}`).innerHTML;
+
+    //         classes.forEach(ele => {
+    //             if (ele === 'edit') {
+    //                 displaycontestantNameForEditing(id, contestant_name);
+    //             } else if (ele === 'delete') {
+    //                 deletecontestant(id, contestant_name);
+    //             }
+    //         })
+    //     })
+    // })
+}
+
 /**
  * When the select element for the displaying contestants for
  * a specific election is changed, it is handled by this
  */
-document.getElementById('elections-dropdown').addEventListener("change", () => {
-    election_id = election_id.value;
-
-    fetch(`${URL}/position?id=${election_id}`)
-        .then(response => response.json())
-        .then(data => {
-            displayPositions(data);
-            getParties();
-        })
+document.getElementById('elections-dropdown').addEventListener("change", async() => {
+    displayPositions(await getPositions(election_id.value));
+    displayParties(await getParties(election_id.value));
 })
 
 const displayContestantNameForEditing = (id, contestant_name) => {
@@ -201,7 +195,7 @@ const validateForm = (e) => {
 
 }
 
-getElections();
+getElections().then(data => displayElections(data));
 
 
 const editContestant = (id, old_name, new_name) => {
