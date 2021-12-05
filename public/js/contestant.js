@@ -132,13 +132,13 @@ const displayContestantNameForEditing = (id, contestant_name) => {
 const validateForm = (e) => {
     e.preventDefault();
 
-    let first_name = document.querySelector('#first-name').value;
-    let middle_name = document.getElementById('middle-name').value;
-    let last_name = document.querySelector('#last-name').value;
+    let first_name = document.querySelector('#first-name');
+    let middle_name = document.getElementById('middle-name');
+    let last_name = document.querySelector('#last-name');
     let election_selected = document.getElementById('elections-dropdown');
-    let position_selected = document.getElementById('positions-dropdown').value;
-    let party_selected = document.getElementById('parties-dropdown').value;
-    let contestant_img = document.getElementById('img-preview').src;
+    let position_selected = document.getElementById('positions-dropdown');
+    let party_selected = document.getElementById('parties-dropdown');
+    let contestant_img = document.getElementById('img-preview');
 
     if (election_selected) {
         election_selected = election_selected.value;
@@ -147,34 +147,49 @@ const validateForm = (e) => {
     }
 
     let data_to_send = {
-        first_name: first_name,
-        middle_name: middle_name,
-        last_name: last_name,
-        election_id: election_selected,
-        position_id: position_selected,
-        party_id: party_selected,
-        contestant_img: contestant_img
+        first_name: first_name.value,
+        middle_name: middle_name.value,
+        last_name: last_name.value,
+        election_id: election_selected.value,
+        position_id: position_selected.value,
+        party_id: party_selected.value,
+        contestant_img: contestant_img.src
     }
 
     makeAPICall(data_to_send, result => {
         if (result.status === 0) {
             Swal.fire({
                 icon: 'success',
-                title: `Contestant name <b>${first_name} ${middle_name} ${last_name}</b> was created`,
+                title: `Contestant name <b>${first_name.value} ${middle_name.value} ${last_name.value}</b> was created`,
                 showConfirmButton: false,
                 timer: 2500
             })
 
+            first_name.value = '';
+            middle_name.value = '';
+            last_name.value = '';
+            election_selected.selectedIndex = 0;
+            position_selected.selectedIndex = 0;
+            party_selected.selectedIndex = 0;
+            contestant_img.src = '';
+
+            middle_name.focus();
+            last_name.focus();
+            first_name.focus();
+
+            document.getElementById('img-preview').src = "";
+            document.getElementById('img-preview').style = "height: 0px; width: 0px;";
+            document.getElementById('preview-text').style = "visibility: visible;";
+
         } else {
             Swal.fire({
                 icon: 'error',
-                title: `Contestant name <b>${first_name} ${middle_name} ${last_name}</b> already exist`,
+                title: `Contestant name <b>${first_name.value} ${middle_name.value} ${last_name.value}</b> already exist`,
                 showConfirmButton: false,
                 timer: 2500
             })
         }
     })
-
 }
 
 const editContestant = (id, old_name, new_name) => {
