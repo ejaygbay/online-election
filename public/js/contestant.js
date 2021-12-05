@@ -22,7 +22,6 @@ const getPositions = async(election_id) => {
         .then(data => data)
 }
 
-
 /**
  * Display election
  * @param {array} data array of objects
@@ -108,20 +107,6 @@ const displayContestants = (data) => {
     // })
 }
 
-/**
- * When the select element for the displaying contestants for
- * a specific election is changed, it is handled by this
- */
-if (elections_dropdown) {
-    elections_dropdown.addEventListener("change", async() => {
-        displayPositions(await getPositions(elections_dropdown.value));
-        displayParties(await getParties(elections_dropdown.value));
-    })
-} else {
-    getPositions('').then(data => displayPositions(data));
-    getParties('').then(data => displayParties(data));
-}
-
 const displayContestantNameForEditing = (id, contestant_name) => {
     Swal.fire({
             title: 'Edit contestant',
@@ -140,20 +125,6 @@ const displayContestantNameForEditing = (id, contestant_name) => {
             }
         })
 }
-
-let img_input_ele = document.getElementById('contestant-img');
-img_input_ele.addEventListener('change', (e) => {
-    if (e.target.files.length > 0) {
-        let img_path = window.URL.createObjectURL(e.target.files[0]);
-        document.getElementById('img-preview').src = img_path;
-        document.getElementById('img-preview').style = "height: 160px; width: 160px;";
-        document.getElementById('preview-text').style = "visibility: hidden;";
-    } else {
-        document.getElementById('img-preview').src = "";
-        document.getElementById('img-preview').style = "height: 0px; width: 0px;";
-        document.getElementById('preview-text').style = "visibility: visible;";
-    }
-})
 
 /**
  * Get form data and make request when the Add Contestant btn is clicked
@@ -204,10 +175,6 @@ const validateForm = (e) => {
         }
     })
 
-}
-
-if (elections_dropdown) {
-    getElections().then(data => displayElections(data));
 }
 
 const editContestant = (id, old_name, new_name) => {
@@ -273,3 +240,35 @@ const validateInputs = (data) => {
 const enableBtn = (id) => document.querySelector(id).disabled = false;
 
 const disableBtn = (id) => document.querySelector(id).disabled = true;
+
+/**
+ * When the select element for the displaying contestants for
+ * a specific election is changed, it is handled by this
+ */
+if (elections_dropdown) {
+    elections_dropdown.addEventListener("change", async() => {
+        displayPositions(await getPositions(elections_dropdown.value));
+        displayParties(await getParties(elections_dropdown.value));
+    })
+} else {
+    getPositions('').then(data => displayPositions(data));
+    getParties('').then(data => displayParties(data));
+}
+
+let img_input_ele = document.getElementById('contestant-img');
+img_input_ele.addEventListener('change', (e) => {
+    if (e.target.files.length > 0) {
+        let img_path = window.URL.createObjectURL(e.target.files[0]);
+        document.getElementById('img-preview').src = img_path;
+        document.getElementById('img-preview').style = "height: 160px; width: 160px;";
+        document.getElementById('preview-text').style = "visibility: hidden;";
+    } else {
+        document.getElementById('img-preview').src = "";
+        document.getElementById('img-preview').style = "height: 0px; width: 0px;";
+        document.getElementById('preview-text').style = "visibility: visible;";
+    }
+})
+
+if (elections_dropdown) {
+    getElections().then(data => displayElections(data));
+}
