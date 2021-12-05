@@ -1,5 +1,5 @@
 const URL = window.location.origin;
-let election_id = document.getElementById('elections-dropdown');
+let election_dropdown = document.getElementById('elections-dropdown');
 
 /**
  * Using Fetch to get all elections
@@ -112,15 +112,14 @@ const displayContestants = (data) => {
  * When the select element for the displaying contestants for
  * a specific election is changed, it is handled by this
  */
-if (election_id) {
+if (election_dropdown) {
     document.getElementById('elections-dropdown').addEventListener("change", async() => {
-        displayPositions(await getPositions(election_id.value));
-        displayParties(await getParties(election_id.value));
+        displayPositions(await getPositions(election_dropdown.value));
+        displayParties(await getParties(election_dropdown.value));
     })
 } else {
-    getPositions('').then(data => displayPositions(data))
-        // displayPositions(getPositions(''));
-        // displayParties(getParties(''));
+    getPositions('').then(data => displayPositions(data));
+    getParties('').then(data => displayParties(data));
 }
 
 const displayContestantNameForEditing = (id, contestant_name) => {
@@ -165,10 +164,16 @@ const validateForm = (e) => {
     let first_name = document.querySelector('#first-name').value;
     let middle_name = document.getElementById('middle-name').value;
     let last_name = document.querySelector('#last-name').value;
-    let election_selected = document.getElementById('elections-dropdown').value;
+    let election_selected = document.getElementById('elections-dropdown');
     let position_selected = document.getElementById('positions-dropdown').value;
     let party_selected = document.getElementById('parties-dropdown').value;
     let contestant_img = document.getElementById('img-preview').src;
+
+    if (election_selected) {
+        election_selected = election_selected.value;
+    } else {
+        election_selected = '';
+    }
 
     let data_to_send = {
         first_name: first_name,
@@ -201,7 +206,7 @@ const validateForm = (e) => {
 
 }
 
-if (election_id) {
+if (election_dropdown) {
     getElections().then(data => displayElections(data));
 }
 
