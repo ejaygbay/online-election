@@ -1,5 +1,5 @@
 const URL = window.location.origin;
-let election_dropdown = document.getElementById('elections-dropdown');
+let elections_dropdown = document.getElementById('elections-dropdown');
 
 /**
  * Using Fetch to get all elections
@@ -29,16 +29,16 @@ const getPositions = async(election_id) => {
  * [{id: exampleID, election_name: "Test Election"}]
  */
 const displayElections = (data) => {
-    let election_dropdown = document.querySelector("#elections-dropdown");
+    let elections_dropdown = document.querySelector("#elections-dropdown");
     let html = `<option value="" disabled selected>Select Election</option>`;
 
     data = data.reverse();
-    election_dropdown.innerHTML = "";
-    election_dropdown.insertAdjacentHTML('beforeend', html);
+    elections_dropdown.innerHTML = "";
+    elections_dropdown.insertAdjacentHTML('beforeend', html);
 
     data.forEach(ele => {
         let html = `<option value="${ele.id}">${ele.election_name}</option>`;
-        election_dropdown.insertAdjacentHTML('beforeend', html);
+        elections_dropdown.insertAdjacentHTML('beforeend', html);
     });
 }
 
@@ -112,10 +112,10 @@ const displayContestants = (data) => {
  * When the select element for the displaying contestants for
  * a specific election is changed, it is handled by this
  */
-if (election_dropdown) {
-    document.getElementById('elections-dropdown').addEventListener("change", async() => {
-        displayPositions(await getPositions(election_dropdown.value));
-        displayParties(await getParties(election_dropdown.value));
+if (elections_dropdown) {
+    elections_dropdown.addEventListener("change", async() => {
+        displayPositions(await getPositions(elections_dropdown.value));
+        displayParties(await getParties(elections_dropdown.value));
     })
 } else {
     getPositions('').then(data => displayPositions(data));
@@ -206,7 +206,7 @@ const validateForm = (e) => {
 
 }
 
-if (election_dropdown) {
+if (elections_dropdown) {
     getElections().then(data => displayElections(data));
 }
 
@@ -225,7 +225,6 @@ const editContestant = (id, old_name, new_name) => {
             document.querySelector(`#name-${id}`).innerHTML = new_name;
         })
 }
-
 
 const deleteContestant = (id, contestant_name) => {
     fetch(`${URL}/contestant?id=${id}`, {
