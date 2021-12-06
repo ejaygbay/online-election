@@ -29,6 +29,8 @@ const createVoter = (req, res) => {
 
     if (role === "superadmin") {
         election_id = req.body.election_id;
+    } else {
+        req.body.election_id = election_id;
     }
 
     if (validateVoterData(req.body)) {
