@@ -125,7 +125,6 @@ const deleteVoter = (req, res) => {
     })
 }
 
-
 const validateVoterData = (data) => {
     let count = 0;
     for (let items in data) {
@@ -139,69 +138,6 @@ const validateVoterData = (data) => {
         return false
     else
         return true;
-}
-
-// ================================================
-
-
-
-const createParty = (req, res) => {
-    let party_name = req.query.name.trim();
-    req.session.userID = "f759fa54-6640-416a-a01c-9e1ae1b1fd21";
-    req.session.electionID = "8c25132a-5e69-4572-8944-565d5c0eabc6";
-    req.session.role = "superadmin";
-    let userID = req.session.userID;
-    let electionID = req.session.electionID;
-
-    if (party_name.length > 0) {
-
-    } else {
-        res.send({ status: 1, msg: 'Invalid party name' })
-    }
-}
-
-const getParties = async(req, res) => {
-    console.log("Get Parties ====================");
-    if (req.query.id) {
-        queryParties(req.query.id, data => {
-            res.send(data);
-        })
-    } else {
-        queryParties(null, data => {
-            res.send(data);
-        })
-    }
-}
-
-const updateParty = (req, res) => {
-    let party_id = req.query.id;
-    let party_name = req.query.name;
-
-    PARTY.update({
-        party_name: party_name
-    }, {
-        where: {
-            id: party_id
-        }
-    }).then(() => {
-        res.send({ status: 0, msg: 'Party updated' });
-    }).catch(error => {
-        res.send({ status: 1, msg: 'Party not updated' });
-    })
-}
-
-const deleteParty = (req, res) => {
-    let party_id = req.query.id;
-
-    PARTY.destroy({
-        where: {
-            id: party_id
-        }
-    }).then(() => {
-        res.send({ status: 0, msg: 'Party deleted' });
-    }).catch(error => {
-        res.send({ status: 1, msg: 'Party not deleted' });
-    })
 }
 
 const queryVoters = async(election_id, callback) => {
@@ -243,15 +179,6 @@ const queryVoters = async(election_id, callback) => {
             })
     }
 }
-
-// queryParties();
-
-// module.exports = {
-//     createParty,
-//     getParties,
-//     updateParty,
-//     deleteParty
-// }
 
 module.exports = {
     votersRegistrationView,
