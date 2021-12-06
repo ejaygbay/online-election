@@ -107,59 +107,59 @@ img_input_ele.addEventListener('change', (e) => {
 /**
  * Get form data and make request when the Add voter btn is clicked
  */
-document.querySelector("#add-voter-btn").addEventListener("click", (e) => {
-    let first_name = document.querySelector('#first-name').value;
-    let middle_name = document.getElementById('middle-name').value;
-    let last_name = document.querySelector('#last-name').value;
-    let election_selected = document.getElementById('elections-dropdown');
-    let voter_img = document.getElementById('img-preview').src;
+document.querySelector("#add-voter-btn").addEventListener("click", async(e) => {
+    let first_name = document.getElementById('first-name');
+    let middle_name = document.getElementById('middle-name');
+    let last_name = document.getElementById('last-name');
+    let election_dropdown = document.getElementById('elections-dropdown');
+    let voter_img = document.getElementById('img-preview');
 
-    if (election_selected) {
-        election_selected = election_selected.value;
-    } else {
-        election_selected = '';
+    let data_to_send = {
+        first_name: first_name.value,
+        middle_name: middle_name.value,
+        last_name: last_name.value,
+        election_id: '',
+        voter_img: voter_img.src
     }
 
-    fetch(`${URL}/voter`, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                first_name: first_name,
-                middle_name: middle_name,
-                last_name: last_name,
-                election_id: election_selected,
-                voter_img: voter_img
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log("Result:::::", data);
-            if (data.status === 0) {
+    if (election_dropdown) {
+        data_to_send.election_id = election_dropdown.value;
+    }
+
+    await makeRequest(data_to_send)
+        .then(result => {
+            if (result.status === 0) {
                 Swal.fire({
                     icon: 'success',
-                    title: `Voter name <b>${first_name} ${middle_name} ${last_name}</b> was created`,
+                    title: `Voter name <b>${first_name.value} ${middle_name.value} ${last_name.value}</b> was created`,
                     showConfirmButton: false,
                     timer: 2500
                 })
+
+                first_name.value = '';
+                middle_name.value = '';
+                last_name.value = '';
+                if (election_dropdown) {
+                    election_dropdown.selectedIndex = 0;
+                }
+                voter_img.src = '';
+
+                middle_name.focus();
+                last_name.focus();
+                first_name.focus();
+
+                document.getElementById('img-preview').src = "";
+                document.getElementById('img-preview').style = "height: 0px; width: 0px;";
+                document.getElementById('preview-text').style = "visibility: visible;";
+
             } else {
                 Swal.fire({
                     icon: 'error',
-                    title: `Voter name <b>${first_name} ${middle_name} ${last_name}</b> already exist`,
+                    title: `Voter name <b>${first_name.value} ${middle_name.value} ${last_name.value}</b> already exist`,
                     showConfirmButton: false,
                     timer: 2500
                 })
             }
-        })
-        .catch(err => {
-            console.log("Error Message:===========", err.message);
-            Swal.fire({
-                icon: 'error',
-                title: `Voter name <b>${first_name} ${middle_name} ${last_name}</b> was not created`,
-                showConfirmButton: false,
-                timer: 2500
-            })
         })
 })
 
@@ -182,7 +182,6 @@ const editvoter = (id, old_name, new_name) => {
         })
 }
 
-
 const deletevoter = (id, voter_name) => {
     fetch(`${URL}/voter?id=${id}`, {
             method: 'DELETE'
@@ -196,5 +195,25 @@ const deletevoter = (id, voter_name) => {
                 timer: 1000
             })
             document.getElementById(id).style = "display: none";
+        })
+}
+
+const makeRequest = async(data) => {
+    return await fetch(`${URL}/voter`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => result)
+        .catch(err => {
+            Swal.fire({
+                icon: 'error',
+                title: `Voter name <b>${first_name} ${middle_name} ${last_name}</b> was not created`,
+                showConfirmButton: false,
+                timer: 2500
+            })
         })
 }
