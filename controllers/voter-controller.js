@@ -12,10 +12,6 @@ const votersRegistrationView = (req, res) => {
 }
 
 const createVoter = (req, res) => {
-    req.session.userID = "f759fa54-6640-416a-a01c-9e1ae1b1fd21";
-    req.session.electionID = "8c25132a-5e69-4572-8944-565d5c0eabc6";
-    req.session.role = "superadmin";
-
     let role = req.session.role;
     let user_id = req.session.userID;
     let election_id = req.session.electionID;
