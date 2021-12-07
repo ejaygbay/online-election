@@ -1,5 +1,6 @@
 const URL = window.location.origin;
-let elections_dropdown = document.getElementById('elections-dropdown');
+let election_dropdown = document.getElementById('elections-dropdown');
+let img_input_ele = document.getElementById('contestant-img');
 
 /**
  * Using Fetch to get all elections
@@ -28,16 +29,15 @@ const getPositions = async(election_id) => {
  * [{id: exampleID, election_name: "Test Election"}]
  */
 const displayElections = (data) => {
-    let elections_dropdown = document.querySelector("#elections-dropdown");
     let html = `<option value="" disabled selected>Select Election</option>`;
 
     data = data.reverse();
-    elections_dropdown.innerHTML = "";
-    elections_dropdown.insertAdjacentHTML('beforeend', html);
+    election_dropdown.innerHTML = "";
+    election_dropdown.insertAdjacentHTML('beforeend', html);
 
     data.forEach(ele => {
         let html = `<option value="${ele.id}">${ele.election_name}</option>`;
-        elections_dropdown.insertAdjacentHTML('beforeend', html);
+        election_dropdown.insertAdjacentHTML('beforeend', html);
     });
 }
 
@@ -132,64 +132,65 @@ const displayContestantNameForEditing = (id, contestant_name) => {
 const validateForm = (e) => {
     e.preventDefault();
 
-    let first_name = document.querySelector('#first-name');
+    let first_name = document.getElementById('first-name');
     let middle_name = document.getElementById('middle-name');
-    let last_name = document.querySelector('#last-name');
-    let election_selected = document.getElementById('elections-dropdown');
+    let last_name = document.getElementById('last-name');
     let position_selected = document.getElementById('positions-dropdown');
     let party_selected = document.getElementById('parties-dropdown');
     let contestant_img = document.getElementById('img-preview');
-
-    if (election_selected) {
-        election_selected = election_selected.value;
-    } else {
-        election_selected = '';
-    }
 
     let data_to_send = {
         first_name: first_name.value,
         middle_name: middle_name.value,
         last_name: last_name.value,
-        election_id: election_selected.value,
+        election_id: '',
         position_id: position_selected.value,
         party_id: party_selected.value,
         contestant_img: contestant_img.src
     }
 
-    makeAPICall(data_to_send, result => {
-        if (result.status === 0) {
-            Swal.fire({
-                icon: 'success',
-                title: `Contestant name <b>${first_name.value} ${middle_name.value} ${last_name.value}</b> was created`,
-                showConfirmButton: false,
-                timer: 2500
-            })
+    if (election_dropdown) {
+        data_to_send.election_id = election_dropdown.value;
+    }
 
-            first_name.value = '';
-            middle_name.value = '';
-            last_name.value = '';
-            election_selected.selectedIndex = 0;
-            position_selected.selectedIndex = 0;
-            party_selected.selectedIndex = 0;
-            contestant_img.src = '';
+    makeAPICall(data_to_send)
+        .then(result => {
+            if (result.status === 0) {
+                Swal.fire({
+                    icon: 'success',
+                    title: `Contestant name <b>${first_name.value} ${middle_name.value} ${last_name.value}</b> was created`,
+                    showConfirmButton: false,
+                    timer: 2500
+                })
 
-            middle_name.focus();
-            last_name.focus();
-            first_name.focus();
+                first_name.value = '';
+                middle_name.value = '';
+                last_name.value = '';
+                position_selected.selectedIndex = 0;
+                party_selected.selectedIndex = 0;
+                if (election_dropdown) {
+                    election_dropdown.selectedIndex = 0;
+                }
+                contestant_img.src = '';
 
-            document.getElementById('img-preview').src = "";
-            document.getElementById('img-preview').style = "height: 0px; width: 0px;";
-            document.getElementById('preview-text').style = "visibility: visible;";
+                middle_name.focus();
+                last_name.focus();
+                first_name.focus();
 
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: `Contestant name <b>${first_name.value} ${middle_name.value} ${last_name.value}</b> already exist`,
-                showConfirmButton: false,
-                timer: 2500
-            })
-        }
-    })
+                img_input_ele.value = '';
+                document.getElementById('img-preview').src = "";
+                document.getElementById('img-preview').style = "height: 0px; width: 0px;";
+                document.getElementById('preview-text').style = "visibility: visible;";
+
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: `Contestant name <b>${first_name.value} ${middle_name.value} ${last_name.value}</b> already exist`,
+                    showConfirmButton: false,
+                    timer: 2500
+                })
+            }
+        })
 }
 
 const editContestant = (id, old_name, new_name) => {
@@ -224,8 +225,8 @@ const deleteContestant = (id, contestant_name) => {
         })
 }
 
-const makeAPICall = async(data, callback) => {
-    fetch(`${URL}/contestant`, {
+const makeAPICall = async(data) => {
+    return await fetch(`${URL}/contestant`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -233,7 +234,7 @@ const makeAPICall = async(data, callback) => {
             body: JSON.stringify(data)
         })
         .then(response => response.json())
-        .then(data => callback(data))
+        .then(data => data)
         .catch(err => {
             console.log("Contestant:::", err.message)
             Swal.fire({
@@ -260,17 +261,19 @@ const disableBtn = (id) => document.querySelector(id).disabled = true;
  * When the select element for the displaying contestants for
  * a specific election is changed, it is handled by this
  */
-if (elections_dropdown) {
-    elections_dropdown.addEventListener("change", async() => {
-        displayPositions(await getPositions(elections_dropdown.value));
-        displayParties(await getParties(elections_dropdown.value));
+if (election_dropdown) {
+    election_dropdown.addEventListener("change", async() => {
+        displayPositions(await getPositions(election_dropdown.value));
+        displayParties(await getParties(election_dropdown.value));
     })
 } else {
     getPositions('').then(data => displayPositions(data));
     getParties('').then(data => displayParties(data));
 }
 
-let img_input_ele = document.getElementById('contestant-img');
+/**
+ * Event lisener used for input element used for inputting images 
+ */
 img_input_ele.addEventListener('change', (e) => {
     if (e.target.files.length > 0) {
         let img_path = window.URL.createObjectURL(e.target.files[0]);
@@ -284,6 +287,6 @@ img_input_ele.addEventListener('change', (e) => {
     }
 })
 
-if (elections_dropdown) {
+if (election_dropdown) {
     getElections().then(data => displayElections(data));
 }

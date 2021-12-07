@@ -33,6 +33,8 @@ const createContestant = (req, res) => {
         req.body.election_id = election_id;
     }
 
+    console.log("========>>>>>>", req.body);
+
     if (validateContestantData(req.body)) {
         CONTESTANTS
             .findOrCreate({
