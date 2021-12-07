@@ -112,14 +112,14 @@ document.querySelector("#add-voter-btn").addEventListener("click", async(e) => {
     let middle_name = document.getElementById('middle-name');
     let last_name = document.getElementById('last-name');
     let election_dropdown = document.getElementById('elections-dropdown');
-    let voter_img = document.getElementById('img-preview');
+    let voter_preview_img = document.getElementById('img-preview');
 
     let data_to_send = {
         first_name: first_name.value,
         middle_name: middle_name.value,
         last_name: last_name.value,
         election_id: '',
-        voter_img: voter_img.src
+        voter_img: voter_preview_img.src
     }
 
     if (election_dropdown) {
@@ -142,12 +142,13 @@ document.querySelector("#add-voter-btn").addEventListener("click", async(e) => {
                 if (election_dropdown) {
                     election_dropdown.selectedIndex = 0;
                 }
-                voter_img.src = '';
+                voter_preview_img.src = '';
 
                 middle_name.focus();
                 last_name.focus();
                 first_name.focus();
 
+                img_input_ele.value = '';
                 document.getElementById('img-preview').src = "";
                 document.getElementById('img-preview').style = "height: 0px; width: 0px;";
                 document.getElementById('preview-text').style = "visibility: visible;";
