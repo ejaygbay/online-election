@@ -1,4 +1,10 @@
 const URL = window.location.origin;
+let first_name = document.getElementById('first-name');
+let middle_name = document.getElementById('middle-name');
+let last_name = document.getElementById('last-name');
+let election_dropdown = document.getElementById('elections-dropdown');
+let voter_preview_img = document.getElementById('img-preview');
+let img_input_ele = document.getElementById('voter-img');
 
 const displayVoters = (data) => {
     // let table = document.querySelector("tbody");
@@ -57,16 +63,15 @@ const getElections = () => {
  * [{id: exampleID, election_name: "Test Election"}]
  */
 const displayElections = (data) => {
-    let dropdown = document.querySelector("#elections-dropdown");
     let html = `<option value="" disabled selected>Select Election</option>`;
 
     data = data.reverse();
-    dropdown.innerHTML = "";
-    dropdown.insertAdjacentHTML('beforeend', html);
+    election_dropdown.innerHTML = "";
+    election_dropdown.insertAdjacentHTML('beforeend', html);
 
     data.forEach(ele => {
         let html = `<option value="${ele.id}">${ele.election_name}</option>`;
-        dropdown.insertAdjacentHTML('beforeend', html);
+        election_dropdown.insertAdjacentHTML('beforeend', html);
     });
 }
 
@@ -90,7 +95,6 @@ const displayVoterNameForEditing = (id, voter_name) => {
         })
 }
 
-let img_input_ele = document.getElementById('voter-img');
 img_input_ele.addEventListener('change', (e) => {
     if (e.target.files.length > 0) {
         let img_path = window.URL.createObjectURL(e.target.files[0]);
@@ -108,12 +112,6 @@ img_input_ele.addEventListener('change', (e) => {
  * Get form data and make request when the Add voter btn is clicked
  */
 document.querySelector("#add-voter-btn").addEventListener("click", async(e) => {
-    let first_name = document.getElementById('first-name');
-    let middle_name = document.getElementById('middle-name');
-    let last_name = document.getElementById('last-name');
-    let election_dropdown = document.getElementById('elections-dropdown');
-    let voter_preview_img = document.getElementById('img-preview');
-
     let data_to_send = {
         first_name: first_name.value,
         middle_name: middle_name.value,
@@ -164,7 +162,9 @@ document.querySelector("#add-voter-btn").addEventListener("click", async(e) => {
         })
 })
 
-getElections();
+if (election_dropdown) {
+    getElections();
+}
 
 
 const editvoter = (id, old_name, new_name) => {
