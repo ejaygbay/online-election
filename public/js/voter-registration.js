@@ -56,7 +56,6 @@ const getElections = () => {
         })
 }
 
-
 /**
  * Display election
  * @param {array} data array of objects
@@ -75,6 +74,57 @@ const displayElections = (data) => {
     });
 }
 
+const editvoter = (id, old_name, new_name) => {
+    fetch(`${URL}/voter?id=${id}&name=${new_name}`, {
+            method: 'PATCH'
+        })
+        .then(response => response.json())
+        .then(data => {
+            Swal.fire({
+                icon: 'success',
+                title: `${old_name} was changed to ${new_name}`,
+                showConfirmButton: false,
+                timer: 2500
+            })
+            document.querySelector(`#name-${id}`).innerHTML = new_name;
+        })
+}
+
+const deletevoter = (id, voter_name) => {
+    fetch(`${URL}/voter?id=${id}`, {
+            method: 'DELETE'
+        })
+        .then(response => response.json())
+        .then(data => {
+            Swal.fire({
+                icon: 'success',
+                title: `${voter_name} was deleted`,
+                showConfirmButton: false,
+                timer: 1000
+            })
+            document.getElementById(id).style = "display: none";
+        })
+}
+
+const makeRequest = async(data) => {
+    return await fetch(`${URL}/voter`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => result)
+        .catch(err => {
+            Swal.fire({
+                icon: 'error',
+                title: `Voter name <b>${first_name} ${middle_name} ${last_name}</b> was not created`,
+                showConfirmButton: false,
+                timer: 2500
+            })
+        })
+}
 
 const displayVoterNameForEditing = (id, voter_name) => {
     Swal.fire({
@@ -95,6 +145,9 @@ const displayVoterNameForEditing = (id, voter_name) => {
         })
 }
 
+/**
+ * Event lisener used for input element used for inputting images 
+ */
 img_input_ele.addEventListener('change', (e) => {
     if (e.target.files.length > 0) {
         let img_path = window.URL.createObjectURL(e.target.files[0]);
@@ -164,57 +217,4 @@ document.querySelector("#add-voter-btn").addEventListener("click", async(e) => {
 
 if (election_dropdown) {
     getElections();
-}
-
-
-const editvoter = (id, old_name, new_name) => {
-    fetch(`${URL}/voter?id=${id}&name=${new_name}`, {
-            method: 'PATCH'
-        })
-        .then(response => response.json())
-        .then(data => {
-            Swal.fire({
-                icon: 'success',
-                title: `${old_name} was changed to ${new_name}`,
-                showConfirmButton: false,
-                timer: 2500
-            })
-            document.querySelector(`#name-${id}`).innerHTML = new_name;
-        })
-}
-
-const deletevoter = (id, voter_name) => {
-    fetch(`${URL}/voter?id=${id}`, {
-            method: 'DELETE'
-        })
-        .then(response => response.json())
-        .then(data => {
-            Swal.fire({
-                icon: 'success',
-                title: `${voter_name} was deleted`,
-                showConfirmButton: false,
-                timer: 1000
-            })
-            document.getElementById(id).style = "display: none";
-        })
-}
-
-const makeRequest = async(data) => {
-    return await fetch(`${URL}/voter`, {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(result => result)
-        .catch(err => {
-            Swal.fire({
-                icon: 'error',
-                title: `Voter name <b>${first_name} ${middle_name} ${last_name}</b> was not created`,
-                showConfirmButton: false,
-                timer: 2500
-            })
-        })
 }
