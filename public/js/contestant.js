@@ -1,6 +1,7 @@
 const URL = window.location.origin;
 let election_dropdown = document.getElementById('elections-dropdown');
 let img_input_ele = document.getElementById('contestant-img');
+let independent_party = [];
 
 /**
  * Using Fetch to get all elections
@@ -46,6 +47,7 @@ const displayParties = (data) => {
     let html = `<option value="" disabled selected>Select Party</option>`;
 
     data = data.reverse();
+    data.unshift(independent_party[0]);
     parties_dropdown.innerHTML = "";
     parties_dropdown.insertAdjacentHTML('beforeend', html);
 
@@ -270,7 +272,10 @@ if (election_dropdown) {
     getPositions('').then(data => displayPositions(data));
     getParties('').then(data => displayParties(data));
 }
-getParties('Independent').then(data => displayParties(data));
+getParties('Independent').then(data => {
+    independent_party = data;
+    displayParties([])
+});
 
 /**
  * Event lisener used for input element used for inputting images 
