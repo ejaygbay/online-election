@@ -1,15 +1,12 @@
 const URL = window.location.origin;
 
 const getContestants = async(election_id) => {
-    console.log("Election ID:::", URL);
-    fetch(`${URL}/contestant`);
+    // console.log("Election ID:::", URL);
 
-    // fetch(`${URL}/contestant?election_id=${election_id}`)
-    //     // .then(response => response.json())
-    //     .then(data => {
-    //         console.log(data);
-    //     })
-    //     .catch(err => { console.log("Error+>>>>>>>>>>>>>>", err) })
+    fetch(`${URL}/contestant?election_id=${election_id}`)
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(err => { console.log("Error+>>>>>>>>>>>>>>", err) })
 }
 
 // getComputedStyle();

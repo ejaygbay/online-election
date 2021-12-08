@@ -74,17 +74,11 @@ const createContestant = (req, res) => {
 }
 
 const getContestants = (req, res) => {
-    console.log("+>>>>>>>>>>>>>>>>>>>>$$$$$$");
-    res.send({ status: 1, msg: 'done' });
-    // if (req.query.election_id) {
-    //     queryContestants(req.query.election_id, data => {
-    //         res.send(data);
-    //     })
-    // } else {
-    //     queryContestants(null, data => {
-    //         res.send(data);
-    //     })
-    // }
+    if (req.query.election_id) {
+        queryContestants(req.query.election_id, data => res.send(data))
+    } else {
+        queryContestants(null, data => res.send(data))
+    }
 }
 
 const updateContestant = (req, res) => {
@@ -140,13 +134,11 @@ const queryContestants = async(election_id, callback) => {
                 where: {
                     election_id: election_id
                 },
-                // attributes: ['id', 'contestant_name']
+                attributes: ['id', 'first_name', 'middle_name', 'last_name', 'photo']
             })
             .then(result => {
                 let results = [];
-                result.forEach(ele => {
-                    results.push(ele.dataValues);
-                })
+                result.forEach(ele => results.push(ele.dataValues))
 
                 return callback(results);
             })
@@ -157,18 +149,14 @@ const queryContestants = async(election_id, callback) => {
         CONTESTANTS
             .findAll({
                 where: { status: 'active' },
-                attributes: ['id', 'contestant_name']
+                // attributes: ['id', 'contestant_name']
             })
             .then(result => {
                 let results = [];
-                result.forEach(ele => {
-                    results.push(ele.dataValues);
-                })
+                result.forEach(ele => results.push(ele.dataValues))
                 return callback(results);
             })
-            .catch(err => {
-                console.log(err);
-            })
+            .catch(err => console.log(err))
     }
 }
 
