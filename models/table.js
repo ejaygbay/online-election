@@ -356,8 +356,19 @@ const insertDefaultParty = (userID) => {
 /**
  * ASSOCIATIONS
  */
+// USERS
 ROLES.hasMany(USERS);
 USERS.belongsTo(ROLES);
+
+// CONTESTANTS
+POSITIONS.hasMany(CONTESTANTS);
+CONTESTANTS.belongsTo(POSITIONS);
+
+PARTY.hasMany(CONTESTANTS);
+CONTESTANTS.belongsTo(PARTY);
+
+
+
 
 // Reset DB
 // sequelize.sync({

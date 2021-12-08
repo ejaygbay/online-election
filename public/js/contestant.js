@@ -42,16 +42,16 @@ const displayElections = (data) => {
 }
 
 const displayParties = (data) => {
-    let dropdown = document.querySelector("#parties-dropdown");
+    let parties_dropdown = document.querySelector("#parties-dropdown");
     let html = `<option value="" disabled selected>Select Party</option>`;
 
     data = data.reverse();
-    dropdown.innerHTML = "";
-    dropdown.insertAdjacentHTML('beforeend', html);
+    parties_dropdown.innerHTML = "";
+    parties_dropdown.insertAdjacentHTML('beforeend', html);
 
     data.forEach(ele => {
         let html = `<option value="${ele.id}">${ele.party_name}</option>`;
-        dropdown.insertAdjacentHTML('beforeend', html);
+        parties_dropdown.insertAdjacentHTML('beforeend', html);
     });
 }
 
