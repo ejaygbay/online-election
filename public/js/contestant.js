@@ -270,6 +270,7 @@ if (election_dropdown) {
     getPositions('').then(data => displayPositions(data));
     getParties('').then(data => displayParties(data));
 }
+getParties('Independent').then(data => displayParties(data));
 
 /**
  * Event lisener used for input element used for inputting images 

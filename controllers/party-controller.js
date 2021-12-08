@@ -97,7 +97,21 @@ const deleteParty = (req, res) => {
 }
 
 const queryParties = async(election_id, callback) => {
-    if (election_id) {
+    if (election_id === 'Independent') {
+        PARTY
+            .findOne({
+                attributes: ['id', 'party_name'],
+                where: { party_name: 'Independent' }
+            })
+            .then(result => {
+                let results = [];
+                results.push(result.dataValues);
+                return callback(results);
+            })
+            .catch(err => {
+                return callback({ status: 1, message: 'election id not found' });
+            })
+    } else if (election_id) {
         PARTY
             .findAll({
                 where: { election_id: election_id, status: 'active' }
