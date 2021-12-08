@@ -15,7 +15,6 @@ const loginDetails = async(req, res) => {
     }
 
     getUsers(req.body, result => {
-        console.log(result);
         if (result.id) {
             req.session.userID = result.id;
             req.session.electionID = result.election_id;
@@ -25,7 +24,6 @@ const loginDetails = async(req, res) => {
             res_obj.code = 1;
             res_obj.msg = 'not active user';
         }
-        console.log(req.session);
         res.send(res_obj)
     })
 }

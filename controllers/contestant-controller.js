@@ -1,4 +1,6 @@
 const CONTESTANTS = require('../models/table').CONTESTANTS;
+const PARTY = require('../models/table').PARTY;
+const POSITIONS = require('../models/table').POSITIONS;
 
 const getContestantView = (req, res) => {
     let userID = req.session.userID;
@@ -132,10 +134,11 @@ const queryContestants = async(election_id, callback) => {
     if (election_id) {
         CONTESTANTS
             .findAll({
+                include: [PARTY, POSITIONS],
                 where: {
                     election_id: election_id
                 },
-                attributes: ['id', 'contestant_name']
+                // attributes: ['id', 'contestant_name']
             })
             .then(result => {
                 let results = [];
@@ -166,6 +169,11 @@ const queryContestants = async(election_id, callback) => {
             })
     }
 }
+
+queryContestants('86b60f63-d9c6-400f-8368-f72bedf1995c', result => {
+    console.log("CONTESTANT$$$$$$$$$$$$", result[0].party.dataValues.party_name);
+    console.log("CONTESTANT$$$$$$$$$$$$", result[0].position.dataValues.position_name);
+})
 
 module.exports = {
     getContestantView,
