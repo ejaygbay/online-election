@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const contestantControllers = require('../controllers/contestant-controller');
 
-router.get('/contestant', contestantControllers.getContestantView);
+router.get('/contestant/create', contestantControllers.getContestantView);
 
 router.post('/contestant', contestantControllers.createContestant);
 

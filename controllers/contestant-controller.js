@@ -74,15 +74,17 @@ const createContestant = (req, res) => {
 }
 
 const getContestants = (req, res) => {
-    if (req.query.id) {
-        queryContestants(req.query.id, data => {
-            res.send(data);
-        })
-    } else {
-        queryContestants(null, data => {
-            res.send(data);
-        })
-    }
+    console.log("+>>>>>>>>>>>>>>>>>>>>$$$$$$");
+    res.send({ status: 1, msg: 'done' });
+    // if (req.query.election_id) {
+    //     queryContestants(req.query.election_id, data => {
+    //         res.send(data);
+    //     })
+    // } else {
+    //     queryContestants(null, data => {
+    //         res.send(data);
+    //     })
+    // }
 }
 
 const updateContestant = (req, res) => {
@@ -169,11 +171,6 @@ const queryContestants = async(election_id, callback) => {
             })
     }
 }
-
-queryContestants('86b60f63-d9c6-400f-8368-f72bedf1995c', result => {
-    console.log("CONTESTANT$$$$$$$$$$$$", result[0].party.dataValues.party_name);
-    console.log("CONTESTANT$$$$$$$$$$$$", result[0].position.dataValues.position_name);
-})
 
 module.exports = {
     getContestantView,
