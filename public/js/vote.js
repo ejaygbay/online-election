@@ -1,4 +1,4 @@
-const URL2 = window.location.origin;
+const URL = window.location.origin;
 let contestants_ele = document.querySelector("#contestants");
 let election_dropdown = document.getElementById('elections-dropdown');
 
@@ -22,9 +22,9 @@ const displayElections = (data) => {
 }
 
 const getContestants = async(election_id) => {
-    // console.log("Election ID:::", URL2);
+    // console.log("Election ID:::", URL);
 
-    fetch(`${URL2}/contestant?election_id=${election_id}`)
+    fetch(`${URL}/contestant?election_id=${election_id}`)
         .then(response => response.json())
         .then(data => {
             let contestant_id = data[0].id;
@@ -88,4 +88,8 @@ const getPositions = (election_id) => {
                 }
             })
         })
+}
+
+if (election_dropdown) {
+    getElections().then(data => displayElections(data));
 }
