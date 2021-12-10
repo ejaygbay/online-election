@@ -1,6 +1,12 @@
 const URL2 = window.location.origin;
 let contestants_ele = document.querySelector("#contestants");
 
+const getElections = async() => {
+    return await fetch(`${URL}/election`)
+        .then(response => response.json())
+        .then(data => data)
+}
+
 const getContestants = async(election_id) => {
     // console.log("Election ID:::", URL2);
 
