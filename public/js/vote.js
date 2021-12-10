@@ -1,10 +1,24 @@
 const URL2 = window.location.origin;
 let contestants_ele = document.querySelector("#contestants");
+let election_dropdown = document.getElementById('elections-dropdown');
 
 const getElections = async() => {
     return await fetch(`${URL}/election`)
         .then(response => response.json())
         .then(data => data)
+}
+
+const displayElections = (data) => {
+    let html = `<option value="" disabled selected>Select Election</option>`;
+
+    data = data.reverse();
+    election_dropdown.innerHTML = "";
+    election_dropdown.insertAdjacentHTML('beforeend', html);
+
+    data.forEach(ele => {
+        let html = `<option value="${ele.id}">${ele.election_name}</option>`;
+        election_dropdown.insertAdjacentHTML('beforeend', html);
+    });
 }
 
 const getContestants = async(election_id) => {
