@@ -1,4 +1,5 @@
 const URL2 = window.location.origin;
+let contestants_ele = document.querySelector("#contestants");
 
 const getContestants = async(election_id) => {
     // console.log("Election ID:::", URL2);
@@ -45,5 +46,26 @@ getContestants('86b60f63-d9c6-400f-8368-f72bedf1995c');
 // })
 
 const displayContestants = (data) => {
+    let html = ``;
+    // contestants_ele
+}
 
+const getPositions = (election_id) => {
+    positions = {};
+
+    fetch(`${URL}/position?id=${election_id}`)
+        .then(response => response.json())
+        .then(data => {
+            data = data.reverse();
+
+            data.forEach(ele => {
+                let id = ele.id;
+                let position_name = ele.position_name;
+
+                positions[id] = {
+                    id: id,
+                    position_name: position_name
+                }
+            })
+        })
 }
