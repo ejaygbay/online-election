@@ -123,4 +123,7 @@ if (election_dropdown) {
         contestants_ele.innerHTML = "";
         displayPositions(await getPositions(election_dropdown.value));
     })
+} else {
+    contestants_ele.innerHTML = "";
+    getPositions('').then(data => displayPositions(data));
 }
