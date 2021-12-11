@@ -77,7 +77,10 @@ const getContestants = (req, res) => {
     if (req.query.election_id) {
         queryContestants(req.query.election_id, data => res.send(data))
     } else {
-        queryContestants(null, data => res.send(data))
+        if (req.session.role === "admin") {
+            let electionID = req.session.electionID;
+            queryContestants(electionID, data => res.send(data))
+        }
     }
 }
 
