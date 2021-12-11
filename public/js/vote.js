@@ -19,35 +19,6 @@ const getContestants = async(election_id) => {
         .then(response => response.json())
         .then(data => data)
         .catch(err => { console.log("Error+>>>>>>>>>>>>>>", err) })
-
-    // {
-    // let contestant_id = data[0].id;
-    // let full_name = `${data[0].full_name} ${data[0].middle_name} ${data[0].last_name}`;
-    // let contestant_party = data[0].party.party_name;
-    // let total_votes = 100;
-    // let blob = data[0].photo.data;
-
-    // let blob = "blob:http://localhost:3200/dd9de8b4-b9bc-4e71-8d68-c34e90bc5c52";
-    // // const url = window.URL.createObjectURL(blob);
-
-    // const reader = new FileReader();
-    // reader.addEventListener('loadend', () => {
-    //     // reader.result contains the contents of blob as a typed array
-    //     console.log("Done:", reader.result);
-    // });
-    // reader.readAsArrayBuffer(blob);
-    // console.log("Reader>>", reader);
-
-    // // let img = new Image()
-    // // img.onload = () => {
-    // //     URL.revokeObjectURL(url)
-    // //     resolve(img)
-    // // }
-    // // img.src = url
-    // console.log(data[0].photo);
-    // // console.log("PHOTO::::", blob)
-    // document.querySelector("#test-blob").src = "";
-    // })
 }
 
 const displayElections = (data) => {
@@ -63,19 +34,6 @@ const displayElections = (data) => {
     });
 }
 
-// getComputedStyle();
-// getContestants('86b60f63-d9c6-400f-8368-f72bedf1995c');
-
-// queryContestants('86b60f63-d9c6-400f-8368-f72bedf1995c', result => {
-//     console.log("CONTESTANT$$$$$$", result[0].party.dataValues.party_name);
-//     console.log("CONTESTANT$$$$$$", result[0].position.dataValues.position_name);
-// })
-
-const displayContestants = (data) => {
-    let html = ``;
-    console.log(data)
-}
-
 const displayPositions = (data) => {
     data.forEach(ele => {
         let id = ele.id;
@@ -89,6 +47,48 @@ const displayPositions = (data) => {
             `;
 
         contestants_ele.insertAdjacentHTML('beforeend', html);
+    })
+}
+
+const displayContestants = (data) => {
+    data.forEach(ele => {
+        let position_id = ele.position.id;
+        let election_contestants_ele = document.getElementById(`${position_id}_contestants`);
+        let contestant_id = ele.id;
+        let full_name = `${ele.first_name} ${ele.middle_name} ${ele.last_name}`;
+        let contestant_party = ele.party.party_name;
+        let total_votes = 100;
+        let img = ele.photo.data;
+
+        let html = `
+            <div class="col-xl-3 col-sm-6 col-12 mb-4 ">
+                <div class="card">
+                    <div class="card-body ">
+                        <div class="d-flex justify-content-between px-md-1 ">
+                            <div class="align-self-center">
+                                <img src="../public/images/user.jpg" class="img-fluid text-info fa-3x" />
+                                <p class="mb-0">${full_name}</p>
+                                <p class="mb-0"><b><i>${contestant_party}</b></i>
+                                </p>
+                            </div>
+                            <div class="text-end ">
+                                <h3>${total_votes}</h3>
+                                <p class="mb-0 ">Votes</p>
+                            </div>
+                        </div>
+                        <div class="px-md-1 ">
+                            <div class="progress mt-3 mb-1 rounded " style="height: 15px ">
+                                <div class="progress-bar bg-info " role="progressbar " style="width: 80% " aria-valuenow="80 " aria-valuemin="0 " aria-valuemax="100 ">75</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button id=${contestant_id} class="btn btn-primary btn-block mb-4 vote-btn">Vote</button>
+            </div>
+        `;
+
+        election_contestants_ele.innerHTML = '';
+        election_contestants_ele.insertAdjacentHTML('beforeend', html);
     })
 }
 
