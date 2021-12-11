@@ -27,20 +27,6 @@ const displayElections = (data) => {
     });
 }
 
-/**
- * When the select element for the displaying contestants for
- * a specific election is changed, it is handled by this
- */
-if (election_dropdown) {
-    election_dropdown.addEventListener("change", async() => {
-        displayPositions(await getPositions(election_dropdown.value));
-        displayParties(await getParties(election_dropdown.value));
-    })
-} else {
-    getPositions('').then(data => displayPositions(data));
-    getParties('').then(data => displayParties(data));
-}
-
 const getContestants = async(election_id) => {
     // console.log("Election ID:::", URL);
 
@@ -90,26 +76,39 @@ const displayContestants = (data) => {
     // contestants_ele
 }
 
-const getPositions = (election_id) => {
-    positions = {};
+const displayPositions = (data) => {
 
-    fetch(`${URL}/position?id=${election_id}`)
-        .then(response => response.json())
-        .then(data => {
-            data = data.reverse();
-
-            data.forEach(ele => {
-                let id = ele.id;
-                let position_name = ele.position_name;
-
-                positions[id] = {
-                    id: id,
-                    position_name: position_name
-                }
-            })
-        })
 }
 
+// const getPositions = (election_id) => {
+//     positions = {};
+
+//     fetch(`${URL}/position?id=${election_id}`)
+//         .then(response => response.json())
+//         .then(data => {
+//             data = data.reverse();
+
+//             data.forEach(ele => {
+//                 let id = ele.id;
+//                 let position_name = ele.position_name;
+
+//                 positions[id] = {
+//                     id: id,
+//                     position_name: position_name
+//                 }
+//             })
+//         })
+// }
+
+/**
+ * When the select element for the displaying contestants for
+ * a specific election is changed, it is handled by this
+ */
 if (election_dropdown) {
     getElections().then(data => displayElections(data));
+
+    election_dropdown.addEventListener("change", async() => {
+        let positions = await getPositions(election_dropdown.value);
+        console.log(positions);
+    })
 }
