@@ -8,6 +8,12 @@ const getElections = async() => {
         .then(data => data)
 }
 
+const getPositions = async(election_id) => {
+    return await fetch(`${URL}/position?id=${election_id}`)
+        .then(response => response.json())
+        .then(data => data)
+}
+
 const displayElections = (data) => {
     let html = `<option value="" disabled selected>Select Election</option>`;
 
@@ -19,6 +25,20 @@ const displayElections = (data) => {
         let html = `<option value="${ele.id}">${ele.election_name}</option>`;
         election_dropdown.insertAdjacentHTML('beforeend', html);
     });
+}
+
+/**
+ * When the select element for the displaying contestants for
+ * a specific election is changed, it is handled by this
+ */
+if (election_dropdown) {
+    election_dropdown.addEventListener("change", async() => {
+        displayPositions(await getPositions(election_dropdown.value));
+        displayParties(await getParties(election_dropdown.value));
+    })
+} else {
+    getPositions('').then(data => displayPositions(data));
+    getParties('').then(data => displayParties(data));
 }
 
 const getContestants = async(election_id) => {
