@@ -77,7 +77,19 @@ const displayContestants = (data) => {
 }
 
 const displayPositions = (data) => {
+    data.forEach(ele => {
+        let id = ele.id;
+        let position_name = ele.position_name;
 
+        let html = `
+            <article id="${id}">
+                <h2 id="${id}_${position_name}">${position_name}</h2>
+                <div class="row" id="${id}_contestants"></div>
+            </article>
+            `;
+
+        contestants_ele.insertAdjacentHTML('beforeend', html);
+    })
 }
 
 // const getPositions = (election_id) => {
@@ -108,7 +120,7 @@ if (election_dropdown) {
     getElections().then(data => displayElections(data));
 
     election_dropdown.addEventListener("change", async() => {
-        let positions = await getPositions(election_dropdown.value);
-        console.log(positions);
+        contestants_ele.innerHTML = "";
+        displayPositions(await getPositions(election_dropdown.value));
     })
 }
