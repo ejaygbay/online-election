@@ -375,14 +375,14 @@ CONTESTANTS.belongsTo(PARTY);
 
 
 // Reset DB
-sequelize.sync({
-        alter: true,
-        // force: true
-    }).then(suc => {
-        console.log("SUCCESS=====", suc.models);
-        // insertDefaultRoles(roles[cnt]);
-    })
-    .catch(err => console.log("ERROR+++++", err))
+// sequelize.sync({
+//         // alter: true,
+//         force: true
+//     }).then(suc => {
+//         console.log("SUCCESS=====", suc.models);
+//         insertDefaultRoles(roles[cnt]);
+//     })
+//     .catch(err => console.log("ERROR+++++", err))
 
 module.exports = {
     USERS,

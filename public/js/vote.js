@@ -57,7 +57,7 @@ const displayContestants = (data) => {
         let contestant_id = ele.id;
         let full_name = `${ele.first_name} ${ele.middle_name} ${ele.last_name}`;
         let contestant_party = ele.party.party_name;
-        let total_votes = 100;
+        let total_votes = ele.votes;
         let img = ele.photo.data;
 
         let html = `

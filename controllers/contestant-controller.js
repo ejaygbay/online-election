@@ -137,7 +137,7 @@ const queryContestants = async(election_id, callback) => {
                 where: {
                     election_id: election_id
                 },
-                attributes: ['id', 'first_name', 'middle_name', 'last_name', 'photo']
+                attributes: ['id', 'first_name', 'middle_name', 'last_name', 'photo', 'votes']
             })
             .then(result => {
                 let results = [];
