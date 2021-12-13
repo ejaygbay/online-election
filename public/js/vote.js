@@ -92,6 +92,11 @@ const displayContestants = (data) => {
     })
 }
 
+document.querySelectorAll('.vote-btn').addEventListener('click', e => {
+
+})
+const voteForContestant = (contestant_id) => {}
+
 if (election_dropdown) {
     getElections().then(data => displayElections(data));
 
