@@ -73,7 +73,7 @@ const displayContestants = (data) => {
                                 </p>
                             </div>
                             <div class="text-end ">
-                                <h3>${total_votes}</h3>
+                                <h3 id=${contestant_id}_votes>${total_votes}</h3>
                                 <p class="mb-0 ">Votes</p>
                             </div>
                         </div>
@@ -86,7 +86,7 @@ const displayContestants = (data) => {
                 </div>
                 <button id=${contestant_id} class="btn btn-primary btn-block mb-4 vote-btn">Vote</button>
             </div>
-        `;
+            `;
 
             election_contestants_ele.innerHTML = '';
             election_contestants_ele.insertAdjacentHTML('beforeend', html);
@@ -99,11 +99,15 @@ const displayContestants = (data) => {
 }
 
 const voteForContestant = (contestant_id) => {
+    let contestant_votes_ele = document.querySelector(`#${contestant_id}_votes`);
+    let current_votes = parseInt(contestant_votes_ele.innerHTML);
+
     fetch(`${URL}/contestant?id=${contestant_id}&vote=true`, {
             method: 'PATCH'
         })
         .then(response => response.json())
         .then(data => {
+            contestant_votes_ele.innerHTML = current_votes + 1;
             Swal.fire({
                 icon: 'success',
                 title: `Thank for voting!!!`,
