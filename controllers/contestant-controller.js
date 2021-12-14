@@ -74,6 +74,7 @@ const createContestant = (req, res) => {
 }
 
 const getContestants = (req, res) => {
+    req.session.voterID = 'f5ca8bf2-8181-423e-8b57-c914df13420c';
     if (req.query.election_id) {
         queryContestants(req.query.election_id, data => res.send(data))
     } else {
@@ -86,19 +87,31 @@ const getContestants = (req, res) => {
 
 const updateContestant = (req, res) => {
     let contestant_id = req.query.id;
-    let contestant_name = req.query.name;
+    let registrants_vote = req.query.vote;
 
-    CONTESTANTS.update({
-        contestant_name: contestant_name
-    }, {
-        where: {
-            id: contestant_id
-        }
-    }).then(() => {
-        res.send({ status: 0, msg: 'Contestant updated' });
-    }).catch(error => {
-        res.send({ status: 1, msg: 'Contestant not updated' });
-    })
+    if (registrants_vote) {
+        CONTESTANTS.increment('votes', {
+            where: {
+                id: contestant_id
+            }
+        }).then((suc) => {
+            res.send({ status: 0, msg: 'Contestant votes updated' });
+        }).catch(error => {
+            res.send({ status: 1, msg: 'Contestant votes not updated' });
+        })
+    } else {
+        CONTESTANTS.update({
+            total_votes: true
+        }, {
+            where: {
+                id: contestant_id
+            }
+        }).then(() => {
+            res.send({ status: 0, msg: 'Contestant updated' });
+        }).catch(error => {
+            res.send({ status: 1, msg: 'Contestant not updated' });
+        })
+    }
 }
 
 const deleteContestant = (req, res) => {

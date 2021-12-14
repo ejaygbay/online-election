@@ -51,16 +51,17 @@ const displayPositions = (data) => {
 }
 
 const displayContestants = (data) => {
-    data.forEach(ele => {
-        let position_id = ele.position.id;
-        let election_contestants_ele = document.getElementById(`${position_id}_contestants`);
-        let contestant_id = ele.id;
-        let full_name = `${ele.first_name} ${ele.middle_name} ${ele.last_name}`;
-        let contestant_party = ele.party.party_name;
-        let total_votes = ele.votes;
-        let img = ele.photo.data;
+    if (data.length > 0) {
+        data.forEach(ele => {
+            let position_id = ele.position.id;
+            let election_contestants_ele = document.getElementById(`${position_id}_contestants`);
+            let contestant_id = ele.id;
+            let full_name = `${ele.first_name} ${ele.middle_name} ${ele.last_name}`;
+            let contestant_party = ele.party.party_name;
+            let total_votes = ele.votes;
+            let img = ele.photo.data;
 
-        let html = `
+            let html = `
             <div class="col-xl-3 col-sm-6 col-12 mb-4 ">
                 <div class="card">
                     <div class="card-body ">
@@ -87,15 +88,30 @@ const displayContestants = (data) => {
             </div>
         `;
 
-        election_contestants_ele.innerHTML = '';
-        election_contestants_ele.insertAdjacentHTML('beforeend', html);
-    })
+            election_contestants_ele.innerHTML = '';
+            election_contestants_ele.insertAdjacentHTML('beforeend', html);
+        })
+
+        document.querySelectorAll('.vote-btn').forEach(ele => {
+            ele.addEventListener('click', e => voteForContestant(e.target.id))
+        })
+    }
 }
 
-document.querySelectorAll('.vote-btn').addEventListener('click', e => {
-
-})
-const voteForContestant = (contestant_id) => {}
+const voteForContestant = (contestant_id) => {
+    fetch(`${URL}/contestant?id=${contestant_id}&vote=true`, {
+            method: 'PATCH'
+        })
+        .then(response => response.json())
+        .then(data => {
+            Swal.fire({
+                icon: 'success',
+                title: `Thank for voting!!!`,
+                showConfirmButton: false,
+                timer: 2500
+            })
+        })
+}
 
 if (election_dropdown) {
     getElections().then(data => displayElections(data));
