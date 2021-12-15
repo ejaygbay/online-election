@@ -1,4 +1,5 @@
 const URL = window.location.origin;
+let contestants_ele = document.querySelector("#contestants");
 let election_dropdown = document.getElementById('elections-dropdown');
 
 document.querySelector("#registered-voters").innerHTML = 10;
@@ -96,16 +97,19 @@ const displayParties = (data) => {
 }
 
 const displayPositions = (data) => {
-    let dropdown = document.querySelector("#positions-dropdown");
-    let html = `<option value="" disabled selected>Select Position</option>`;
-
-    dropdown.innerHTML = "";
-    dropdown.insertAdjacentHTML('beforeend', html);
-
     data.forEach(ele => {
-        let html = `<option value="${ele.id}">${ele.position_name}</option>`;
-        dropdown.insertAdjacentHTML('beforeend', html);
-    });
+        let id = ele.id;
+        let position_name = ele.position_name;
+
+        let html = `
+            <article id="${id}">
+                <h2 id="${id}_${position_name}">${position_name}</h2>
+                <div class="row" id="${id}_contestants"></div>
+            </article>
+            `;
+
+        contestants_ele.insertAdjacentHTML('beforeend', html);
+    })
 }
 
 const displayContestantNameForEditing = (id, contestant_name) => {
