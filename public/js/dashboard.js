@@ -1,12 +1,6 @@
 const URL = window.location.origin;
 let election_dropdown = document.getElementById('elections-dropdown');
 
-const getElections = async() => {
-    return await fetch(`${URL}/election`)
-        .then(response => response.json())
-        .then(data => data)
-}
-
 document.querySelector("#registered-voters").innerHTML = 10;
 
 const displayContestants = (data) => {
@@ -48,7 +42,6 @@ const displayContestants = (data) => {
     // })
 }
 
-
 const getVoterCounts = () => {
     fetch(`${URL}/voter/count`)
         .then(response => response.json())
@@ -63,17 +56,22 @@ getVoterCounts();
  * @param {array} data array of objects
  * [{id: exampleID, election_name: "Test Election"}]
  */
+const getElections = async() => {
+    return await fetch(`${URL}/election`)
+        .then(response => response.json())
+        .then(data => data)
+}
+
 const displayElections = (data) => {
-    let dropdown = document.querySelector("#elections-dropdown");
     let html = `<option value="" disabled selected>Select Election</option>`;
 
     data = data.reverse();
-    dropdown.innerHTML = "";
-    dropdown.insertAdjacentHTML('beforeend', html);
+    election_dropdown.innerHTML = "";
+    election_dropdown.insertAdjacentHTML('beforeend', html);
 
     data.forEach(ele => {
         let html = `<option value="${ele.id}">${ele.election_name}</option>`;
-        dropdown.insertAdjacentHTML('beforeend', html);
+        election_dropdown.insertAdjacentHTML('beforeend', html);
     });
 }
 
@@ -121,4 +119,20 @@ const displayContestantNameForEditing = (id, contestant_name) => {
                 editcontestant(id, contestant_name, result.value);
             }
         })
+}
+
+if (election_dropdown) {
+    getElections().then(data => displayElections(data));
+
+    // election_dropdown.addEventListener("change", async() => {
+    //     contestants_ele.innerHTML = "";
+    //     displayPositions(await getPositions(election_dropdown.value));
+    //     displayContestants(await getContestants(election_dropdown.value));
+    // })
+} else {
+    // contestants_ele.innerHTML = "";
+    // getPositions('').then(data => displayPositions(data));
+
+    // getContestants('')
+    //     .then(data => displayContestants(data));
 }
