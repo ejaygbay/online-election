@@ -4,45 +4,6 @@ let election_dropdown = document.getElementById('elections-dropdown');
 
 document.querySelector("#registered-voters").innerHTML = 10;
 
-const displayContestants = (data) => {
-    // let table = document.querySelector("tbody");
-    // let contestant_data = data.reverse();
-
-    // table.innerHTML = "";
-    // contestant_data.forEach((ele, index) => {
-    //     let html = `<tr id=${ele.id}>
-    //                 <th scope="row">${index + 1}.</th>
-    //                 <td id=name-${ele.id}>${ele.contestant_name}</td>
-    //                 <td>
-    //                     <button id=${ele.id}_edit-btn class="action-btn edit btn outline btn-outline-primary btn-floating">
-    //                         <i id=${ele.id}_edit class="edit fas fa-pencil-alt"></i>
-    //                     </button>
-    //                     <button id=${ele.id}_del-btn type="button" class="action-btn delete btn btn-outline-danger btn-floating">
-    //                         <i id=${ele.id}_del class="delete fas fa-trash-alt"></i>
-    //                     </button>
-    //                 </td>
-    //             </tr>`;
-
-    //     table.insertAdjacentHTML('beforeend', html);
-    // });
-
-    // document.querySelectorAll(".action-btn").forEach(ele => {
-    //     ele.addEventListener("click", (e) => {
-    //         let id = e.target.id.split("_")[0];
-    //         let classes = e.target.classList;
-    //         let contestant_name = document.getElementById(`name-${id}`).innerHTML;
-
-    //         classes.forEach(ele => {
-    //             if (ele === 'edit') {
-    //                 displaycontestantNameForEditing(id, contestant_name);
-    //             } else if (ele === 'delete') {
-    //                 deletecontestant(id, contestant_name);
-    //             }
-    //         })
-    //     })
-    // })
-}
-
 const getVoterCounts = () => {
     fetch(`${URL}/voter/count`)
         .then(response => response.json())
@@ -103,6 +64,53 @@ const displayParties = (data) => {
     });
 }
 
+const displayContestants = (data) => {
+    if (data.length > 0) {
+        data.forEach(ele => {
+            let position_id = ele.position.id;
+            let election_contestants_ele = document.getElementById(`${position_id}_contestants`);
+            let contestant_id = ele.id;
+            let full_name = `${ele.first_name} ${ele.middle_name} ${ele.last_name}`;
+            let contestant_party = ele.party.party_name;
+            let total_votes = ele.votes;
+            let img = ele.photo.data;
+
+            let html = `
+            <div class="col-xl-3 col-sm-6 col-12 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between px-md-1 ">
+                            <div class="align-self-center">
+                                <img src="../public/images/user.jpg" class="img-fluid text-info fa-3x" />
+                                <p class="mb-0">${full_name}</p>
+                                <p class="mb-0"><b><i>${contestant_party}</b></i>
+                                </p>
+                            </div>
+                            <div class="text-end ">
+                                <h3 id=${contestant_id}_votes>${total_votes}</h3>
+                                <p class="mb-0 ">Votes</p>
+                            </div>
+                        </div>
+                        <div class="px-md-1 ">
+                            <div class="progress mt-3 mb-1 rounded " style="height: 15px ">
+                                <div class="progress-bar bg-info " role="progressbar " style="width: 80% " aria-valuenow="80 " aria-valuemin="0 " aria-valuemax="100 ">75</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+
+            election_contestants_ele.innerHTML = '';
+            election_contestants_ele.insertAdjacentHTML('beforeend', html);
+        })
+
+        document.querySelectorAll('.vote-btn').forEach(ele => {
+            ele.addEventListener('click', e => voteForContestant(e.target.id))
+        })
+    }
+}
+
 const displayPositions = (data) => {
     data.forEach(ele => {
         let id = ele.id;
@@ -144,7 +152,7 @@ if (election_dropdown) {
     election_dropdown.addEventListener("change", async() => {
         contestants_ele.innerHTML = "";
         displayPositions(await getPositions(election_dropdown.value));
-        // displayContestants(await getContestants(election_dropdown.value));
+        displayContestants(await getContestants(election_dropdown.value));
     })
 } else {
     // contestants_ele.innerHTML = "";
