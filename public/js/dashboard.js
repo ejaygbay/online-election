@@ -1,5 +1,5 @@
 const URL = window.location.origin;
-let contestants_ele = document.querySelector("#contestants");
+let contestants_ele = document.querySelector("#contestants-results");
 let election_dropdown = document.getElementById('elections-dropdown');
 
 document.querySelector("#registered-voters").innerHTML = 10;
@@ -134,11 +134,11 @@ const displayContestantNameForEditing = (id, contestant_name) => {
 if (election_dropdown) {
     getElections().then(data => displayElections(data));
 
-    // election_dropdown.addEventListener("change", async() => {
-    //     contestants_ele.innerHTML = "";
-    //     displayPositions(await getPositions(election_dropdown.value));
-    //     displayContestants(await getContestants(election_dropdown.value));
-    // })
+    election_dropdown.addEventListener("change", async() => {
+        contestants_ele.innerHTML = "";
+        displayPositions(await getPositions(election_dropdown.value));
+        // displayContestants(await getContestants(election_dropdown.value));
+    })
 } else {
     // contestants_ele.innerHTML = "";
     // getPositions('').then(data => displayPositions(data));
