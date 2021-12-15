@@ -1,4 +1,11 @@
 const URL = window.location.origin;
+let election_dropdown = document.getElementById('elections-dropdown');
+
+const getElections = async() => {
+    return await fetch(`${URL}/election`)
+        .then(response => response.json())
+        .then(data => data)
+}
 
 document.querySelector("#registered-voters").innerHTML = 10;
 
