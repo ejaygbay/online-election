@@ -62,6 +62,12 @@ const getElections = async() => {
         .then(data => data)
 }
 
+const getPositions = async(election_id) => {
+    return await fetch(`${URL}/position?id=${election_id}`)
+        .then(response => response.json())
+        .then(data => data)
+}
+
 const displayElections = (data) => {
     let html = `<option value="" disabled selected>Select Election</option>`;
 
