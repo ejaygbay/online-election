@@ -155,9 +155,9 @@ if (election_dropdown) {
         displayContestants(await getContestants(election_dropdown.value));
     })
 } else {
-    // contestants_ele.innerHTML = "";
-    // getPositions('').then(data => displayPositions(data));
+    contestants_ele.innerHTML = "";
+    getPositions('').then(data => displayPositions(data));
 
-    // getContestants('')
-    //     .then(data => displayContestants(data));
+    getContestants('')
+        .then(data => displayContestants(data));
 }
