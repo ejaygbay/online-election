@@ -85,10 +85,15 @@ const getVoters = (req, res) => {
 }
 
 const getVoterCounts = (req, res) => {
+    let election_id = req.session.electionID;
+
+    if (req.query.election_id)
+        election_id = req.query.election_id;
+
     VOTERS
         .count({
             where: {
-                election_id: req.session.electionID
+                election_id: election_id
             }
         })
         .then(result => res.send({ count: result }))

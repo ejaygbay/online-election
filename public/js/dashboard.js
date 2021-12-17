@@ -4,14 +4,13 @@ let election_dropdown = document.getElementById('elections-dropdown');
 
 document.querySelector("#registered-voters").innerHTML = 10;
 
-const getVoterCounts = () => {
-    fetch(`${URL}/voter/count`)
+const getVoterCounts = (election_id) => {
+    fetch(`${URL}/voter/count?election_id=${election_id}`)
         .then(response => response.json())
         .then(data => {
             document.querySelector("#registered-voters").innerHTML = data.count;
         })
 }
-getVoterCounts();
 
 /**
  * Display election
@@ -151,11 +150,13 @@ if (election_dropdown) {
 
     election_dropdown.addEventListener("change", async() => {
         contestants_ele.innerHTML = "";
+        getVoterCounts(election_dropdown.value);
         displayPositions(await getPositions(election_dropdown.value));
         displayContestants(await getContestants(election_dropdown.value));
     })
 } else {
     contestants_ele.innerHTML = "";
+    getVoterCounts('');
     getPositions('').then(data => displayPositions(data));
 
     getContestants('')
