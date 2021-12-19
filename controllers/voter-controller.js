@@ -1,11 +1,11 @@
 const VOTERS = require('../models/table').VOTERS;
 
-const votersRegistrationView = (req, res) => {
+const votersView = (req, res) => {
     let userID = req.session.userID;
     let role = req.session.role;
 
     if (userID && role) {
-        res.render('voter-registration', { page: 'register', role: role });
+        res.render('voters', { page: 'register', role: role });
     } else {
         res.redirect('/login');
     }
@@ -186,7 +186,7 @@ const queryVoters = async(election_id, callback) => {
 }
 
 module.exports = {
-    votersRegistrationView,
+    votersView,
     createVoter,
     getVoters,
     updateVoter,
