@@ -14,56 +14,79 @@
         </header>
 
         <!--Main layout-->
-        <main style="margin-top: 70px ">
-            <h1 class="mb-4" style="text-align: center;">Add Voters</h1>
+        <main style="margin-top: 70px">
             <div class="container pt-2">
-                <!--Section: Statistics with subtitles-->
-                <section style="display: grid; justify-items: center;">
+                <!-- Tabs navs -->
+                <ul class="nav nav-tabs nav-fill mb-3" id="ex1" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link active" id="ex2-tab-1" data-mdb-toggle="tab" href="#voters-tab" role="tab">Voters</a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link" id="ex2-tab-2" data-mdb-toggle="tab" href="#voters-registration-tab" role="tab">Voters Registration</a>
+                    </li>
+                </ul>
+                <!-- Tabs navs -->
 
-                    <div class="col-md-4 mb-3">
-                        <div class="form-outline">
-                            <input type="text" id="first-name" class="form-control form-control-lg" />
-                            <label class="form-label" for="first-name">First Name</label>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="form-outline">
-                            <input type="text" id="middle-name" class="form-control form-control-lg" />
-                            <label class="form-label" for="middle-name">Middle Name</label>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <div class="form-outline">
-                            <input type="text" id="last-name" class="form-control form-control-lg" />
-                            <label class="form-label" for="last-name">Last Name</label>
-                        </div>
+                <!-- Tabs content -->
+                <div class="tab-content" id="ex2-content">
+                    <!-- Voters List Tab -->
+                    <div class="tab-pane fade show active" id="voters-tab" role="tabpanel">
+                        <h1 class="mb-4" style="text-align: center;">List Of Voters</h1>
                     </div>
 
-                    <% if(role === 'superadmin'){ %>
-                        <div class="col-md-4 mb-3">
-                            <label class="visually-hidden" for="elections-dropdown">Preference</label>
-                            <select class="custom-select" id="elections-dropdown">
-                            <option value="">Select Election</option>
-                        </select>
-                        </div>
-                        <% } %>
+                    <!-- Voters Registration Tab -->
+                    <div class="tab-pane fade" id="voters-registration-tab" role="tabpanel">
+                        <h1 class="mb-4" style="text-align: center;">Voters Registration</h1>
 
-                            <!-- Upload file -->
+                        <section style="display: grid; justify-items: center;">
+
                             <div class="col-md-4 mb-3">
-                                <label class="form-label" for="voter-img">Upload voter's photo</label>
-                                <input type="file" name="img" accept="image/*" class="form-control form-control-lg mb-3" id="voter-img" />
+                                <div class="form-outline">
+                                    <input type="text" id="first-name" class="form-control form-control-lg" />
+                                    <label class="form-label" for="first-name">First Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="form-outline">
+                                    <input type="text" id="middle-name" class="form-control form-control-lg" />
+                                    <label class="form-label" for="middle-name">Middle Name</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="form-outline">
+                                    <input type="text" id="last-name" class="form-control form-control-lg" />
+                                    <label class="form-label" for="last-name">Last Name</label>
+                                </div>
                             </div>
 
-                            <!-- <label class="form-label" for="voter-img-preview">Voter's photo preview</label> -->
-                            <div id="preview-section" class="col-md-4 mb-3">
-                                <img id="img-preview" src="">
-                                <h5 id="preview-text">PREVIEW</h5>
-                            </div>
-                            <!-- Submit button -->
-                            <div class="col-md-4 mb-3">
-                                <button id="add-voter-btn" class="btn btn-primary btn-block btn-lg mb-4">Add Voter</button>
-                            </div>
-                </section>
+                            <% if(role === 'superadmin'){ %>
+                                <div class="col-md-4 mb-3">
+                                    <label class="visually-hidden" for="elections-dropdown">Preference</label>
+                                    <select class="custom-select" id="elections-dropdown">
+                                    <option value="">Select Election</option>
+                                </select>
+                                </div>
+                                <% } %>
+
+                                    <!-- Upload file -->
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label" for="voter-img">Upload voter's photo</label>
+                                        <input type="file" name="img" accept="image/*" class="form-control form-control-lg mb-3" id="voter-img" />
+                                    </div>
+
+                                    <!-- <label class="form-label" for="voter-img-preview">Voter's photo preview</label> -->
+                                    <div id="preview-section" class="col-md-4 mb-3">
+                                        <img id="img-preview" src="">
+                                        <h5 id="preview-text">PREVIEW</h5>
+                                    </div>
+                                    <!-- Submit button -->
+                                    <div class="col-md-4 mb-3">
+                                        <button id="add-voter-btn" class="btn btn-primary btn-block btn-lg mb-4">Add Voter</button>
+                                    </div>
+                        </section>
+                    </div>
+                </div>
+                <!-- Tabs content -->
             </div>
         </main>
 
