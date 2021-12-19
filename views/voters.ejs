@@ -31,12 +31,43 @@
                 <div class="tab-content" id="ex2-content">
                     <!-- Voters List Tab -->
                     <div class="tab-pane fade show active" id="voters-tab" role="tabpanel">
-                        <h1 class="mb-4" style="text-align: center;">List Of Voters</h1>
+                        <table class="table responsive">
+                            <thead>
+                                <th>#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Positions</th>
+                                <th scope="col">Vote</th>
+                                <th scope="col">Action</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1.</td>
+                                    <td>John Doe</td>
+                                    <td>
+                                        <span class="badge bg-primary">Boss</span>
+                                        <span class="badge bg-success">Chairman</span>
+                                        <span class="badge bg-danger">Chair lady</span>
+                                    </td>
+                                    <td>
+                                        <button class="action-btn edit btn outline btn-outline-primary">
+                                            Select to vote
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button class="action-btn edit btn outline btn-outline-primary btn-floating">
+                                            <i class="edit fas fa-pencil-alt"></i>
+                                        </button>
+                                        <button class="action-btn delete btn btn-outline-danger btn-floating">
+                                            <i class="delete fas fa-trash-alt"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
 
                     <!-- Voters Registration Tab -->
                     <div class="tab-pane fade" id="voters-registration-tab" role="tabpanel">
-                        <h1 class="mb-4" style="text-align: center;">Voters Registration</h1>
 
                         <section style="display: grid; justify-items: center;">
 
