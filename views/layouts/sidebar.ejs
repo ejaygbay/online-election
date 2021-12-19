@@ -7,33 +7,33 @@
                 </a>
 
                 <a href="/voters/registration" class="list-group-item list-group-item-action py-2 ripple <% if(page === 'register'){ %>active<% } %>">
-                    <i class="fas fa-lock fa-fw me-3"></i><span>Voter Registration</span>
+                    <i class="fas fa-lock fa-fw me-3"></i><span>Voters</span>
                 </a>
 
-                <a href="/vote" class="list-group-item list-group-item-action py-2 ripple <% if(page === 'vote'){ %>active<% } %>">
+                <!-- <a href="/vote" class="list-group-item list-group-item-action py-2 ripple <% if(page === 'vote'){ %>active<% } %>">
                     <i class="fas fa-chart-line fa-fw me-3"></i><span>Vote</span>
-                </a>
+                </a> -->
 
                 <a href="/party/create" class="list-group-item list-group-item-action py-2 ripple <% if(page === 'party'){ %>active<% } %>">
-                    <i class="fas fa-chart-pie fa-fw me-3"></i><span>Party</span>
+                    <i class="fas fa-chart-pie fa-fw me-3"></i><span>Parties</span>
                 </a>
 
                 <a href="/position/create" class="list-group-item list-group-item-action py-2 ripple <% if(page === 'position'){ %>active<% } %>">
-                    <i class="fas fa-chart-bar fa-fw me-3"></i><span>Position</span>
+                    <i class="fas fa-chart-bar fa-fw me-3"></i><span>Positions</span>
                 </a>
 
                 <a href="/contestant/create" class="list-group-item list-group-item-action py-2 ripple <% if(page === 'contestant'){ %>active<% } %>">
-                    <i class="fas fa-globe fa-fw me-3"></i><span>Contestant</span>
+                    <i class="fas fa-globe fa-fw me-3"></i><span>Contestants</span>
                 </a>
 
                 <% } %>
                     <% if(role === 'superadmin'){ %>
                         <a href="/election/create" class="list-group-item list-group-item-action py-2 ripple <% if(page === 'election'){ %>active<% } %>">
-                            <i class="fas fa-chart-pie fa-fw me-3"></i><span>Election</span>
+                            <i class="fas fa-chart-pie fa-fw me-3"></i><span>Elections</span>
                         </a>
 
                         <a href="/user/create" class="list-group-item list-group-item-action py-2 ripple <% if(page === 'user'){ %>active<% } %>">
-                            <i class="fas fa-chart-pie fa-fw me-3"></i><span>User</span>
+                            <i class="fas fa-chart-pie fa-fw me-3"></i><span>Users</span>
                         </a>
                         <% } %>
         </div>
